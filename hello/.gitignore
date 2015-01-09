@@ -1,3 +1,7 @@
 # Ignore objects
 *.o
 
+# Ignore binaries
+hello
+hello-c
+
