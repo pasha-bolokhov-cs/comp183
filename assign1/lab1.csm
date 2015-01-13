@@ -2,22 +2,21 @@
 ;
 ; A program for trying out with the debugger
 ;
-; Almost works too...
-;
-; Deryk Barker
-; 2003-01-08
-;
 
-CONSOLE equ     1       ; BIOS
-PUTSTR  equ     3       ; equates
+CONSOLE equ     1       ; 
+PUTSTR  equ     3       ;
+EXIT	equ	0xffff
+
+	STACK	80
 
         data
-C1      db      'Hello there!'          ; Introductory message
+C1      db      'Hello there!', 10, 0   ; Introductory message
 W1      dw      -33                     ; Some numbers to 
 W2      dw      30055                   ; add
 W3      dw      ?                       ; Result goes here
 D2      dd      -33
-C2      db      'Bye now!', 10, 13      ; Salutary message
+C2      db      'Bye now!', 10, 13, 0   ; Salutary message
+
         code
 
 debugtest                               ; Program entry point
@@ -39,8 +38,13 @@ debugtest                               ; Program entry point
 ;
 ; Say goodnight Gracie.
 ;
-        mov     PUSTTR, r1
+        mov     PUTSTR, r1
         lea     C2, r2
         sys     CONSOLE
+
+;
+; Quit
+;
+	sys	EXIT
         
         end
