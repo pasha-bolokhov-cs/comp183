@@ -1,6 +1,7 @@
 # Ignore all objects
 *.o
 
-# Ignore CHASM '.cig' files
+# Ignore CHASM '.cig' and '.lst' files
 *.cig
+*.lst
 
