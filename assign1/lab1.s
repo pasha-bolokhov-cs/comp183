@@ -1,53 +1,66 @@
+#
+# A program for trying out with the debugger
+#
+# Invocation:
+#	$ cc -c lab1.s
+#	$ ld -o lab1 lab1.s
+#
 
-	global _start
+	#
+	# Define some constants
+	#
+	.set	WRITE,		1	# system call 1 is write
+	.set	FHANDLE, 	1	# file handle 1 is stdout
+	.set	EXIT,		60	# system call 60 is exit
 
-_start:	
-				;
-; A program for trying out with the debugger
-;
+	#
+	# Data
+	#
+	.data
 
-CONSOLE equ     1       ; 
-PUTSTR  equ     3       ;
-EXIT	equ	0xffff
+C1:	.ascii	"Hello There!\n"	# Introductory message
+	.set	len1, .-C1		# Length of 'C1'
+W1:	.short	-33			# Some numbers to 
+W2:	.short	30055			# add
+W3:	.short	0			# Result goes here
+D2:	.word	-33
+C2:	.ascii	"Bye Now!\n"		# Salutary message
+	.set	len2, .-C2		# Length of 'C2'
 
-	STACK	80
-
-        data
-C1      db      'Hello there!', 10, 0   ; Introductory message
-W1      dw      -33                     ; Some numbers to 
-W2      dw      30055                   ; add
-W3      dw      ?                       ; Result goes here
-D2      dd      -33
-C2      db      'Bye now!', 10, 13, 0   ; Salutary message
-
-        code
-
-debugtest                               ; Program entry point
-;
-; Send "Hello" message (You say Goodbye and I...)
-;
-        mov     PUTSTR, r1
-        lea     C1, r2
-        sys     CONSOLE
+	
+	
+	.text
+	.global _start
+_start:		
+	#
+	# Send "Hello" message (You say Goodbye and I...)
+	#
+	mov	$WRITE, %rax
+	mov	$FHANDLE, %rdi
+	mov	$C1, %rsi
+	mov	$len1, %rdx
+	syscall
         
-;
-; Check that simple arithmetic works
-;
-        lodw    W1,,r1
-        lodw    W2,,r2
-        add     r1,r2,r3
-        stow    W3,,r3
+	#
+	# Check that simple arithmetic works
+	#
+	mov	W1, %ax
+	mov	%ax, W3
+	mov	W2, %ax
+	add	%ax, W3
         
-;
-; Say goodnight Gracie.
-;
-        mov     PUTSTR, r1
-        lea     C2, r2
-        sys     CONSOLE
-
-;
-; Quit
-;
-	sys	EXIT
-        
-        end
+	#
+	# Say goodnight Gracie.
+	#
+	mov	$WRITE, %rax
+	mov	$FHANDLE, %rdi
+	mov	$C2, %rsi
+	mov	$len2, %rdx
+	syscall
+	
+	#
+	# exit(0)
+	#
+	mov	$EXIT, %rax
+	xor	%rdi, %rdi	# return code 0
+	syscall
