@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+</head>
+<body style="font-family: arial, helvetica, sans-serif;">
+<h1>A Tutorial Introduction to Assembling and Debugging CHASM Programs</h1>
+<h2>General</h2>
+<p>Before you can assemble a CHASM program, the source file must be on a linux system. If you are working in the labs at Camosun, then this will mean deepblue. (If you have a linux system at home you can install CRAPS yourself, see the&nbsp;<a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=83577&amp;type=content&amp;rcode=Camosun-696094" target="_self">Installing CRAPS</a> modulefor more information) Your "M drive" in the labs is also your home directory on deepblue, so you can use a Windows-based text editor (if you must) to build and edit your programs.</p>
+<p>But not assemble or run them, to do this you&nbsp;<i>must</i>&nbsp;be logged onto linux.</p>
+<p>The rest of this document assumes that your source file is called&nbsp;<i>myprog.csm</i>, it is in an appropriate directory on the linux system, which directory is also your current directory.</p>
+<p><a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=83577&amp;type=content&amp;rcode=Camosun-696146" target="_self">command reference manual</a></p>
+<h2>Assembling</h2>
+<p>CHASM programs are assembled using the&nbsp;<i>chasm</i>&nbsp;command. Full documentation is available the CRAPS&nbsp;<a href="file:///Users/rusted_root/Documents/Camosun/COMP_183/Deryks_Notes/COMP183/CRAPS/command.html">command reference manual</a>.</p>
+<p>In order to assemble our program we will use this command:</p>
+<pre style="padding-left: 30px;"><span style="font-family: 'courier new', courier, sans-serif; color: #38761d;">chasm -l myprog</span></pre>
+<p>The chasm command assumes that our program source file name has the extension ".csm", so you don't need to type it (you can, it's not an error).</p>
+<p>The "-l" asks chasm to produce a "listing file", which will be called&nbsp;<i>myprog.lst</i>; this is a useful file and will be discussed below.</p>
+<p>Typical output from this command looks like this:</p>
+<pre style="padding-left: 30px;"><span style="font-family: 'courier new', courier, sans-serif; color: #38761d;">CHASM version 2.0RC1 March 21, 2002</span></pre>
+<pre style="padding-left: 30px;"><span style="color: #38761d; font-family: 'courier new', courier, sans-serif;">File: myprog.csm, Entrypoint: 194, Errors: 0, Warnings: 0
+</span></pre>
+<p>The&nbsp;<i>Entrypoint</i>&nbsp;is the address of the logically first instruction (the label on the&nbsp;<i>PROGRAM</i>&nbsp;directive)</p>
+<p><i>Errors</i>&nbsp;are fatal problems which will definitely make the program fail: no image file is generated if there are any errors.</p>
+<p><i>Warnings</i>&nbsp;are potential problems; the program may run or it may not: an image file will be generated.</p>
+<p>You should in general remove&nbsp;<i>all</i>&nbsp;errors and warnings.</p>
+<p></p>
+<h3>The Listing File</h3>
+<p>It is always a good idea to generate the listing file (<i>myprog.lst</i>). This not only includes the complete source program, but also the generated code (in hexadecimal) and the addresses (also hex) of every instruction and every piece of data.</p>
+<p>Here is an annotated example (extract only):</p>
+<pre><span style="font-family: 'courier new', courier, sans-serif; color: #38761d;">File myprog.csm Program myprog Assembled Thu Jan  9 14:49:36 2003
+
+	   1
+	   2               ;
+	   3                       program myprog
+	   4               ;
+	   5               ; A simple CHASM test program
+	   6               ;
+	   7               ; Deryk Barker
+	   8
+	   9          ffff EXIT            EQU     0xffff
+	  10
+	  11          0064 ArrSize         EQU     100
+	  12
+	  13                               stack   10
+	  14
+	  15                               data
+	  16
+	  17 0000 dead     W1              dw      -8531
+	  18 0002 0063     W2              dw      99
+	  19 0004 ....     W3              dw      ?
+	  20 0006 48656c6c C1              db      'Hello!'
+	     000a 6f21
+	  21
+	  22                               code
+	  23 000c           myprog
+	  24 000c c4000000                 lodw    W1,,r1          ; load first number
+	  25 0010 c8000002                 lodw    W2,,r2          ; ditto second
+	  26 0014 0c822000                 add     r1,r2,r3        ; add them and
+	  27 0018 cc800004                 stow    W3,,r3          ; save the result
+	  28
+	  29 001c 8220ffff                 sys     EXIT            ; We're done
+	  30                               end
+          ^^ ^^^^ ^^^^^^^^  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ 	 Line Add   Code                              Source
+</span></pre>
+<p>The first column is the&nbsp;<i>line number</i>&nbsp;of the source line. Some lines generate no code (e.g. lines 1-8 above).</p>
+<p>The next column is the address (in hexadecimal) of the&nbsp;<i>first byte</i>&nbsp;containing the generated code or data. All instructions are four bytes long and will be aligned on a four-byte boundary (i.e. the address will be a multiple of four).</p>
+<p>On line 24, for example, the lodw instruction, occupies bytes 0x000c, 0x000d, 0x000e and 0x000f.</p>
+<p>The third column shows the (hexadecimal) generated code or data. Note that only four bytes of generated data are displayed on each line of the listing file.</p>
+<p>This is why the hex generated for address 0x000a (and 0x000b) has no line number: this data is in the fifth and sixth bytes generated by the&nbsp;<i>db</i>directive on line 20.</p>
+<p>After the generated code/data comes the original source line, exactly as it appears in the source program.</p>
+<p>Lines 9 and 11 seem to generate hex without addresses: this is because these&nbsp;<i>equates</i>&nbsp;(think of them as shorthand definitions) are only defining abbreviations for the&nbsp;<i>assembler</i>&nbsp;to use while assembling the program.</p>
+<p>The displayed hex is the value which the assembler will substitute for every occurrence of the defined name: for example, every time the assembler finds the name&nbsp;<i>EXIT</i>&nbsp;used in the program it will substitute the value 0xffff.</p>
+<p>Warnings and errors messages generally accompany the source line which caused the problem (except where it's the fact the the line is missing that's the problem - e.g. a missing&nbsp;<i>PROGRAM</i>&nbsp;directive).</p>
+<p>You should remove all warnings and errors before testing your program.</p>
+<p></p>
+<h2>Running/Debugging</h2>
+<p>CHASM programs are run using the CRAPS emulator program, which also includes the debugger.</p>
+<p>The simplest command to load and run a CRAPS image file (<i>myprog.cig</i>) is:&nbsp;</p>
+<pre style="padding-left: 30px;"><span style="font-family: 'courier new', courier, sans-serif; color: #38761d;">craps myprog</span></pre>
+<p>The command assumes the extension of ".cig" although, again, supplying it is not an error.</p>
+<p>With no further arguments specified the emulator will load the image file, and run it until it either terminates normally or fails. Even if it fails, the debugger is not invoked.</p>
+<p>In order to run the program and interact with the debugger when it fails, you need to do:</p>
+<pre style="padding-left: 30px;"><span style="font-family: 'courier new', courier, sans-serif; color: #38761d;">craps -l myprog</span></pre>
+<p>At which point you should see something like this:</p>
+<pre style="padding-left: 30px;"><span style="font-family: 'courier new', courier, sans-serif; color: #38761d;">CRAPS debugger version 1.93c February 6, 2002</span></pre>
+<pre style="padding-left: 30px;"><span style="font-family: 'courier new', courier, sans-serif; color: #38761d;">CRAPS virtual machine version 1.93b February 4, 2002
+loaded myprog entrypoint at 0194
+craps&gt;
+</span></pre>
+<p>The image file has been loaded into memory and the PC register will now contain 0x194.</p>
+<p>The craps prompt indicates that a command is now expected.</p>
+<p>At this point you can type</p>
+<pre style="padding-left: 30px;"><span style="font-family: 'courier new', courier, sans-serif; color: #38761d;">?</span></pre>
+<p>(or&nbsp;<i>help</i>&nbsp;or&nbsp;<i>h</i>) to get help.</p>
+<p>In order to run the program type:</p>
+<pre style="padding-left: 30px;"><span style="font-family: 'courier new', courier, sans-serif; color: #38761d;">run</span></pre>
+<p>(Can be shortened to&nbsp;<i>r</i>). CRAPS will now run the program until it either terminates normally or fails. But,&nbsp;<i>whichever happens</i>&nbsp;you will once again get the craps prompt and you can input debugger commands.</p>
+<p>There are many available debugger commands (see the&nbsp;<a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=83577&amp;type=content&amp;rcode=Camosun-696147" target="_self">reference manual</a> for full details); some of the more useful ones are:</p>
+<pre style="padding-left: 30px;"><span style="font-family: 'courier new', courier, sans-serif; color: #38761d;">step (s)</span></pre>
+<p>(Names in parentheses are alternatives and can be used instead of the full command).</p>
+<p>The step command executes a single instruction, the instruction at address specified in the PC register and then stops (i.e returns to the debugger command loop): in other words step executes precisely one pass through the Information Processing Cycle: Fetch, Decode, Execute.</p>
+<p>Back at the prompt you can now examine the contents of memory, registers, etc.</p>
+<pre style="padding-left: 30px;"><span style="font-family: 'courier new', courier, sans-serif; color: #38761d;">display (d, dbyte, db)</span></pre>
+<p>This command displays the contents of individual&nbsp;<i>bytes</i>. For example, to display the contents of 20<sub>10</sub>&nbsp;bytes, beginning at address 44<sub>16</sub>, both in hexadecimal and as ASCII characters type:</p>
+<pre style="padding-left: 30px;"><span style="font-family: 'courier new', courier, sans-serif; color: #38761d;">db 0x44,20:xa
+</span></pre>
+<p>which (depending on the contents of those bytes) will produce something like:</p>
+<pre style="padding-left: 30px;"><span style="font-family: 'courier new', courier, sans-serif; color: #38761d;">0044: 66 75 6e 00 de ad 00 00 fun.....</span></pre>
+<pre style="padding-left: 30px;"><span style="color: #38761d; font-family: 'courier new', courier, sans-serif;">004c: 00 00 00 00 00 00 00 00 ........
+</span></pre>
+<p>The line begins with the (hex) address of the first byte displayed on that line; this is followed by the data displayed in the specified formats (in order). Spaces appear between each byte (for db, word for dw and doubleword for dd) except when displaying character (ASCII) data.</p>
+<p>The periods which appear in the ASCII display represent "non-printing" characters, i.e. ASCII characters which have no direct representation on the printer (or keyboard).</p>
+<p>You can also display the registers (<i>dr</i>) and the flags (<i>df</i>).</p>
+<p>Although single-stepping through an entire program is possible, it quickly gets tedious, especially when you have loops repeated many times.</p>
+<p>Instead, you can set&nbsp;<i>breakpoints</i>&nbsp;in your code.This is easily done with the&nbsp;<i>brs</i>&nbsp;command:</p>
+<pre style="padding-left: 30px;"><span style="color: #38761d; font-family: 'courier new', courier, sans-serif;">brs 0x44
+</span></pre>
+<p>will set a breakpoint at location 44<sub>16</sub>. When you run the program (either from the beginning or from a previous breakpoint) the normal fetch-decode-execute cycle is performed until the breakpoint address is encountered.</p>
+<p>The debugger then regains control&nbsp;<i>before</i>&nbsp;the instruction at the breakpoint is fetched. When the breakpoint is hit, in other words, you're back talking to the debugger and PC contains the breakpoint address.</p>
+<p>You can remove a breakpoint with the&nbsp;<i>brd</i>&nbsp;command. Note that breakpoints are&nbsp;<i>not</i>&nbsp;remembered between debugging sessions.</p>
+<p>A note about the PC register: as with most CPUs this is updated during the fetch stage; this means that if an insgtruction fails (for any reason) the error message you see will give you the&nbsp;<i>current</i>&nbsp;PC value as the address.</p>
+<p>This will be incorrect; if the code at that point is sequential, then you can find the faulting instruction by suibtracting 4 from PC (every instruction is 4 bytes wide).</p>
+<p></p>
+<h2>Summing Up</h2>
+<p>The process of producing an error-free program can be summarised by the following pseudocode:</p>
+<pre><span style="color: #741b47;">	code source program
+	do
+	    assemble source
+            while there are errors or warnings:
+	        edit source
+	        assemble source
+	    run program
+	    debug program
+	    edit source to include fixes
+	until program is working
+</span></pre>
+<p></p>
+<h2>A Note on Testing Strategies</h2>
+<p>When you sit down at the keyboard ready to start testing your program you should have a&nbsp;<i>plan</i>; you should know what input you intend to feed the program and&nbsp;<i>exactly</i>&nbsp;what the output should be. Simply throwing data at the program and then thinking that the output "looks right" is not a testing strategy.</p>
+<p>If you, the author, cannot predict exactly what the program will do in any given circumstance, then you don't understand your own code...</p>
+<p>As a very trivial example: if you have written a program to input two numbers and out the sum, then you can safely say that if the input values are, say, 15 and 934 the output result should be 949. Not "about" 949.</p>
+<p></p>
+<h2>Where to Go from Here</h2>
+<p>Check out the&nbsp;<a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=83577&amp;type=content&amp;rcode=Camosun-696147" target="_self">reference manual</a> for full details of all available commands.</p>
+<hr /><address><a href="mailto:dbarker@turing.cs.camosun.bc.ca"></a></address>
+<p><span>Last modified: Thu Jan 5 20:30:26 PST 2006</span></p>
+<p><span>Adapted to D2L January 11, 2015</span></p>
+</body>
+</html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+</head>
+<body style="font-family: arial, helvetica, sans-serif;">
+<center>
+<h1>Introduction to the CRAPS system</h1>
+</center>
+<p></p>
+<h2>Introduction</h2>
+<p>CRAPS is an emulator for a simple virtual machine, specifically designed for teaching purposes.</p>
+<p>The machine is programmed in the CHASM (CRAPS Heuristic ASseMbler) language and executed using the CRAPS runtime system and debugger (described below).</p>
+<p></p>
+<h2>Basic Architecture</h2>
+<p><img src="/content/enforced/83574-2015Q2COMP183X02AB/CRAPS_Emulator/Images%20and%20resources/CPU.gif" alt="The basic architecture of the CRAPS system" title="The basic architecture of the CRAPS system" style="display: block; margin-left: auto; margin-right: auto;" /></p>
+<p style="text-align: center;">The basic architecture of the CRAPS system</p>
+<p>The CRAPS system is a (much) simplified version of the Sun SPARC family of CPUs - SPARC, as you may have noticed, as CRAPS spelled backwards.&nbsp;</p>
+<h3></h3>
+<h3>Registers</h3>
+<p>CRAPS is a register machine with RISC-like features. There are 16 16-bit general purpose registers named&nbsp;<i>R0</i>&nbsp;through&nbsp;<i>R15</i>&nbsp;and, with two specific exceptions, any register can be used for any purpose the programmer chooses.</p>
+<p>The exceptions are:</p>
+<ul>
+<li>Register R0 is permanently "wired" to zero; in other words any instructions which takes input from R0 will always get zero; any instruction which uses R0 as its destination will effectively be throwing the results of the calculation away. (Perhaps surprisingly this is more useful than it sounds).</li>
+</ul>
+<ul>
+<li>Register R15, also known as SP, is used as the&nbsp;<i>stack pointer</i>. You mess with this at your peril.</li>
+</ul>
+<p>There are also some programmer-invisible registers (i.e. the programmer cannot affect these directly), of which the most important is&nbsp;<i>PC</i>(Program Counter) which contains the physical memory address of the next instruction to fetch.</p>
+<h3></h3>
+<h3>Flags</h3>
+<p>There are four single-bit registers called flags, which reflect the outcome of previous instructions.</p>
+<p>The flags are:</p>
+<ul>
+<li>Carry - set if the result of an arithmetic operation is too large to contain in a register. Used to check that the result of unsigned arithmetic will 'fit'.</li>
+</ul>
+<ul>
+<li>Overflow - set if the result of an arithmetic operation is too large to contain in a register&nbsp;<i>as a signed number</i>. Used to check that the result of signed arithmetic will 'fit'.</li>
+</ul>
+<ul>
+<li>Sign - set if the leftmost bit of the register is on (i.e.&nbsp;<i>if</i>&nbsp;the register contains a signed value, then it is considered negative).</li>
+</ul>
+<ul>
+<li>Zero - set if the result of an operation is all zero bits.</li>
+</ul>
+<p>Not all instructions affect all flags, though; the description of each individual instruction should be consulted for more details.</p>
+<h3></h3>
+<h3>Memory</h3>
+<p>CRAPS supports a flat memory to a maximum of 64KB (65536 bytes). Although this may not sound like very much, it is a lot of memory to fill when you are programming in assembler.</p>
+<p>Data and code are both stored within this same memory, as is the user stack.&nbsp;</p>
+<h3></h3>
+<h3>Execution model</h3>
+<p>In keep with its RISC-inspired design, CRAPS employs a&nbsp;<i>register-register</i>&nbsp;execution model.</p>
+<p>What this means is that only&nbsp;<i>LOAD</i>- and&nbsp;<i>STORE</i>-type instructions are allowed to access memory. All data manipulation (arithmetic, logic, etc) must be done in the registers.</p>
+<p></p>
+<h3>Instructions</h3>
+<p>The CRAPS instruction set basically divides into 4 formats:</p>
+<ul>
+<li>"Normal" instructions taking 3 operands<br /><br /></li>
+<li>Call instruction<br /><br /></li>
+<li>Branch (jump) instructions<br /><br /></li>
+<li>LOAD/STORE instructions</li>
+</ul>
+<p></p>
+<h4>Examples</h4>
+<h5><span>Type 1 ("normal") instructions</span></h5>
+<p>The instructions come in two flavours; both take 3 operands: two source and one destination.</p>
+<p>For example:</p>
+<pre style="padding-left: 30px;"><span style="font-family: 'courier new', courier, sans-serif; color: #38761d;">add        r1, r2, r3</span></pre>
+<p>Will add the contents of registers R1 and R2 (notice that the CHASM assembler is case-insensitive) and put the result in register R3. Note that neither R1 nor R2 is affected by this instruction - i.e their contents are&nbsp;<i>not</i>&nbsp;changed.</p>
+<p>There are two briefer ways of writing this&nbsp;<i>definition</i>&nbsp;of what the instruction does (neither of these is valid CHASM by the way):</p>
+<pre style="padding-left: 30px;"><span style="color: #741b47;">r1 + r2 -&gt; r3</span><br /><br /></pre>
+<pre style="padding-left: 30px;"><span style="color: #741b47;">r3 := r1 + r2</span></pre>
+<p>Most assembler documentation (including the description of the CRAPS instruction set which you will find&nbsp;<a href="file:///Users/rusted_root/Documents/Camosun/COMP_183/Deryks_Notes/COMP183/CRAPS/instruction.html">here</a>) use the second type of description, with its assignment-like notation.</p>
+<p>The first flavour of type 1 instructions is the 3-register version, as above; the other flavour is the&nbsp;<i>immediate</i>&nbsp;version, in which the second operand is a constant value; for example:</p>
+<pre style="padding-left: 30px;"><span style="font-family: 'courier new', courier, sans-serif; color: #38761d;">add        r1, 15, r3</span></pre>
+<p>Will add the contents of register R1 and the number 15 and store the result in R3.</p>
+<p>Among the Type 1 instructions are the arithmetic (add, subtract), logic (or, and, exclusive or) and shift instructions.</p>
+<p></p>
+<h5><span>Type 2 (Call) instruction</span></h5>
+<p>There is only one Type 2 instruction: the CALL instruction, which saves its return address and jumps to the location specified.</p>
+<p>The return address is the address of the instruction&nbsp;<i>after</i>&nbsp;the CALL and is contained in PC.</p>
+<p>So the effect of the CALL instruction is documented as:</p>
+<p style="padding-left: 30px;"><span style="font-family: Verdana, Arial, Helvetica, sans-serif; color: #741b47;">PC pushed onto stack, PC := OP</span></p>
+<p><span>For example:</span></p>
+<pre><span style="font-family: 'courier new', courier, sans-serif; color: #38761d;">&nbsp; &nbsp; &nbsp; &nbsp; call    test    ; make the call</span></pre>
+<pre><span style="font-family: 'courier new', courier, sans-serif; color: #38761d;">        bz      OK      ; now we're back - is Z flag set?
+        ....
+test
+                        ; various stuff is done here
+        ret             ; return to instruction after call
+</span></pre>
+<p>This example shows a number of things, including the fact that comments in CHASM begin with a semicolon (<i>;</i>) - everything on the line after that is ignored.</p>
+<p></p>
+<h5><span>Type 3 (Branch) instructions</span></h5>
+<p>There essentially two type of branch (jump) instruction:</p>
+<ul>
+<li>unconditional branch
+<p>There is only one unconditional branch instruction, BR. The definition of:</p>
+<blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;"><span style="color: #741b47;">BR target</span></blockquote>
+<p>is:</p>
+<blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;"><span style="color: #741b47;">PC := target</span></blockquote>
+<p>In other words the address of the target instruction is loaded into the Program Counter register. As this register specifies the next instruction to fetch, it has the effect of "jumping" to that instruction.&nbsp;</p>
+</li>
+<li>conditional branches
+<p>There are a number of&nbsp;<i>conditional</i>&nbsp;branch instructions; these test a particular condition and jump to the target address or not, depending on the test.</p>
+<p>We can divide the conditional branches into three families:</p>
+<ul>
+<li>branches which test individual flags
+<p>There are eight of these instructions, two per flag, one to branch if the flag is on (set, = 1), one to branch if it is off (unset, = 0).</p>
+<p>One example is the BZ, BNZ instructions. The definition of:</p>
+<blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;"><span style="color: #741b47;">BZ target</span></blockquote>
+<p>is</p>
+<blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;"><span style="color: #741b47;">if Z flag set, PC := target</span></blockquote>
+<p>In other words, is the Z flag is on (=1) we fetch the next instruction from&nbsp;<i>target</i>, otherwise (Z flag off) we'll carry on with our normal, sequential execution and fetch the instructions immediately after the BZ in memory.</p>
+<p>For instance we can test to see if the result of a calculation is zero, by checking the Z flag:</p>
+<pre><span style="font-family: 'courier new', courier, sans-serif; color: #38761d;">        sub     r1, r2, r3      ; r1 - r2 -&gt; r3
+        bz      Equal
+Unequal
+        ...                     ; processing for different values in r1 and r2
+        br      Common
+Equal
+        ...                     ; processing for same values in r1 and r2
+Common
+                                ; both paths end up here
+</span></pre>
+<p>This brief example shows the use of both a conditional (BZ) and unconditional (BR) branch instruction.</p>
+</li>
+<li>branches which check arithmetic
+<p>Although, as we shall see later, there is only one set of arithmetic instructions (two ADDs and two SUBtracts), we need different instructions to test the outcome, depending on whether our original values were intended to signed or unsigned.</p>
+<p><b>The CPU does not know whether you intend a number to be signed or unsigned</b>&nbsp;and the circuitry for adding or subtracting in 2's complement arithmetic are identical regardless of the signed/unsigned nature of the operands. (The same, incidentally, is&nbsp;<i>not</i>&nbsp;true of multiplication and division, but the CRAPS architecture doesn't provide a hardware multiply or divide).&nbsp;</p>
+<p>The settings of the flags, however, will be different for signed and unsigned operands.</p>
+<p>To see why this is, consider the 8 possible values of a 3-bit 'byte': in 3-bits we can store any value from 0 to 2<sup>3</sup>-1, (i.e. 0 to 7) if unsigned, or any value between -2<sup>2</sup>&nbsp;and 2<sup>2</sup>+1 (i.e. -4 to +3) if signed.</p>
+<p>The ordering of these bit patterns is therefore as follows, from largest value to smallest value:</p>
+<center>
+<table border="">
+<tbody>
+<tr>
+<td>Unsigned</td>
+<td>numeric value</td>
+<td>Signed</td>
+<td>numeric value</td>
+</tr>
+<tr>
+<td align="center">111</td>
+<td align="right">7&nbsp;</td>
+<td align="center">011</td>
+<td align="right">3&nbsp;</td>
+</tr>
+<tr>
+<td align="center">110</td>
+<td align="right">6&nbsp;</td>
+<td align="center">010</td>
+<td align="right">2&nbsp;</td>
+</tr>
+<tr>
+<td align="center">101</td>
+<td align="right">5&nbsp;</td>
+<td align="center">001</td>
+<td align="right">1&nbsp;</td>
+</tr>
+<tr>
+<td align="center">100</td>
+<td align="right">4&nbsp;</td>
+<td align="center">000</td>
+<td align="right">0&nbsp;</td>
+</tr>
+<tr>
+<td align="center">011</td>
+<td align="right">3&nbsp;</td>
+<td align="center">111</td>
+<td align="right">-1&nbsp;</td>
+</tr>
+<tr>
+<td align="center">010</td>
+<td align="right">2&nbsp;</td>
+<td align="center">110</td>
+<td align="right">-2&nbsp;</td>
+</tr>
+<tr>
+<td align="center">001</td>
+<td align="right">1&nbsp;</td>
+<td align="center">101</td>
+<td align="right">-3&nbsp;</td>
+</tr>
+<tr>
+<td align="center">000</td>
+<td align="right">0&nbsp;</td>
+<td align="center">100</td>
+<td align="right">-4&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</center>
+<p>Note, in particular, that the relative positions of two particular bit patterns may be different.</p>
+<p>For example, in unsigned arithmetic, the bit-pattern 111 represents a higher numeric value than 000 if they are both signed (7 &gt; 0) but not if they are signed (0 &gt; -1).</p>
+<p>Hence the two families of conditional branches.</p>
+<ul>
+<li>branches which check unsigned arithmetic
+<p>The instructions for testing unsigned arithmetic use the terms&nbsp;<i>above</i>&nbsp;and&nbsp;<i>below</i>.</p>
+<p>Hence: BA (Branch if Above), BAE (Branch if Above or Equal), BNA (Branch if Not Above), BB (Branch if Below), etc.</p>
+<p>All sensible combinations are implemented; note, however, that some pairs are equivalent: for example BNA (Branch if Not Above) is the same as BBE (Branch if Below or Equal).</p>
+<p>Here is an example using the CoMPare instructions, which we have not previously discussed:</p>
+<pre><span style="font-family: 'courier new', courier, sans-serif; color: #38761d;">again
+        cmp     r2, 10
+        bae     done
+        ...                     ; interesting stuff goeshere
+        add     r2, 1, r2       ; increment r2
+        br      again
+done
+</span></pre>
+<p>The CMP instruction compares the contents of R2 with the&nbsp;<i>immediate value</i>&nbsp;10 and&nbsp;<i>sets the flags accordingly</i>. The BAE instructions will branch to&nbsp;<i>done</i>&nbsp;if the contents of R2 are above or equal to 10 (unsigned comparison).</p>
+<p>Although far less comprehensibly, this code fragment actually implements a&nbsp;<i>while</i>&nbsp;loop, which in C/C++/Java would look something like:</p>
+<p style="margin: 0 0 0 40px; border: none; padding: 0px;"><span style="color: #741b47;">while (r2 &lt; 10){<br /></span><span style="color: #741b47;"> // interesting stuff goes here</span><span style="color: #741b47;"><br />}</span></p>
+<p style="margin: 0 0 0 40px; border: none; padding: 0px;"><span style="color: #741b47;">&nbsp;</span></p>
+</li>
+<li><span style="font-family: arial, helvetica, sans-serif;">branches which check signed arithmetic</span>
+<p>Every unsigned compare has a signed equivalent, the difference being that the signed compares use the terms&nbsp;<i>greater</i>&nbsp;and&nbsp;<i>less</i></p>
+<p>Hence: BG (Branch if Greater), BGE (Branch if Greater or Equal), BNG (Branch if Not Greater), BL (Branch if Less), etc.</p>
+<p>All sensible combinations are implemented; note, however, that some pairs are equivalent: for example BNG (Branch if Not Greater) is the same as BLE (Branch if Less or Equal).</p>
+<p>Here is a similar example to the one above, using signed comparisons:</p>
+<pre><span style="font-family: 'courier new', courier, sans-serif; color: #38761d;">again
+        cmp     r2, 0
+        bl      done
+        ...                     ; interesting stuff goes here
+        sub     r2, 1, r2       ; decrement r2
+        br      again
+done
+</span></pre>
+<p>The CMP instruction compares the contents of R2 with the&nbsp;<i>immediate value</i>&nbsp;0 and&nbsp;<i>sets the flags accordingly</i>. The BL instruction will branch to&nbsp;<i>done</i>&nbsp;if the contents of R2 are less than zero - in other words negative (signed comparison).</p>
+<p>Similarly this code fragment implements a&nbsp;<i>while</i>&nbsp;loop, which in C/C++/Java would look something like:</p>
+<blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;"><span style="color: #741b47;">while (r2 &gt; 0){<br /></span><span style="color: #741b47;"> // interesting stuff goes here<br /></span><span style="color: #741b47;">}</span></blockquote>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr style="width: 100%; height: 0px; color: #ffffff; border-style: inset; border-width: 1px; border-color: #cccccc;" />
+<p>Last modified: Thu Jan 5 20:19:51 PST 2006</p>
+<p>Adapted to D2L: &nbsp;January 11, 2015</p>
+</body>
+</html>

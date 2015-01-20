@@ -1,0 +1,965 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+</head>
+<body style="font-family: verdana, sans-serif;font-size: 12px;">
+<center>
+<h1>CRAPS Instruction Set</h1>
+<h2><span size="-1">Alphabetical listing</span></h2>
+</center>
+<table style="margin: 5px; border-collapse: collapse;">
+<tbody>
+<tr>
+<td valign="top">Key</td>
+<td>In three-operand instructions, dest = destination, src1 = source register 1, src2 = source register 2</td>
+</tr>
+<tr>
+<td valign="top"></td>
+<td>In single-operand instructions op = operand</td>
+</tr>
+<tr>
+<td valign="top"></td>
+<td>In flow of control instructions (branch, call) target = 16-bit immediate&nbsp;<br />operand, src = source register</td>
+</tr>
+<tr>
+<td valign="top"></td>
+<td>In load/store (and lea) instructions address = 16-bit immediate operand,&nbsp;<br />src = source register</td>
+</tr>
+<tr>
+<td valign="top">Flags</td>
+<td>O overflow</td>
+</tr>
+<tr>
+<td valign="top"></td>
+<td>S sign</td>
+</tr>
+<tr>
+<td valign="top"></td>
+<td>Z zero</td>
+</tr>
+<tr>
+<td valign="top"></td>
+<td>C carry</td>
+</tr>
+</tbody>
+</table>
+<table style="margin: 5px; border-collapse: collapse;">
+<tbody>
+<tr style="background-color: #cccccc;">
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Name</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">Add with carry</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Mnemonic</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">ADC</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Function</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">dest := src1 + src2 + carry flag</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Flags</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">OSZC set</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Note</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">A 16-bit immediate value may be used for src2</td>
+</tr>
+</tbody>
+</table>
+<table style="margin: 5px; border-collapse: collapse;">
+<thead>
+<tr style="background-color: #cccccc;">
+<td style="border: 1px solid #000000; width: 7em; padding: 2px;">Name</td>
+<td style="border: 1px solid #000000; padding: 2px;">Add</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="border: 1px solid #000000; width: 7em; padding: 2px;">Mnemonic</td>
+<td style="border: 1px solid #000000; padding: 2px;">ADD</td>
+</tr>
+<tr>
+<td style="border: 1px solid #000000; width: 7em; padding: 2px;">Function</td>
+<td style="border: 1px solid #000000; padding: 2px;">dest := src1 + src2</td>
+</tr>
+<tr>
+<td style="border: 1px solid #000000; width: 7em; padding: 2px;">Flags</td>
+<td style="border: 1px solid #000000; padding: 2px;">OSZC set</td>
+</tr>
+<tr>
+<td style="border: 1px solid #000000; width: 7em; padding: 2px;">Note</td>
+<td style="border: 1px solid #000000; padding: 2px;">A 16-bit immediate value may be used for src2</td>
+</tr>
+</tbody>
+</table>
+<table style="margin: 5px; border-collapse: collapse;">
+<tbody>
+<tr style="background-color: #cccccc;">
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Name</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">Logical AND</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Mnemonic</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">AND</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Function</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">dest := src1 AND src2&nbsp;<br />(bit n of dest = 1 iff bit n of src1 and bit n of src2 are both 1,&nbsp;<br />otherwise bit n of dest = 0)</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Flags</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">OC set to zero, SZ set</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Note</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">A 16-bit immediate value may be used for src2</td>
+</tr>
+</tbody>
+</table>
+<table style="margin: 5px; border-collapse: collapse;">
+<tbody>
+<tr style="background-color: #cccccc;">
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Name</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">Branch if condition is met</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Mnemonic</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">Bcc</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Function</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">If appropriate condition is true pc := target + src&nbsp;<br />(Condition flags will have been set by a previous instruction)</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Flags</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">None</td>
+</tr>
+<tr style="background-color: #eeeeee;">
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Examples</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">&nbsp;</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">BC</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">branch if carry flag on</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">BNC</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">branch if carry flag off</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">BO</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">branch if overflow flag on</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">BNO</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">branch if overflow flag off</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">BS</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">branch if sign flag on</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">BNS</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">branch if sign flag off</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">BZ</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">branch if zero flag on</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">BNZ</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">branch if zero flag off</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">BE</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">branch if equal</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">BA</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">branch if above (unsigned)</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">BAE</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">branch if above or equal (unsigned)</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">BB</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">branch if below (unsigned)</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">BBE</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">branch if below or equal (unsigned)</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">BG</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">branch if greater (signed)</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">BGE</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">branch if greater or equal (signed)</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">BL</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">branch if less (signed)</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">BLE</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">branch if less or equal (signed)</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Note</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">The src register may be omitted (r0 is assumed)</td>
+</tr>
+</tbody>
+</table>
+<table style="margin: 5px; border-collapse: collapse;">
+<tbody>
+<tr style="background-color: #cccccc;">
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Name</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">Branch (unconditional)</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Mnemonic</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">BR</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Function</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">pc := target + src</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Flags</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">None</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Note</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">The src register may be omitted (r0 is assumed)</td>
+</tr>
+</tbody>
+</table>
+<table style="margin: 5px; border-collapse: collapse;">
+<tbody>
+<tr style="background-color: #cccccc;">
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Name</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">Call procedure</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Mnemonic</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">CALL</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Function</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">pc pushed onto stack, pc := op + src</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Flags</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">None</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Note</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">The src register may be omitted (r0 is assumed)</td>
+</tr>
+</tbody>
+</table>
+<table style="margin: 5px; border-collapse: collapse;">
+<tbody>
+<tr style="background-color: #cccccc;">
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Name</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">Compare</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Mnemonic</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">CMP</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Function</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">Compare src1 to src2, set flags</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Flags</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">OSZC</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Note</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">A 16-bit immediate value may be used for src2</td>
+</tr>
+</tbody>
+</table>
+<table style="margin: 5px; border-collapse: collapse;">
+<tbody>
+<tr style="background-color: #cccccc;">
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Name</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">Decrement by 1</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Mnemonic</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">DEC</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Function</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">dest := op - 1</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Flags</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">OSZ</td>
+</tr>
+</tbody>
+</table>
+<table style="margin: 5px; border-collapse: collapse;">
+<tbody>
+<tr style="background-color: #cccccc;">
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Name</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">Divide (unsigned)</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Mnemonic</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">DIV</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Function</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">dest := src1 / src2 (integer - i.e truncated - division)&nbsp;<br />dest+1 := src1 modulo src2 (i.e. the remainder)</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Flags</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">C and O are cleared, S and Z are undefined.</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Notes</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">The results occupy two registers; dest+1 signifies the next numbered register.&nbsp;<br />A 16-bit immediate value may be used for src2</td>
+</tr>
+</tbody>
+</table>
+<table style="margin: 5px; border-collapse: collapse;">
+<tbody>
+<tr style="background-color: #cccccc;">
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Name</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">Halt</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Mnemonic</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">HALT</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Function</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">The CPU stops&nbsp;<br />Note: use of this instruction is not recommended by user&nbsp;<br />programs and may cause an error in future versions</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Flags</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">OSZ</td>
+</tr>
+</tbody>
+</table>
+<table style="margin: 5px; border-collapse: collapse;">
+<tbody>
+<tr style="background-color: #cccccc;">
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Name</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">Increment by 1</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Mnemonic</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">INC</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Function</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">dest := op + 1</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Flags</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">OSZ</td>
+</tr>
+</tbody>
+</table>
+<table style="margin: 5px; border-collapse: collapse;">
+<tbody>
+<tr style="background-color: #cccccc;">
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Name</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">Load effective address offset</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Mnemonic</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">LEA</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Function</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">dest := address + src</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Flags</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">None</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Note</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">The src register may be omitted (r0 is assumed)</td>
+</tr>
+</tbody>
+</table>
+<table style="margin: 5px; border-collapse: collapse;">
+<tbody>
+<tr style="background-color: #cccccc;">
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Name</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">Load Byte High</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Mnemonic</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">LODBH</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Function</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">dest (bits 0-7) := M[address + src]&nbsp;<br />dest (bits 8-15) unchanged</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Flags</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">None</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Note</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">The src register may be omitted (r0 is assumed)</td>
+</tr>
+</tbody>
+</table>
+<table style="margin: 5px; border-collapse: collapse;">
+<tbody>
+<tr style="background-color: #cccccc;">
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Name</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">Load Byte Low</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Mnemonic</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">LODBL</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Function</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">dest (bits 8-15) := M[address + src]&nbsp;<br />dest (bits 0-7) unchanged</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Flags</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">None</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Note</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">The src register may be omitted (r0 is assumed)</td>
+</tr>
+</tbody>
+</table>
+<table style="margin: 5px; border-collapse: collapse;">
+<tbody>
+<tr style="background-color: #cccccc;">
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Name</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">Load Byte Signed</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Mnemonic</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">LODBS</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Function</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">dest (bits 8-15) := M[address + src]&nbsp;<br />dest (bits 0-7) all set to copy of bit 8&nbsp;<br />(i.e. the sign bit of the original byte)</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Flags</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">None</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Note</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">The src register may be omitted (r0 is assumed)</td>
+</tr>
+</tbody>
+</table>
+<table style="margin: 5px; border-collapse: collapse;">
+<tbody>
+<tr style="background-color: #cccccc;">
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Name</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">Load Byte Unsigned</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Mnemonic</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">LODBU</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Function</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">dest (bits 8-15) := M[address + src]&nbsp;<br />dest (bits 0-7) set to zero</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Flags</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">None</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Note</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">The src register may be omitted (r0 is assumed)</td>
+</tr>
+</tbody>
+</table>
+<table style="margin: 5px; border-collapse: collapse;">
+<tbody>
+<tr style="background-color: #cccccc;">
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Name</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">Load Word</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Mnemonic</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">LODW</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Function</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">dest (bits 0-7) := M[address + src]&nbsp;<br />dest (bits 8-15) := M[address + src + 1]</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Flags</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">None</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Note</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">The src register may be omitted (r0 is assumed)</td>
+</tr>
+</tbody>
+</table>
+<table style="margin: 5px; border-collapse: collapse;">
+<tbody>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;"></td>
+</tr>
+<tr style="background-color: #cccccc;">
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Name</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">Move data</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Mnemonic</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">MOV</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Function</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">dest := op</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Flags</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">OC set to zero, SZ set from operand</td>
+</tr>
+</tbody>
+</table>
+<table style="margin: 5px; border-collapse: collapse;">
+<tbody>
+<tr style="background-color: #cccccc;">
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Name</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">Multiply (unsigned)</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Mnemonic</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">MUL</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Function</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">dest := src1 * src2 (bits 0-15)&nbsp;<br />dest+1 := src1 * src2 (bits 16-31)</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Flags</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">If the result will fit into 16 bits (i.e. dest = 0) then C and O are cleared,&nbsp;<br />otherwise they are set. S and Z are undefined.</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Notes</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">The result occupies two registers; dest+1 signifies the next numbered register.&nbsp;<br />A 16-bit immediate value may be used for src2</td>
+</tr>
+</tbody>
+</table>
+<table style="margin: 5px; border-collapse: collapse;">
+<tbody>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;"></td>
+</tr>
+<tr style="background-color: #cccccc;">
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Name</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">Two's complement negation</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Mnemonic</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">NEG</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Function</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">dest := -op</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Flags</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">OSZC</td>
+</tr>
+</tbody>
+</table>
+<table style="margin: 5px; border-collapse: collapse;">
+<tbody>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;"></td>
+</tr>
+<tr style="background-color: #cccccc;">
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Name</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">No operation</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Mnemonic</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">NOP</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Function</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">pc := pc + 4 (address of next instruction)</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Flags</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">None</td>
+</tr>
+</tbody>
+</table>
+<table style="margin: 5px; border-collapse: collapse;">
+<tbody>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;"></td>
+</tr>
+<tr style="background-color: #cccccc;">
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Name</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">One's complement negation</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Mnemonic</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">NOT</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Function</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">If bit n of op is 1 bit n of dest := 0, and vice-versa</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Flags</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">None</td>
+</tr>
+</tbody>
+</table>
+<table style="margin: 5px; border-collapse: collapse;">
+<tbody>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;"></td>
+</tr>
+<tr style="background-color: #cccccc;">
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Name</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">Logical inclusive OR</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Mnemonic</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">OR</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Function</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">dest := src1 OR src2&nbsp;<br />(bit n of dest = 0 iff bit n of src1 and bit n of src2 are both 0,&nbsp;<br />otherwise bit n of dest = 1)</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Flags</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">OC set to zero, SZ set</td>
+</tr>
+</tbody>
+</table>
+<table style="margin: 5px; border-collapse: collapse;">
+<tbody>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;"></td>
+</tr>
+<tr style="background-color: #cccccc;">
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Name</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">Pop stack to register</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Mnemonic</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">POP</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Function</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">op (bits 0-7) := M[sp]&nbsp;<br />op (bits 8-15) := M[sp+1]&nbsp;<br />sp := sp - 2</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Flags</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">None</td>
+</tr>
+</tbody>
+</table>
+<table style="margin: 5px; border-collapse: collapse;">
+<tbody>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;"></td>
+</tr>
+<tr style="background-color: #cccccc;">
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Name</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">Push register onto stack</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Mnemonic</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">PUSH</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Function</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">sp := sp + 2&nbsp;<br />M[sp] := op (bits 0-7)&nbsp;<br />M[sp+1] := op (bits 8-15)</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Flags</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">None</td>
+</tr>
+</tbody>
+</table>
+<table style="margin: 5px; border-collapse: collapse;">
+<tbody>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;"></td>
+</tr>
+<tr style="background-color: #cccccc;">
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Name</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">Return</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Mnemonic</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">RET</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Function</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">pc is popped from the stack</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Flags</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">None</td>
+</tr>
+</tbody>
+</table>
+<table style="margin: 5px; border-collapse: collapse;">
+<tbody>
+<tr style="background-color: #cccccc;">
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Name</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">Shift arithmetic right</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Mnemonic</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">SAR</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Function</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">src1 is shifted right src2 bits and stored in dest&nbsp;<br />vacated left bits are filled with a copy of bit 0 of src1&nbsp;<br />(sign extension)</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Flags</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">SZ set, C set off, O unchanged</td>
+</tr>
+</tbody>
+</table>
+<table style="margin: 5px; border-collapse: collapse;">
+<tbody>
+<tr style="background-color: #cccccc;">
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Name</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">Subtract with Borrow</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Mnemonic</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">SBB</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Function</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">dest := src1 - src2 - carry flag</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Flags</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">OSZC set</td>
+</tr>
+</tbody>
+</table>
+<table style="margin: 5px; border-collapse: collapse;">
+<tbody>
+<tr style="background-color: #cccccc;">
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Name</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">Shift left</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Mnemonic</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">SHL</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Function</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">src1 is shifted left src2 bits and stored in dest&nbsp;<br />vacated right bits are filled with zero</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Flags</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">SZC set, O unchanged</td>
+</tr>
+</tbody>
+</table>
+<table style="margin: 5px; border-collapse: collapse;">
+<tbody>
+<tr style="background-color: #cccccc;">
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Name</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">Shift right</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Mnemonic</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">SHR</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Function</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">src1 is shifted right src2 bits and stored in dest&nbsp;<br />vacated left bits are filled with zero</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Flags</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">SZ set, C set off, O unchanged</td>
+</tr>
+</tbody>
+</table>
+<table style="margin: 5px; border-collapse: collapse;">
+<tbody>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;"></td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Name</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">Store Byte High</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Mnemonic</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">STOBH</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Function</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">M[address + src1] := src2 (bits 0-7)</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Flags</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">None</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Note</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">The src1 register may be omitted (r0 is assumed)</td>
+</tr>
+</tbody>
+</table>
+<table style="margin: 5px; border-collapse: collapse;">
+<tbody>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;"></td>
+</tr>
+<tr style="background-color: #cccccc;">
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Name</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">Store Byte Low</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Mnemonic</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">STOBL</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Function</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">M[address + src1] := src2 (bits 8-15)</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Flags</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">None</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Note</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">The src1 register may be omitted (r0 is assumed)</td>
+</tr>
+</tbody>
+</table>
+<table style="margin: 5px; border-collapse: collapse;">
+<tbody>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;"></td>
+</tr>
+<tr style="background-color: #cccccc;">
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Name</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">Store Word</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Mnemonic</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">STOW</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Function</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">M[address + src1] := src2 (bits 0-7)&nbsp;<br />M[address + src1 + 1] := src2 (bits 8-15)</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Flags</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">None</td>
+</tr>
+</tbody>
+</table>
+<table style="margin: 5px; border-collapse: collapse;">
+<tbody>
+<tr style="background-color: #cccccc;">
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Name</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">Subtract</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Mnemonic</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">SUB</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Function</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">dest := src1 - src2</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Flags</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">OSZC set</td>
+</tr>
+</tbody>
+</table>
+<table style="margin: 5px; border-collapse: collapse;">
+<tbody>
+<tr style="background-color: #cccccc;">
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Name</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">System call</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Mnemonic</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">SYS</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Function</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">The CRAPS BIOS (CRAB) is invoked and passed the immediate value</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Flags</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">None</td>
+</tr>
+</tbody>
+</table>
+<table style="margin: 5px; border-collapse: collapse;">
+<tbody>
+<tr style="background-color: #cccccc;">
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Name</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">Logical test</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Mnemonic</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">TEST</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Function</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">r0 := src1 and src2</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Flags</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">OC set to zero, SZ set</td>
+</tr>
+</tbody>
+</table>
+<table style="margin: 5px; border-collapse: collapse;">
+<tbody>
+<tr style="background-color: #cccccc;">
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Name</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">Logical exclusive or</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Mnemonic</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">XOR</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Function</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">dest := src1 xor src2&nbsp;<br />(bit n of dest = 1 iff bit n of src1 and bit n of src2 are equal,&nbsp;<br />otherwise bit n of dest = 0)</td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; width: 7em; padding: 2px;">Flags</td>
+<td style="border-width: 1px; border-style: solid; padding: 2px;">OC set to zero, SZ set</td>
+</tr>
+</tbody>
+</table>
+<hr style="width: 100%; height: auto; color: #ffffff; border-style: inset; border-width: 1px; border-color: #cccccc;" />
+<p>Last modified: Thu Jan 5 20:18:12 PST 2006</p>
+<p>Adapted to D2L: January 11, 2015</p>
+</body>
+</html>

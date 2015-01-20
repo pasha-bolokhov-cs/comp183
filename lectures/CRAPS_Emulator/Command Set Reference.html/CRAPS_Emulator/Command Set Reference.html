@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+</head>
+<body style="font-family: arial, helvetica, sans-serif;">
+<center>
+<h1>CRAPS commands</h1>
+<h2>Alphabetical listing</h2>
+</center>
+<p><a name="chasm"></a></p>
+<h3><a name="chasm"></a>chasm</h3>
+<p>The chasm program is the assembler for the CRAPS system.</p>
+<p>Usage:</p>
+<ul>chasm [ -o imagename] [ -l ] [-t tabsize] program</ul>
+<p>where:</p>
+<table>
+<tbody>
+<tr valign="top">
+<td style="width: 10em;">-o&nbsp;imagename</td>
+<td>pathname of image (machine code) file</td>
+</tr>
+<tr valign="top">
+<td style="width: 10em;">-l</td>
+<td>produce a listing file</td>
+</tr>
+<tr valign="top">
+<td style="width: 10em;">-t tabsize</td>
+<td>specify tabstop size. Horizontal Tab (HT) characters encountered in the source file will be expanded to the next&nbsp;<i>tab stop</i>&nbsp;column. The default is every 8 columns.</td>
+</tr>
+<tr valign="top">
+<td style="width: 10em;">program</td>
+<td>path of source file. If no extension .csm is assumed. If -o omitted, image file name is program file name with extension replaced by .cig If -l specified, listing file name is the program file name with extension replaced by .lst</td>
+</tr>
+</tbody>
+</table>
+<p><a name="craps"></a></p>
+<h3><a name="craps"></a>craps</h3>
+<p>The craps program is the main user interface to the CRAPS system. It contains the debugger (see&nbsp;<a href="file:///Users/rusted_root/Documents/Camosun/COMP_183/Deryks_Notes/COMP183/CRAPS/debugger.html">manual</a>) and chasm programs can be edited, assembled and loaded into the virtual machine's memory from the craps command line.</p>
+<p>Usage:</p>
+<ul>craps [-l imagefile] [-r imagefile] [-d] [imagefile]</ul>
+<p><span>where:</span></p>
+<table>
+<tbody>
+<tr valign="top">
+<td style="width: 10em;">-l&nbsp;imagefile</td>
+<td>load&nbsp;<i>imagefile</i>&nbsp;(the .cig extensions is assumed) into the CRAPS memory.</td>
+</tr>
+<tr valign="top">
+<td>-r&nbsp;imagefile</td>
+<td>load and run&nbsp;<i>imagefile</i>. If the program terminates abnormally, a termiantion status will be printed. The debugger loop is&nbsp;<i>not</i>&nbsp;entered</td>
+</tr>
+<tr valign="top">
+<td>-d</td>
+<td>enter the main debug loop after the programs stops, even if it terminates normally (i.e. via the SYS EXIT call)</td>
+</tr>
+<tr>
+<td>imagefile</td>
+<td>same as -r imagefile</td>
+</tr>
+</tbody>
+</table>
+<p>The -l and -r options may not be combined.</p>
+</body>
+</html>

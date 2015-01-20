@@ -1,0 +1,484 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+</head>
+<body style="font-family: arial, helvetica, sans-serif;">
+<center>
+<h1>CRAPS commands and debugger</h1>
+</center>
+<h2>Introduction</h2>
+<p>The craps program (see the CRAPS&nbsp;<a href="file:///Users/rusted_root/Documents/Camosun/COMP_183/Deryks_Notes/COMP183/CRAPS/command.html">command reference</a>) is the main user interface to the CRAPS system. It contains the debugger (see below) and chasm programs can be edited, assembled and loaded into the virtual machine's memory from the command line.</p>
+<p>A typical session would involve repeatedly editing, assembling, loading, running and debugging a program using the various commands detailed below.</p>
+<p>All commands have a long name and at least one shorter name, provided for typing convenience.</p>
+<p></p>
+<h2>Command conventions</h2>
+<h3>Values</h3>
+<h4>Numbers</h4>
+<p>Numeric values are specified in the same way as in a CHASM program, beginning with a decimal digits (0-9):</p>
+<table border="">
+<tbody>
+<tr><th>First digit</th><th>Second character</th><th>Base</th></tr>
+<tr>
+<td>1-9</td>
+<td>any digit</td>
+<td>10 (decimal)</td>
+</tr>
+<tr>
+<td>0</td>
+<td>0-7</td>
+<td>8 (octal)</td>
+</tr>
+<tr>
+<td>0</td>
+<td>b or B</td>
+<td>2 (binary)</td>
+</tr>
+<tr>
+<td>0</td>
+<td>x or X</td>
+<td>16 (hexadecimal)</td>
+</tr>
+</tbody>
+</table>
+<p></p>
+<h4>ASCII</h4>
+<p>At present the only command which allows specification of an ASCII values is the&nbsp;<a href="file:///Users/rusted_root/Documents/Camosun/COMP_183/Deryks_Notes/COMP183/CRAPS/debugger.html#pbyte">pbyte</a>&nbsp;command, which only permits a single ASCII character to be patched into memory. Eithe single or double quotes may be used.</p>
+<p></p>
+<h3>Display formats</h3>
+<p>The data display commands will display bytes, words or doublewords from memory in various formats. The default format is hexadecimal.</p>
+<p></p>
+<h4><a name="formatspec"></a>Format specifiers</h4>
+<p>The following format specifier characters are provided:</p>
+<table border="">
+<tbody>
+<tr><th>specifier</th><th>display format</th></tr>
+<tr>
+<td>a</td>
+<td>ASCII (only supported by the&nbsp;<a href="file:///Users/rusted_root/Documents/Camosun/COMP_183/Deryks_Notes/COMP183/CRAPS/debugger.html#pbyte">pbyte</a>&nbsp;command)</td>
+</tr>
+<tr>
+<td>b</td>
+<td>binary (base 2) (not yet implemented)</td>
+</tr>
+<tr>
+<td>o</td>
+<td>octal (base 8)</td>
+</tr>
+<tr>
+<td>s</td>
+<td>signed decimal (base 10)</td>
+</tr>
+<tr>
+<td>u</td>
+<td>unsigned decimal (base 10)</td>
+</tr>
+<tr>
+<td>x</td>
+<td>hexademical (base 16) (default)</td>
+</tr>
+</tbody>
+</table>
+<p></p>
+<h3>Displaying data</h3>
+<p>Data from the CRAPS memory can be displayed using the various data display commands described below.</p>
+<p>You can optionally specify a count of items (bytes, words, doublewords) and a string of format specifiers chosen from those described above.</p>
+<p></p>
+<p>Data is displayed in the specified format(s), the number of items per column being dependant on the number of different formats specified (duplicates are ignored).</p>
+<p>Each line displayed begins with the (hexadecimal) address of the first byte on that line; this is followed by columns of formatted data, with the items on each lines being displayed in each format in turn.</p>
+<p>For example, suppose the 6 words in memory beginning at location 32<sub>16</sub>&nbsp;contain the decimal values 12, 99, 64321, 777, 55555 and 65534.</p>
+<p>Here is the result of using the defaults (in the case of the dword instruction 8 words, hexadecimal):</p>
+<pre><span style="font-family: 'courier new', courier, sans-serif; color: #38761d;">        craps&gt; dw 0x54
+        0054:  000c 0063 fb41 0309 d903 fffe 4ae1 1a4b 
+</span></pre>
+<p>In decimal (unsigned) and from here we'll only ask for the 6 words we're interested in:</p>
+<pre><span style="font-family: 'courier new', courier, sans-serif; color: #38761d;">        craps&gt; dw 0x54,6:u
+        0054:  00012 00099 64321 00777 55555 65534
+</span></pre>
+<p>In decimal (signed):</p>
+<pre><span style="font-family: 'courier new', courier, sans-serif; color: #38761d;">        craps&gt; dw 0x54,6:s
+        0054:  +000012 +000099 -001215 +000777 -009981 -000002
+</span></pre>
+<p>Both decimal formats:</p>
+<pre><span style="font-family: 'courier new', courier, sans-serif; color: #38761d;">        craps&gt; dw 0x54,6:us
+        0054:  00012 00099 64321 00777 +000012 +000099 -001215 +000777
+        005c:  55555 65534             -009981 -000002
+</span></pre>
+<p>Notice in particular that, now we can't fit everything onto a single line, the data is displayed in columns for each format. The more formats we ask for, the less data will fit onto a line.</p>
+<p>Here's an example of overkill: octal, decimal (both) and hex:</p>
+<pre><span style="color: #38761d; font-family: 'courier new', courier, sans-serif;">        craps&gt; dw 0x54,6:ousx
+        0054:  000014 000143 00012 00099 +000012 +000099 000c 0063
+        0058:  175501 001411 64321 00777 -001215 +000777 fb41 0309
+        005c:  154403 177776 55555 65534 -009981 -000002 d903 fffe
+</span></pre>
+<p>The only exception to the above format is when the 'a' specifier is used to display bytes in ASCII. In this format&nbsp;<i>only</i>, the characters are printed with no space between (any space is because the byte in question holds the ASCII space (20<sub>16</sub>) character. Non-printing characters are displayed as dots (.)</p>
+<p>For example:</p>
+<pre><span style="font-family: 'courier new', courier, sans-serif; color: #38761d;">        craps&gt; db 0x14,60:ax
+        0014:  Enter st 45 6e 74 65 72 20 73 74
+        001c:  rings at 72 69 6e 67 73 20 61 74
+        0024:   the pro 20 74 68 65 20 70 72 6f
+        002c:  mpt; to  6d 70 74 3b 20 74 6f 20
+        0034:  quit pre 71 75 69 74 20 70 72 65
+        003c:  ss Enter 73 73 20 45 6e 74 65 72
+        0044:  ...palin 0d 0a 00 70 61 6c 69 6e
+        004c:  &gt; .      3e 20 00 20
+</span></pre>
+<p></p>
+<center>
+<h2>Alphabetical command listing</h2>
+<h4>Alternative name(s) in brackets</h4>
+</center>
+<p></p>
+<h3><a name="brdel"></a>brdel [brd]</h3>
+<p>Breakpoint Delete</p>
+<p>Usage:</p>
+<ul>brdel address</ul>
+<p><span>where:</span></p>
+<table>
+<tbody>
+<tr>
+<td>address</td>
+<td>is the address of the specified breakpoint to be deleted</td>
+</tr>
+</tbody>
+</table>
+<p><span>Example:</span></p>
+<ul>brd 0x54</ul>
+<p>will delete the breakpoint current set at address 54<sub>16</sub>&nbsp;or issue a warning message if no breakpoint is currently set.</p>
+<p></p>
+<h3><a name="brdel"></a>brset [brs]</h3>
+<p>Breakpoint Set</p>
+<p>Usage:</p>
+<ul>brset address</ul>
+<p><span>where:</span></p>
+<table>
+<tbody>
+<tr>
+<td>address</td>
+<td>is the address at which a breakpoint is to be</td>
+</tr>
+</tbody>
+</table>
+<p><span>Example:</span></p>
+<ul>brs 0x5c</ul>
+<p>will set a breakpoint at address 5c<sub>16</sub>&nbsp;or issue a warning message if there is currently breakpoint set at that location.</p>
+<p></p>
+<p><a name="chasm"></a></p>
+<h3><a name="chasm"></a>chasm [assem, a]</h3>
+<p>Invoke the CHASM assembler program</p>
+<p>Usage:</p>
+<ul>chasm chasm-options</ul>
+<p>For details of the chasm-options see the appropriate description in the&nbsp;<a href="file:///Users/rusted_root/Documents/Camosun/COMP_183/Deryks_Notes/COMP183/CRAPS/command.html#chasm">command reference</a>.</p>
+<p></p>
+<p><a name="dbyte"></a></p>
+<h3><a name="dbyte"></a>dbyte [db, display, d]</h3>
+<p>Display Bytes from memory</p>
+<p>Usage:</p>
+<ul>dbyte address[,count][:format]</ul>
+<p><span>where:</span></p>
+<table>
+<tbody>
+<tr>
+<td>address</td>
+<td>is the address of the first byte from memory whose contents are to be displayed</td>
+</tr>
+<tr>
+<td>count</td>
+<td>the number of bytes to display (default 16)</td>
+</tr>
+<tr>
+<td>format</td>
+<td>a string of&nbsp;<a href="file:///Users/rusted_root/Documents/Camosun/COMP_183/Deryks_Notes/COMP183/CRAPS/debugger.html#formatspec">format specifer characters</a>&nbsp;(default x - i.e. hexadecimal)</td>
+</tr>
+</tbody>
+</table>
+<p><a name="ddword"></a></p>
+<h3></h3>
+<h3><a name="ddword"></a>ddword [dd]</h3>
+<p>Display Doublewords (32 bits) from memory</p>
+<p>Usage:</p>
+<ul>ddword address[,count][:format]</ul>
+<p><span>where:</span></p>
+<table>
+<tbody>
+<tr>
+<td>address</td>
+<td>is the address of the first byte from memory whose contents are to be displayed</td>
+</tr>
+<tr>
+<td>count</td>
+<td>the number of doublewords to display (default 4)</td>
+</tr>
+<tr>
+<td>format</td>
+<td>a string of&nbsp;<a href="file:///Users/rusted_root/Documents/Camosun/COMP_183/Deryks_Notes/COMP183/CRAPS/debugger.html#formatspec">format specifer characters</a>&nbsp;(default x - i.e. hexadecimal)</td>
+</tr>
+</tbody>
+</table>
+<p><a name="dflags"></a></p>
+<h3></h3>
+<h3><a name="dflags"></a>dflags [df]</h3>
+<p>Display Flags</p>
+<p>Usage:</p>
+<ul>dflags</ul>
+<p>The dflags command displays the contents of the four flag registers, using the following abbreviations:</p>
+<p></p>
+<table border="">
+<tbody>
+<tr><th>Flag</th><th>Set (on)</th><th>Unset (off)</th></tr>
+<tr>
+<td>Sign</td>
+<td>S</td>
+<td>NS</td>
+</tr>
+<tr>
+<td>Zero</td>
+<td>Z</td>
+<td>NZ</td>
+</tr>
+<tr>
+<td>Overflow</td>
+<td>O</td>
+<td>NO</td>
+</tr>
+<tr>
+<td>Carry</td>
+<td>C</td>
+<td>NC</td>
+</tr>
+</tbody>
+</table>
+<p><a name="disassemble"></a></p>
+<h3></h3>
+<h3><a name="disassemble"></a>disassemble [dis]</h3>
+<p>Disassemble instructions from memory</p>
+<p>Usage:</p>
+<ul>disassemble [address][,count]</ul>
+<p><span>where:</span></p>
+<table>
+<tbody>
+<tr>
+<td>address</td>
+<td>is the address of the first instruction to disassemble (default: current PC)</td>
+</tr>
+<tr>
+<td>count</td>
+<td>is the number of instructions to disassemble (default 1)</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<pre><span style="font-family: 'courier new', courier, sans-serif; color: #38761d;">        craps&gt; dis 0xe0,5
+        0x00e0: call      0118
+        0x00e4: lodbu     007c,,r1
+        0x00e8: sub       r1,0,r0
+        0x00ec: bz        0100
+        0x00f0: call      0138
+</span></pre>
+<p>Note that all addresses are displayed as (hexadecimal) numbers; there is no symbolic information (currently) preserved in the image file.</p>
+<p></p>
+<h4>Virtual instructions</h4>
+<p>The discerning debugger may notice that the disassemble command doesn't always produce the expected out.</p>
+<p>For example, the instruction at location e8<sub>16</sub>&nbsp;above is actually a cmp (compare) instruction in the source.</p>
+<p>As with the Sun SPARC CPU which was the priginal inspiration for the CRAPS processor, various instructions which are normally found in the level 2 ISA are simulated, utilising the fact that register zero (R0) always contains zero; using R0 as the destination register effectively "throws away" the result (but the ALU will still have set the flags).</p>
+<p>For full details of these virtual instructions see&nbsp;<a href="file:///Users/rusted_root/Documents/Camosun/COMP_183/Deryks_Notes/COMP183/CRAPS/debugger.html#virtuals">below</a>.</p>
+<p></p>
+<p><a name="dregs"></a></p>
+<h3><a name="dregs"></a>dregs [dr]</h3>
+<p>Display CPU Registers</p>
+<p>Usage:</p>
+<ul>dregs</ul>
+<p>The dregs command displays the contains of all 16 GPRs in hexadecimal. There is currently no way to display in any other format.</p>
+<p>Example:</p>
+<pre><span style="font-family: 'courier new', courier, sans-serif; color: #38761d;">        craps&gt; dr
+         r0: 0000  r1: 0026  r2: 004c  r3: 0072  r4: 000d  r5: 0033  r6: 0059  r7: 007f
+         r8: 001a  r9: 0040 r10: 0066 r11: 0001 r12: 0027 r13: 004d r14: 0073 r15: 01ba 
+</span></pre>
+<p><a name="dword"></a></p>
+<h3></h3>
+<h3><a name="dword"></a>dword [dw]</h3>
+<p>Display Words (16 bits) from memory</p>
+<p>Usage:</p>
+<ul>dword address[,count][:format]</ul>
+<p><span>where:</span></p>
+<table>
+<tbody>
+<tr>
+<td>address</td>
+<td>is the address of the first byte from memory whose contents are to be displayed</td>
+</tr>
+<tr>
+<td>count</td>
+<td>the number of words to display (default 8)</td>
+</tr>
+<tr>
+<td>format</td>
+<td>a string of&nbsp;<a href="file:///Users/rusted_root/Documents/Camosun/COMP_183/Deryks_Notes/COMP183/CRAPS/debugger.html#formatspec">format specifer characters</a>&nbsp;(default x - i.e. hexadecimal)</td>
+</tr>
+</tbody>
+</table>
+<p></p>
+<p><a name="edit"></a></p>
+<h3><a name="edit"></a>edit, e</h3>
+<p>edit CHASM source file</p>
+<p>Usage:</p>
+<ul>edit [sourcefile]</ul>
+<p><span>where:</span></p>
+<ul>sourcefile
+<ul>path of source file. If no extension .csm is assumed.</ul>
+</ul>
+<p><span>If the user has a value specified for the EDITOR environment variable, that program is invoked, otherwise the system default (/bin/vi) is called.</span></p>
+<p>If&nbsp;<i>sourcefile</i>&nbsp;is omitted, the user will have to read the source file into the editor manually.</p>
+<p><a name="go"></a></p>
+<h3></h3>
+<h3><a name="go"></a>go [g]</h3>
+<p>Go to specific instruction</p>
+<p>Usage:</p>
+<ul>go [address]</ul>
+<p><span>where:</span></p>
+<table>
+<tbody>
+<tr valign="top">
+<td>address</td>
+<td>is the address of the instrction at which execution is to resume.&nbsp;<br />If omitted the default is the current PC - i.e this is equivalent to the&nbsp;<a href="file:///Users/rusted_root/Documents/Camosun/COMP_183/Deryks_Notes/COMP183/CRAPS/debugger.html#run">run</a>&nbsp;command.</td>
+</tr>
+</tbody>
+</table>
+<p><a name="help"></a></p>
+<h3></h3>
+<h3><a name="help"></a>help [h, ?]</h3>
+<p>get debugger help</p>
+<p>Usage:</p>
+<ul>h [command|topic]</ul>
+<p>where:</p>
+<ul>command
+<ul>is the name of a debugger command</ul>
+topic
+<ul>is the name of a debugger command or topic</ul>
+</ul>
+<p>The help on the specified command or topic is printer.</p>
+<p>If topic is omitted, a list of all commands is displayed.</p>
+<p>Example:</p>
+<pre><span style="font-family: 'courier new', courier, sans-serif; color: #38761d;">        craps&gt; h
+        base            [b]
+        brdel           [brd]
+        brset           [brs]
+        chasm           [a, assem]
+        dbyte           [db]
+        ddword          [dd]
+        dflags          [df]
+        disassemble     [dis]
+        display         [d]
+        dregs           [dr]
+        dword           [dw]
+        go              [g]
+        help            [h, ?]
+        load            [l]
+        pbyte           [pb, patch, p]
+        pdword          [pdw]
+        pinst           [pi]
+        pregister       [preg, pr]
+        pword           [pw]
+        quit            [q]
+        reload          [re]
+        run             [r]
+        step            [s]
+</span></pre>
+<p><a name="pbyte"></a></p>
+<h3></h3>
+<h3><a name="pbyte"></a>load, l</h3>
+<p>load image file into CRAPS memory</p>
+<p>Usage:</p>
+<ul>load imagefile</ul>
+<p><a name="pbyte"></a>where:</p>
+<ul>imagefile
+<ul>is the path name of a file containing a CRAPS image as output by the assembler. If the suffix is omitted, .cig is assumed.</ul>
+</ul>
+<p>A confirmatory message is printed, with the program's entrypoint address (in hexadecimal).</p>
+<p><a name="pbyte"></a><a name="pbyte"></a></p>
+<h3></h3>
+<h3><a name="pbyte"></a>patch, pbyte, pb, p</h3>
+<p>patch byte values into memory</p>
+<p>Usage:</p>
+<ul>patch address, value</ul>
+<p><a name="pbyte"></a>where:</p>
+<ul>address
+<ul>is the address at which the first byte-value is to be stored</ul>
+value
+<ul>is either a single-byte value (0-255 decimal) (type 'help value' for more information on value formats) or a quote delimited string of ASCII characters.</ul>
+</ul>
+<p><a name="pbyte"></a>If the value is a single byte, it is stored in memory at the location specified. If the value is an ASCII string, the bytes in the string (not including any final delimiter) are stroed in successive memory locations, beginning with the specified address.</p>
+<p><a name="pbyte"></a><a name="pdword"></a></p>
+<h3></h3>
+<h3><a name="pdword"></a>pdword, pdw</h3>
+<p>patch double word value into memory</p>
+<p>Usage:</p>
+<ul>pdw address, value</ul>
+<p><span>where:</span></p>
+<ul>address
+<ul>is the address of the first byte in the doubleword (4 bytes) at which the value is to be stored</ul>
+value
+<ul>a legal value for a doubleword (between 0x0 and 0xffffffff)</ul>
+</ul>
+<p><span>The value is stored at the specified doubleword address.</span></p>
+<p><a name="pregister"></a></p>
+<h3></h3>
+<h3><a name="pregister"></a>pregister, preg, pr</h3>
+<p>patch word value into a register</p>
+<p>Usage:</p>
+<ul>pr register, value</ul>
+<p><span>where:</span></p>
+<ul>
+<ul>register
+<ul>is the number (0-15) of one of the CRAPS CPU registers. Note, the&nbsp;</ul>
+</ul>
+</ul>
+<p><i>R</i></p>
+<ul>
+<ul>&nbsp;is not included.</ul>
+value
+<ul>a legal value for a word (between 0x0 and 0xffff)</ul>
+</ul>
+<p><span>The value is stored in the specified register. (Note, you may attempt to patch R0 but it will do you no good).</span></p>
+<p></p>
+<p><a name="pword"></a></p>
+<h3><a name="pword"></a>pword, pw</h3>
+<p>patch word value into memory</p>
+<p>Usage:</p>
+<ul>pw address, value</ul>
+<p><span>where:</span></p>
+<ul>address
+<ul>is the address of the first byte in the word (2 bytes) at which the value is to be stored</ul>
+value
+<ul>a legal value for a word (between 0x0 and 0xffff)</ul>
+</ul>
+<p><span>The value is stored at the specified word address.</span></p>
+<p><a name="quit"></a></p>
+<h3></h3>
+<h3><a name="quit"></a>quit, q</h3>
+<p>quit the debugger</p>
+<p>Usage:</p>
+<ul>q</ul>
+<p>Exits the debugger and returns to the system prompt.</p>
+<p><a name="run"></a></p>
+<h3></h3>
+<h3><a name="run"></a>run, r</h3>
+<p>start or resume program execution</p>
+<p>Usage:</p>
+<ul>r[un]</ul>
+<p><span>If a program has just been loaded, it will be run from its entrypoint; if the program has just been stopped at a breakpoint, or by single-stepping, the program is resumed at the address specified by the program counter.</span></p>
+<p>If a program has run to termination, either normal or abnormal, it must be reloaded before it can be restarted.</p>
+<p><a name="step"></a></p>
+<h3></h3>
+<h3><a name="step"></a>step, s</h3>
+<p>execute single instruction</p>
+<p>Usage:</p>
+<ul>s</ul>
+<p><span>The instruction specified in the program counter is executed, the program counter is updated.</span></p>
+<p>The updated program counter is printed out in the status message.</p>
+<p>Control is passed back to the main debugger loop for further user input.</p>
+<p><a name="virtuals"></a></p>
+<h3></h3>
+<h3><a name="virtuals"></a>Virtual instruction listing</h3>
+<p><span style="color: #ff9900;"><em>This section not yet written.</em></span></p>
+</body>
+</html>

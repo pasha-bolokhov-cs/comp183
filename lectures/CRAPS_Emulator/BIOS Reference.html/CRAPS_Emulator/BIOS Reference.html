@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+</head>
+<body style="font-family: arial, helvetica, sans-serif;">
+<h1>CRAB - The CRAPS BIOS</h1>
+<p>Interfacing to the outside world (e.g. doing I/O) can only be achieved by calling upon the services of&nbsp;<i>CRAB</i>&nbsp;(the CRAPS BIOS).</p>
+<p>This is done using the&nbsp;<i>SYS</i>&nbsp;instruction:</p>
+<pre style="padding-left: 30px;"><span style="font-family: 'courier new', courier, sans-serif; color: #38761d;">Name:           System call
+Mnemonic:       SYS
+Format:         SYS  operand
+Function:       The BIOS is called and the function family specified by
+                <i>operand</i> is performed. See individual functions for
+                more details.
+Flags:          None
+</span></pre>
+<p>Version 1.93b of CRAB currently contains three functional groups.</p>
+<p></p>
+<h2>Console I/O</h2>
+<p>The value specified in the SYS instruction is 1.</p>
+<p>There are four currently-defined functions within this family; each is specified by placing a sub-function code into the lower half (8-15) of register R1 before executing the SYS instruction</p>
+<p></p>
+<ul>
+<li>GETCHAR (0)
+<p>Read a single character from the keyboard. The character is placed into the R2 register (bits 0-7 = 0, bits 8-15 = character)</p>
+<p></p>
+</li>
+<li>GETSTR (1)
+<p>Read a line (string) from the keyboard. R2 must contain the address of the first character of the buffer area. This area is formatted as follows:</p>
+<table border="1">
+<tbody>
+<tr>
+<td style="width: 5em;">Byte 0</td>
+<td>Maximum input length (in bytes) including CR</td>
+</tr>
+<tr>
+<td style="width: 5em;">Byte 1</td>
+<td>Set to actually input length (in bytes) excluding CR</td>
+</tr>
+<tr>
+<td>Bytes 2-</td>
+<td>area long enough to contain the maximum input string (the input CR will be converted to a NUL (0x00) byte)</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<pre><span style="font-family: 'courier new', courier, sans-serif; color: #38761d;">CONSOLE EQU     1
+GETSTR  EQU     1
+MAXLINE EQU	80
+        data
+input   db      MAXLINE+1, [?] * MAXLINE+2
+        ...
+        code
+        ...
+        mov     GETSTR, r1
+        lea     input, r2
+        sys     CONSOLE
+
+</span></pre>
+<p>After the SYS instruction is complete, the byte&nbsp;<i>input+1</i>&nbsp;will contain the input character count. (Less the CR - so an empty input will have a length of 0).</p>
+<p>This code will retrieve the count and branch to the exit code if it is zero.</p>
+<pre><span style="font-family: 'courier new', courier, sans-serif; color: #38761d;">        lodbu   input+1,,r3
+        cmp     r3, 0
+        be      done
+        ...                     ; code for non-zero length here
+</span></pre>
+<p></p>
+</li>
+<li>PUTCHAR (2)
+<p>write a single character to the screen. The character must be placed into R2 (bits 8-15) before the SYS instruction.</p>
+<p></p>
+</li>
+<li>PUTSTR (3)
+<p>write a NUL-terminated string to the screen. The address of the&nbsp;<i>first</i>&nbsp;byte of the message must be placed into R2 before the SYS instruction. The message must end with a NUL (i.e. zero) byte. (This is often known as an&nbsp;<i>ASCIIZ string</i>)</p>
+<p>Example:</p>
+<pre><span style="font-family: 'courier new', courier, sans-serif; color: #38761d;">CONSOLE EQU     1</span></pre>
+<pre><span style="font-family: 'courier new', courier, sans-serif; color: #38761d;">PUTSTR  EQU     3
+        data
+message db      "hello world!", 0
+        ...
+        code
+        ...
+        mov     PUTSTR, r1
+        lea     message, r2
+        SYS     CONSOLE
+
+</span></pre>
+</li>
+</ul>
+<h2>File Stream I/O</h2>
+<p>The value specified in the SYS instruction is 2.</p>
+<p>There are three currently-defined functions within this family; each is specified by placing a sub-function code into the lower half (8-15) of register R1 before executing the SYS instruction</p>
+<p></p>
+<ul>
+<li>OPEN (0)
+<p>R2 contains the address of an ASCIIZ string which is the UNIX path of a file to be opened.</p>
+<p>On return from the SYS instruction R1 will contain 0 if the open succeeded, and -1 if it failed.</p>
+<p>On success R2 contains a number called the&nbsp;<i>file handle</i>&nbsp;which is used in all other FSTREAM calls.</p>
+<p>On failure R2 contains an error code.</p>
+<p></p>
+</li>
+<li>CLOSE (1)
+<p>R2 contains the file handle returned by the OPEN call.</p>
+<p>On return from the SYS instruction R1 will contain 0 if the close succeeded, and -1 if it failed.</p>
+<p>On success R2 contains the status returned by the UNIX system call.</p>
+<p></p>
+</li>
+<li>READ (2)
+<p>R2 contains the file handle returned by the OPEN call.</p>
+<p>R3 contains the address of a buffer in which the input data will be placed.</p>
+<p>R4 contains the length of the buffer in bytes.</p>
+<p>The next line is read from the specified file and put into the buffer. The ending linfeed character is&nbsp;<i>not</i>&nbsp;removed by the call; the temrinating ASCII NUL is added to the string.</p>
+<p>On return from the SYS instruction R1 will contain 0 if the close succeeded, and -1 if it failed.</p>
+<p>On success R2 contains the number of characters read; if this is zero it means END OF FILE. On failure it contains the error code.</p>
+</li>
+</ul>
+<h2>Program Termination</h2>
+<p>The value specified in the SYS instruction is 65535 (0xFFFF)</p>
+<p>The program is terminated.</p>
+<hr /><address><a href="mailto:dbarker@turing.cs.camosun.bc.ca"></a></address>
+<p><span>Last modified: Thu Jan 5 20:19:18 PST 2006</span></p>
+<p><span>Adapted to D2L: January 11, 2015</span></p>
+</body>
+</html>
