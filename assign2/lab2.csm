@@ -1,0 +1,84 @@
+;
+; Author:	Pasha Bolokhov C0411819
+; Displayed:
+; Keyword:
+;
+
+
+	program back
+;;;
+;;; A program for printing a string backwards
+;;;
+
+CONSOLE equ	1
+GETSTR	equ	1
+PUTSTR	equ	3
+EXIT	equ	0xffff
+
+BUF	equ	80
+
+
+;;;
+;;; Stack size
+;;;
+	stack	80
+
+
+;;;
+;;; Data section
+;;;
+	data
+prompt	db	'Give a string [exit]: ', 0
+bufsize	db	BUF + 1
+size	db	?
+buf	db	[?] * BUF + 1
+
+
+
+;;;
+;;; Text section
+;;;
+	code
+back						; program entry point
+;
+; Make a prompt
+;
+	mov	PUTSTR, r1
+	lea	prompt, r2
+	sys	CONSOLE
+
+;
+; Read in the string
+;
+	mov	GETSTR, r1
+	lea	bufsize, r2
+	sys	CONSOLE
+
+;
+; Check the string length
+;
+	lodbu	size,, r3
+	cmp	r3, 0
+	be	quit
+
+;
+; Print the string backwards
+;
+	mov	PUTSTR, r1
+	lea	prompt, r2
+	sys	CONSOLE
+
+	
+
+;
+; Repeat
+;
+	br	back
+
+;
+; Quit
+;
+quit
+	sys	EXIT
+
+	end
