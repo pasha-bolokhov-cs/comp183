@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<!-- saved from url=(0071)https://online.camosun.ca/d2l/le/content/83577/viewContent/1280320/View -->
+<html lang="en-ca"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		
+		<title>Lab 1 - (COMP-183-X01) Intro to Computer Architecture</title>
+		<link rel="stylesheet" type="text/css" href="./lab1_files/valenceui.min.css">
+		<link rel="stylesheet" type="text/css" href="./lab1_files/D2L.LP.Web.Desktop.default.css">
+		<link rel="stylesheet" type="text/css" href="./lab1_files/D2L.LE.ToolIntegration.Content.default.css">
+		<style type="text/css">
+		/*<![CDATA[*/
+			.d2l-font{ font-family:verdana, sans-serif; font-size:11px; }
+		/*]]>*/
+		</style>
+		<link rel="stylesheet" type="text/css" href="./lab1_files/5717">
+		<link rel="stylesheet" type="text/css" href="./lab1_files/D2L.LP.Web.Desktop.Print.default.css" media="print">
+		<style type="text/css">
+		/*<![CDATA[*/
+			.d2l_1_13_511 {background-color:#4f4c4a;}
+			.d2l_1_14_453 {table-layout: Inherit;}
+			.d2l_1_15_643 {vertical-align:middle;}
+			.d2l_1_16_472 {background-image:url('/d2l/img/0/sprites/D2L.LP.Main.png?v=10.3.0.791-39');background-position:-9px -1413px;background-repeat:no-repeat;width:9px;height:18px;}
+			.d2l_1_18_953 {background-image:url('/d2l/img/0/sprites/D2L.LP.Main.png?v=10.3.0.791-39');background-position:-10px -1431px;background-repeat:no-repeat;width:10px;height:10px;}
+			.d2l_1_19_911 {max-width:375px;}
+			.d2l_1_20_420 {min-width:375px;}
+			.d2l_1_22_709 {background-image:url('/d2l/img/0/sprites/D2L.LP.Main.png?v=10.3.0.791-39');background-position:0 -310px;background-repeat:no-repeat;width:20px;height:20px;}
+			.d2l_1_23_894 {background-image:url('/d2l/img/0/sprites/D2L.LP.Main.png?v=10.3.0.791-39');background-position:0 -110px;background-repeat:no-repeat;width:20px;height:20px;}
+			.d2l_1_24_235 {background-image:url('/d2l/img/0/sprites/D2L.LP.Main.png?v=10.3.0.791-39');background-position:0 -210px;background-repeat:no-repeat;width:20px;height:20px;}
+			.d2l_1_25_30 {background-image:url('/d2l/img/0/sprites/D2L.LP.Main.png?v=10.3.0.791-39');background-position:0 -190px;background-repeat:no-repeat;width:20px;height:20px;}
+			.d2l_1_26_553 {max-width:350px;}
+			.d2l_1_27_221 {min-width:350px;}
+			.d2l_1_29_14 {padding:0px 10px;}
+			.d2l_1_30_249 {margin:5px;}
+			.d2l_1_31_939 {background-image:url('/d2l/img/0/sprites/D2L.LP.Main.png?v=10.3.0.791-39');background-position:0 -1333px;background-repeat:no-repeat;width:16px;height:16px;}
+			.d2l_1_32_630 {background-image:url('/d2l/img/0/sprites/D2L.LP.Main.png?v=10.3.0.791-39');background-position:0 -853px;background-repeat:no-repeat;width:16px;height:16px;}
+			.d2l_1_33_640 {background-image:url('/d2l/img/0/sprites/D2L.LP.Main.png?v=10.3.0.791-39');background-position:0 -230px;background-repeat:no-repeat;width:20px;height:20px;}
+			.d2l_1_34_167 {background-image:url('/d2l/img/0/sprites/D2L.LP.Main.png?v=10.3.0.791-39');background-position:0 -270px;background-repeat:no-repeat;width:20px;height:20px;}
+			.d2l_1_35_837 {background-image:url('/d2l/img/0/sprites/D2L.LP.Main.png?v=10.3.0.791-39');background-position:0 -250px;background-repeat:no-repeat;width:20px;height:20px;}
+			.d2l_1_36_233 {background-image:url('/d2l/img/0/sprites/D2L.LP.Main.png?v=10.3.0.791-39');background-position:0 -170px;background-repeat:no-repeat;width:20px;height:20px;}
+			.d2l_1_38_357 {background-image:url('/d2l/img/0/sprites/D2L.LP.Main.png?v=10.3.0.791-39');background-position:0 -130px;background-repeat:no-repeat;width:20px;height:20px;}
+			.d2l_1_39_30 {background-image:url('/d2l/img/0/sprites/D2L.LP.Main.png?v=10.3.0.791-39');background-position:0 -70px;background-repeat:no-repeat;width:20px;height:20px;}
+			.d2l_1_40_893 {background-image:url('/d2l/img/0/sprites/D2L.LP.Main.png?v=10.3.0.791-39');background-position:0 -90px;background-repeat:no-repeat;width:20px;height:20px;}
+			.d2l_1_41_252 {background-image:url('/d2l/img/0/sprites/D2L.LP.Main.png?v=10.3.0.791-39');background-position:0 -150px;background-repeat:no-repeat;width:20px;height:20px;}
+			.d2l_1_43_849 {background-image:url('/d2l/img/0/sprites/D2L.LP.Main.png?v=10.3.0.791-39');background-position:0 -48px;background-repeat:no-repeat;width:22px;height:22px;}
+			.d2l_1_44_294 {background-image:url('/d2l/img/0/sprites/D2L.LP.Main.png?v=10.3.0.791-39');background-position:0 -1445px;background-repeat:no-repeat;width:10px;height:10px;}
+			.d2l_1_46_599 {margin:10px;}
+			.d2l_1_47_238 {vertical-align:top;}
+			.d2l_1_49_891 {background-position:left top;}
+			.d2l_1_50_100 {padding:1em;}
+			.d2l_1_51_951 {background-image:url('/d2l/img/0/Auth.SessionExpiry.actAlert.png?v=10.3.0.791-39');}
+			.d2l_1_52_930 {background-position:right top;}
+			.d2l_1_53_621 {padding-right:75px;}
+			.d2l_1_54_76 {min-height:115px;}
+			.d2l_1_55_968 {background-image:url('/d2l/img/0/Auth.SessionExpiry.actCheck.png?v=10.3.0.791-39');}
+			.d2l_1_56_697 {padding:3.6em;}
+			.d2l_1_57_816 {vertical-align:baseline;}
+			.d2l_1_58_641 {width:100%;}
+			.d2l_1_60_881 {margin-top:0.5em;margin-bottom:10px;}
+			.d2l_1_61_337 {table-layout: Fixed;}
+			.d2l_1_62_305 {width:34px;}
+			.d2l_1_63_979 {margin-right:10px;}
+			.d2l_1_64_397 {background-image:url('/d2l/img/0/D2L_LE_Core.ActivityTypes.infDropbox24.png?v=10.3.0.791-39');background-position:0 0;background-repeat:no-repeat;width:24px;height:24px;}
+			.d2l_1_67_578 {background-image:url('/d2l/img/0/Content.main.actLeaveFeedback.gif?v=10.3.0.791-39');}
+			.d2l_1_69_614 {background-image:url('/d2l/img/0/sprites/D2L.LP.Main.png?v=10.3.0.791-39');background-position:-10px -1441px;background-repeat:no-repeat;width:10px;height:7px;}
+			.d2l_1_70_409 {margin:4px 0px 0px 5px;}
+			.d2l_1_73_922 {background-image:url('/d2l/img/0/Content.Main.actBookmarkTopic24.png?v=10.3.0.791-39');background-position:0 0;background-repeat:no-repeat;width:36px;height:28px;}
+			.d2l_1_74_18:hover,.d2l_1_74_18:focus,.d2l_1_74_18:active {background-image:url('/d2l/img/0/Content.Main.actBookmarkTopicHover24.png?v=10.3.0.791-39');background-position:0 0;background-repeat:no-repeat;width:36px;height:28px;}
+			.d2l_1_75_168 {background-image:url('/d2l/img/0/Content.Main.actRemoveBookmark24.png?v=10.3.0.791-39');background-position:0 0;background-repeat:no-repeat;width:36px;height:28px;}
+			.d2l_1_76_132:hover,.d2l_1_76_132:focus,.d2l_1_76_132:active {background-image:url('/d2l/img/0/Content.Main.actRemoveBookmarkHover24.png?v=10.3.0.791-39');background-position:0 0;background-repeat:no-repeat;width:36px;height:28px;}
+			.d2l_1_77_858 {margin-left:10px;}
+			.d2l_1_78_599 {background-image:url('/d2l/img/0/Framework.Iterator.actPrevMvc.png?v=10.3.0.791-39');background-position:0 0;background-repeat:no-repeat;width:16px;height:16px;}
+			.d2l_1_79_593 {background-image:url('/d2l/img/0/Framework.Iterator.actNextMvc.png?v=10.3.0.791-39');background-position:0 0;background-repeat:no-repeat;width:16px;height:16px;}
+			.d2l_1_80_430 {margin-bottom:10px;}
+			.d2l_1_81_314 {padding:20px;}
+			.d2l_1_82_632 {margin-top:-0.5em;}
+			.d2l_1_83_965 {background-image:url('/d2l/img/0/Images.FileTypeIcons.icnGeneric16x16.png?v=10.3.0.791-39');}
+			.d2l_1_85_297 {margin-left:0px;}
+			.d2l_1_86_8 {padding:1.0em;}
+			.d2l_1_87_9 {margin-top:1.5em;margin-left:0.5em;}
+			.d2l_1_89_197 {padding:0.5em 1.5em 0em 0em;}
+			.d2l_1_90_140 {padding:10px 5px 5px 5px;}
+			.d2l_1_92_528 {width:96%;}
+			.d2l_1_94_148 {background-image:url('/d2l/img/0/Framework.InsertStuff.actShowUploadItem.gif?v=10.3.0.791-39');background-position:0 0;background-repeat:no-repeat;width:16px;height:16px;}
+			.d2l_1_98_452 {background-image:url('/d2l/img/0/Framework.FileInput.actRemoveFile.gif?v=10.3.0.791-39');background-position:0 0;background-repeat:no-repeat;width:16px;height:16px;}
+			.d2l_1_103_972 {background-image:url('/d2l/img/0/sprites/D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.png?v=10.3.0.791-39');background-position:0 -848px;background-repeat:no-repeat;width:16px;height:16px;}
+			.d2l_1_104_481 {background-image:url('/d2l/img/0/sprites/D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.png?v=10.3.0.791-39');background-position:0 -912px;background-repeat:no-repeat;width:7px;height:16px;}
+			.d2l_1_105_799 {min-width:150px;}
+			.d2l_1_108_602 {background-image:url('/d2l/img/0/sprites/D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.png?v=10.3.0.791-39');background-position:0 -288px;background-repeat:no-repeat;width:16px;height:16px;}
+			.d2l_1_110_836 {background-image:url('/d2l/img/0/sprites/D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.png?v=10.3.0.791-39');background-position:0 -336px;background-repeat:no-repeat;width:16px;height:16px;}
+			.d2l_1_112_216 {background-image:url('/d2l/img/0/sprites/D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.png?v=10.3.0.791-39');background-position:0 -464px;background-repeat:no-repeat;width:16px;height:16px;}
+			.d2l_1_114_738 {background-image:url('/d2l/img/0/sprites/D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.png?v=10.3.0.791-39');background-position:0 -496px;background-repeat:no-repeat;width:16px;height:16px;}
+			.d2l_1_116_704 {background-image:url('/d2l/img/0/sprites/D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.png?v=10.3.0.791-39');background-position:0 -48px;background-repeat:no-repeat;width:16px;height:16px;}
+			.d2l_1_118_67 {background-image:url('/d2l/img/0/sprites/D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.png?v=10.3.0.791-39');background-position:0 -64px;background-repeat:no-repeat;width:16px;height:16px;}
+			.d2l_1_120_823 {background-image:url('/d2l/img/0/sprites/D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.png?v=10.3.0.791-39');background-position:0 -368px;background-repeat:no-repeat;width:16px;height:16px;}
+			.d2l_1_122_14 {background-image:url('/d2l/img/0/sprites/D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.png?v=10.3.0.791-39');background-position:0 -576px;background-repeat:no-repeat;width:16px;height:16px;}
+			.d2l_1_124_474 {background-image:url('/d2l/img/0/sprites/D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.png?v=10.3.0.791-39');background-position:0 -448px;background-repeat:no-repeat;width:16px;height:16px;}
+			.d2l_1_128_774 {background-image:url('/d2l/img/0/sprites/D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.png?v=10.3.0.791-39');background-position:0 -304px;background-repeat:no-repeat;width:16px;height:16px;}
+			.d2l_1_130_220 {background-image:url('/d2l/img/0/sprites/D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.png?v=10.3.0.791-39');background-position:0 -400px;background-repeat:no-repeat;width:16px;height:16px;}
+			.d2l_1_132_406 {background-image:url('/d2l/img/0/sprites/D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.png?v=10.3.0.791-39');background-position:0 -256px;background-repeat:no-repeat;width:16px;height:16px;}
+			.d2l_1_134_219 {background-image:url('/d2l/img/0/sprites/D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.png?v=10.3.0.791-39');background-position:0 -240px;background-repeat:no-repeat;width:16px;height:16px;}
+			.d2l_1_136_420 {background-image:url('/d2l/img/0/sprites/D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.png?v=10.3.0.791-39');background-position:0 -896px;background-repeat:no-repeat;width:16px;height:16px;}
+			.d2l_1_138_483 {background-image:url('/d2l/img/0/sprites/D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.png?v=10.3.0.791-39');background-position:0 -624px;background-repeat:no-repeat;width:16px;height:16px;}
+			.d2l_1_142_405 {background-image:url('/d2l/img/0/sprites/D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.png?v=10.3.0.791-39');background-position:0 0;background-repeat:no-repeat;width:16px;height:16px;}
+			.d2l_1_144_360 {background-image:url('/d2l/img/0/sprites/D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.png?v=10.3.0.791-39');background-position:0 -16px;background-repeat:no-repeat;width:16px;height:16px;}
+			.d2l_1_146_200 {background-image:url('/d2l/img/0/sprites/D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.png?v=10.3.0.791-39');background-position:0 -112px;background-repeat:no-repeat;width:16px;height:16px;}
+			.d2l_1_148_448 {background-image:url('/d2l/img/0/sprites/D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.png?v=10.3.0.791-39');background-position:0 -160px;background-repeat:no-repeat;width:16px;height:16px;}
+			.d2l_1_150_849 {background-image:url('/d2l/img/0/sprites/D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.png?v=10.3.0.791-39');background-position:0 -128px;background-repeat:no-repeat;width:16px;height:16px;}
+			.d2l_1_152_856 {background-image:url('/d2l/img/0/sprites/D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.png?v=10.3.0.791-39');background-position:0 -144px;background-repeat:no-repeat;width:16px;height:16px;}
+			.d2l_1_154_638 {background-image:url('/d2l/img/0/sprites/D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.png?v=10.3.0.791-39');background-position:0 -192px;background-repeat:no-repeat;width:16px;height:16px;}
+			.d2l_1_156_6 {background-image:url('/d2l/img/0/sprites/D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.png?v=10.3.0.791-39');background-position:0 -384px;background-repeat:no-repeat;width:16px;height:16px;}
+			.d2l_1_158_497 {background-image:url('/d2l/img/0/sprites/D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.png?v=10.3.0.791-39');background-position:0 -688px;background-repeat:no-repeat;width:16px;height:16px;}
+			.d2l_1_162_232 {background-image:url('/d2l/img/0/sprites/D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.png?v=10.3.0.791-39');background-position:0 -672px;background-repeat:no-repeat;width:16px;height:16px;}
+			.d2l_1_164_686 {background-image:url('/d2l/img/0/sprites/D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.png?v=10.3.0.791-39');background-position:0 -608px;background-repeat:no-repeat;width:16px;height:16px;}
+			.d2l_1_166_431 {background-image:url('/d2l/img/0/sprites/D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.png?v=10.3.0.791-39');background-position:0 -592px;background-repeat:no-repeat;width:16px;height:16px;}
+			.d2l_1_168_827 {background-image:url('/d2l/img/0/sprites/D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.png?v=10.3.0.791-39');background-position:0 -432px;background-repeat:no-repeat;width:16px;height:16px;}
+			.d2l_1_170_145 {background-image:url('/d2l/img/0/sprites/D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.png?v=10.3.0.791-39');background-position:0 -656px;background-repeat:no-repeat;width:16px;height:16px;}
+			.d2l_1_172_855 {background-image:url('/d2l/img/0/sprites/D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.png?v=10.3.0.791-39');background-position:0 -352px;background-repeat:no-repeat;width:16px;height:16px;}
+			.d2l_1_174_166 {background-image:url('/d2l/img/0/sprites/D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.png?v=10.3.0.791-39');background-position:0 -816px;background-repeat:no-repeat;width:16px;height:16px;}
+			.d2l_1_175_822 {padding:20px 0px 0px 0px;}
+			.d2l_1_176_850 {padding:20px 0px 10px 0px;}
+			.d2l_1_179_173 {background-color:#F8F8F8;}
+			.d2l_1_180_791 {border:1px solid #D4D4D4;}
+			.d2l_1_182_951 {background-image:url('/d2l/img/0/sprites/D2L.LP.Main.png?v=10.3.0.791-39');background-position:0 -741px;background-repeat:no-repeat;width:16px;height:16px;}
+			.d2l_1_184_611 {background-image:url('/d2l/img/0/sprites/D2L.LP.Main.png?v=10.3.0.791-39');background-position:0 -805px;background-repeat:no-repeat;width:16px;height:16px;}
+			.d2l_1_185_612 {background-color:#FFFFFF;}
+			.d2l_1_186_350 {border-right:1px solid #D4D4D4;border-bottom:1px solid #D4D4D4;border-left:1px solid #D4D4D4;}
+			.d2l_1_187_54 {padding:10px 20px;}
+			.d2l_1_188_497 {padding:10px 0px 0px 0px;}
+			.d2l_1_189_102 {border-top:1px dotted #D0D0D0;}
+			.d2l_1_190_402 {padding-top:5px;}
+			.d2l_1_191_672 {margin:0px 0px 4px 0px;}
+			.d2l_1_192_161 {background-image:url('/d2l/img/0/D2L_LE_Core.EditDateRange.infRestrictions.png?v=10.3.0.791-39');background-position:0 0;background-repeat:no-repeat;width:12px;height:12px;}
+			.d2l_1_193_993 {margin:5px 10px 5px 0px;}
+		/*]]>*/
+		</style>
+	<script type="text/x-mathjax-config;executed=true">MathJax.Hub.Config({ delayStartupUntil: "onload",showProcessingMessages: false, messageStyle: "none", showMathMenu: true, showMathMenuMSIE: true, menuSettings: { context: "MathJax", zoom: "None" },NativeMML: { showMathMenuMSIE: false, scale: 140 }, "HTML-CSS": { linebreaks: { automatic: true, width: "container"}, imageFont: null, scale: 130 } });</script><script type="text/javascript" src="./lab1_files/MathJax.js"></script><link rel="stylesheet" href="https://online.camosun.ca/d2l/common/tiny_mce//themes/advanced/skins/default/ui.css"><style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Hover_Arrow {position: absolute; width: 15px; height: 11px; cursor: pointer}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 5px 0px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -khtml-border-radius: 5px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 1px 2em; background: transparent}
+.MathJax_MenuTitle {background-color: #CCCCCC; margin: -5px 0 0 0; text-align: center; font-style: italic; font-size: 80%; color: #444444; padding: 2px 0; overflow: hidden}
+.MathJax_MenuArrow {position: absolute; right: .5em; color: #666666}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuRadioCheck {position: absolute; left: .7em}
+.MathJax_MenuLabel {padding: 1px 2em 3px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #DDDDDD; margin: 4px 3px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: #606872; color: white}
+.MathJax_Menu_Close {position: absolute; width: 31px; height: 31px; top: -15px; left: -15px}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style></head>
+	<body class="d2l-body d2l-font"><div id="MathJax_Message" style="display: none;"></div>
+		<div class="d2l-background-global"><div></div>
+		</div>
+		<div class="d2l-background-left"><div><div></div>
+			</div>
+		</div>
+		<div class="d2l-background-right"><div><div></div>
+			</div>
+		</div>
+		<a href="https://online.camosun.ca/d2l/le/content/83577/viewContent/1280320/View#d2l_1_12_220" class="d2l-skipnav" id="d2l_skipnav">skip to main content</a>
+		<div class="d2l-minibar-placeholder d2l-minibar-placeholder-fixed" id="d2l_minibar_placeholder" style="height: 34px;">
+			<div class="d2l-minibar d2l-min-width d2l-minibar-light d2l_1_13_511" id="d2l_minibar">
+				<div class="d2l-max-width">
+					<div class="d2l-minibar-padding">
+						<div class="d2l-box-layout d2l_1_14_453">
+							<div class="d2l-box d2l-box-h d2l_1_15_643">
+								<a class="d2l-minibar-home vui-link d2l-link" href="https://online.camosun.ca/d2l/lp/ouHome/defaultHome.d2l"><img class="" src="./lab1_files/1935431" alt=""><span class="d2l-minibar-home-text">My Home</span></a><span class="d2l-minibar-breadcrumb"><span class="d2l_1_16_472"></span><span class="d2l-menuflyout-spacer">&nbsp;</span></span><div class="d2l-menuflyout-link d2l-menuflyout-closed d2l-menuflyout-light d2l-left" id="d2l_1_17_945">
+									<div class="d2l-menuflyout-link-hover">
+										<a class="d2l-menuflyout-link-link" title="(COMP-183-X01) Intro to Computer Architecture" href="https://online.camosun.ca/d2l/home/83577">(COMP-183-X01) Intro to Computer Architecture</a><a class="d2l-menuflyout-opener d2l-clickable" title="Select a course..." onclick="return false;" tabindex="0" role="button" aria-controls="d2l_1_21_37" aria-labelledby="d2l_c_10_135"><div class="d2l-textblock d2l-offscreen" id="d2l_c_10_135">Select a course...</div>
+										<span class="d2l-menuflyout-link-arrow d2l_1_18_953"></span><span class="d2l-menuflyout-spacer">&nbsp;</span></a><div class="d2l-clear"></div>
+									</div>
+									<div class="d2l-menuflyout-contents d2l_1_19_911 d2l_1_20_420" id="d2l_1_21_37" aria-hidden="true" aria-expanded="false" tabindex="0" aria-live="assertive" aria-labelledby="d2l_c_10_135" style="max-height: 449px;">
+										<div class="d2l-menuflyout-group-container">
+											<div id="courseSelectorId" class="d2l-placeholder d2l-placeholder-live" aria-live="assertive">
+												<div class="d2l-loading"><div class="d2l-textblock d2l-offscreen">Loading...</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="d2l-box d2l-box-h d2l-minibar-right d2l_1_15_643">
+								<div class="d2l-minibar-activity">
+									<div class="d2l-menuflyout d2l-menuflyout-closed d2l-menuflyout-light d2l-left" id="d2l_1_9_647">
+										<a class="d2l-menuflyout-opener d2l-clickable" title="Message alerts - You have new alerts" onclick="return false;" tabindex="0" role="button" aria-controls="d2l_1_28_857" aria-labelledby="d2l_c_1_907">
+											<span class="d2l-menuflyout-text d2l-offscreen" id="d2l_c_1_907">Message alerts - You have new alerts</span><div class="d2l-minibar-activity-buckethandle alert_bucket_Messages">
+												<img src="./lab1_files/pixel.gif" alt="" class="Alert d2l-hidden d2l_1_22_709"><img src="./lab1_files/pixel.gif" alt="" class="NewAlert d2l_1_23_894"><img src="./lab1_files/pixel.gif" alt="" class="OpenAlert d2l-hidden d2l_1_24_235"><img src="./lab1_files/pixel.gif" alt="" class="NewOpenAlert d2l-hidden d2l_1_25_30"><span class="d2l-menuflyout-spacer">&nbsp;</span></div>
+											<div class="d2l-clear"></div>
+										</a>
+										<div class="d2l-menuflyout-contents d2l-menuflyout-contents-left d2l_1_26_553 d2l_1_27_221" id="d2l_1_28_857" aria-hidden="true" aria-expanded="false" tabindex="0" aria-live="assertive" aria-labelledby="d2l_c_1_907" style="max-height: 449px;">
+											<div class="d2l-menuflyout-group-container">
+												<div class="d2l_1_29_14">
+													<div>
+														<div>
+															<a class="d2l-text-imagelink vui-outline d2l-left d2l_1_30_249" onclick="D2L.O(&quot;__g1&quot;,0)();return false;" href="javascript:void(0);">
+																<img class="d2l-text-imagelink-img d2l_1_31_939" src="./lab1_files/pixel.gif" alt=""><span class="d2l-text-imagelink-text">Go to Pager</span>
+															</a>
+															<a class="d2l-text-imagelink vui-outline d2l-right d2l_1_30_249" href="https://online.camosun.ca/d2l/lms/email/frame.d2l?ou=83577">
+																<img class="d2l-text-imagelink-img d2l_1_32_630" src="./lab1_files/pixel.gif" alt=""><span class="d2l-text-imagelink-text">Go to Email</span>
+															</a>
+															<div class="d2l-clear"></div>
+														</div>
+														<div id="AB_DL_PH_Messages" class="d2l-placeholder d2l-placeholder-live" aria-live="assertive">
+															<div class="d2l-loading"><div class="d2l-textblock d2l-offscreen">Loading...</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="d2l-minibar-separator"></div><div class="d2l-menuflyout d2l-menuflyout-closed d2l-menuflyout-light d2l-left" id="d2l_1_10_771">
+										<a class="d2l-menuflyout-opener d2l-clickable" title="Update alerts - You have new alerts" onclick="return false;" tabindex="0" role="button" aria-controls="d2l_1_37_171" aria-labelledby="d2l_c_2_773">
+											<span class="d2l-menuflyout-text d2l-offscreen" id="d2l_c_2_773">Update alerts - You have new alerts</span><div class="d2l-minibar-activity-buckethandle alert_bucket_Grades">
+												<img src="./lab1_files/pixel.gif" alt="" class="Alert d2l-hidden d2l_1_33_640"><img src="./lab1_files/pixel.gif" alt="" class="NewAlert d2l_1_34_167"><img src="./lab1_files/pixel.gif" alt="" class="OpenAlert d2l-hidden d2l_1_35_837"><img src="./lab1_files/pixel.gif" alt="" class="NewOpenAlert d2l-hidden d2l_1_36_233"><span class="d2l-menuflyout-spacer">&nbsp;</span></div>
+											<div class="d2l-clear"></div>
+										</a>
+										<div class="d2l-menuflyout-contents d2l-menuflyout-contents-left d2l_1_26_553 d2l_1_27_221" id="d2l_1_37_171" aria-hidden="true" aria-expanded="false" tabindex="0" aria-live="assertive" aria-labelledby="d2l_c_2_773" style="max-height: 449px;">
+											<div class="d2l-menuflyout-group-container">
+												<div class="d2l_1_29_14">
+													<div>
+														<div id="AB_DL_PH_Grades" class="d2l-placeholder d2l-placeholder-live" aria-live="assertive">
+															<div class="d2l-loading"><div class="d2l-textblock d2l-offscreen">Loading...</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="d2l-minibar-separator"></div><div class="d2l-menuflyout d2l-menuflyout-closed d2l-menuflyout-light d2l-left" id="d2l_1_11_898">
+										<a class="d2l-menuflyout-opener d2l-clickable" title="Subscription alerts - You have new alerts" onclick="return false;" tabindex="0" role="button" aria-controls="d2l_1_42_904" aria-labelledby="d2l_c_3_718">
+											<span class="d2l-menuflyout-text d2l-offscreen" id="d2l_c_3_718">Subscription alerts - You have new alerts</span><div class="d2l-minibar-activity-buckethandle alert_bucket_Alerts">
+												<img src="./lab1_files/pixel.gif" alt="" class="Alert d2l-hidden d2l_1_38_357"><img src="./lab1_files/pixel.gif" alt="" class="NewAlert d2l_1_39_30"><img src="./lab1_files/pixel.gif" alt="" class="OpenAlert d2l-hidden d2l_1_40_893"><img src="./lab1_files/pixel.gif" alt="" class="NewOpenAlert d2l-hidden d2l_1_41_252"><span class="d2l-menuflyout-spacer">&nbsp;</span></div>
+											<div class="d2l-clear"></div>
+										</a>
+										<div class="d2l-menuflyout-contents d2l-menuflyout-contents-left d2l_1_26_553 d2l_1_27_221" id="d2l_1_42_904" aria-hidden="true" aria-expanded="false" tabindex="0" aria-live="assertive" aria-labelledby="d2l_c_3_718" style="max-height: 449px;">
+											<div class="d2l-menuflyout-group-container">
+												<div class="d2l_1_29_14">
+													<div>
+														<div id="AB_DL_PH_Alerts" class="d2l-placeholder d2l-placeholder-live" aria-live="assertive">
+															<div class="d2l-loading"><div class="d2l-textblock d2l-offscreen">Loading...</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</div><div class="d2l-menuflyout d2l-menuflyout-closed d2l-menuflyout-light">
+									<a class="d2l-menuflyout-opener d2l-clickable" onclick="return false;" tabindex="0" role="button" aria-controls="d2l_1_45_641" aria-labelledby="d2l_c_4_280">
+										<img class="d2l-image d2l-menuflyout-icon d2l_1_43_849" src="./lab1_files/pixel.gif" alt="">
+										<span class="d2l-menuflyout-text" id="d2l_c_4_280">Pavel Bolokhov</span><span class="d2l-menuflyout-arrow d2l-menuflyout-arrow-open d2l_1_44_294"></span><span class="d2l-menuflyout-arrow d2l_1_18_953 d2l-menuflyout-arrow-closed"></span>
+										<div class="d2l-clear"></div>
+									</a>
+									<div class="d2l-menuflyout-contents d2l-menuflyout-contents-left" id="d2l_1_45_641" aria-hidden="true" aria-expanded="false" tabindex="0" aria-live="assertive" aria-labelledby="d2l_c_4_280" style="max-height: 449px;">
+										<div class="d2l-menuflyout-group-container">
+											<div>
+												<ul class="d2l-list">
+													<li>
+														<ul style="list-style:none;margin:10px;padding:0;">
+															<li>
+																<span style="white-space:nowrap;"><a class="vui-link vui-outline d2l-link" href="https://online.camosun.ca/d2l/lp/profile/profile_edit.d2l?ou=83577" onclick="D2L.O(&quot;__g1&quot;,1)();">Profile</a>
+																</span></li>
+															<li>
+																<span style="white-space:nowrap;"><a class="vui-link vui-outline d2l-link" href="https://online.camosun.ca/d2l/Notifications/Settings?ou=83577" onclick="D2L.O(&quot;__g1&quot;,2)();">Notifications</a>
+																</span></li>
+															<li>
+																<span style="white-space:nowrap;"><a class="vui-link vui-outline d2l-link" href="https://online.camosun.ca/d2l/lp/preferences/preferences_main/preferences_main.d2l?ou=83577" onclick="D2L.O(&quot;__g1&quot;,3)();">Account Settings</a>
+																</span></li>
+														</ul>
+														<hr class="d2l-minibar-menu-separator"></li>
+													<li>
+														<ul style="list-style:none;margin:10px;padding:0;">
+															<li>
+																<span style="white-space:nowrap;"><a class="vui-link vui-outline d2l-link" href="https://online.camosun.ca/d2l/le/userprogress/56036/83577/Summary?searchString=&sortDirection=0&sortField=LastName">Progress</a>
+																</span></li>
+														</ul>
+														<hr class="d2l-minibar-menu-separator"></li>
+													<li>
+														<span style="white-space:nowrap;"><a class="vui-link vui-outline d2l-link d2l_1_46_599" href="javascript:void(0);" onclick="D2L.O(&quot;__g1&quot;,4)();return false;">Log Out</a>
+														</span></li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="d2l-clear"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="d2l_navbar" class="d2l-navbar d2l-font-inverse d2l-min-width" role="navigation">
+			<h2 class="d2l-offscreen">Navigation</h2>
+			<div class="d2l-navbar-container d_nb_cFull">
+				<div class="d2l-max-width">
+					<div class="d2l-navbar-container d_nb_cGlobal">
+						<div class="d2l-box-layout d2l_1_14_453">
+							<div class="d2l-box d2l-box-v d2l_1_47_238">
+								<div class="d2l-box-layout d2l_1_14_453">
+									<div class="d2l-box d2l-box-h d2l_1_47_238">
+									</div>
+									<div class="d2l-box d2l-box-h d2l_1_47_238">
+									</div>
+								</div>
+							</div>
+							<div class="d2l-box d2l-box-v d2l_1_47_238">
+								<div class="d2l-navbar-container d_nb_cLinks">
+									<div class="d2l-box-layout d2l_1_14_453">
+										<div class="d2l-box d2l-box-h AreaBoxBottomLeft d2l_1_47_238">
+											<div class="d2l-navbar-area d_nb_pBottomLeft">
+												<div class="d_nb_pd">
+													<div class="d_nb_i">
+														<ul class="d2l-navbar-area-list">
+															<li class="d2l-navbar-area-list-item-last">
+																<div class="d2l-navbar-item">
+																	<span class="d2l-navbar-text">
+																		<span>(COMP-183-X01) Intro to Computer Architecture</span></span>
+																</div>
+																<span class="d2l-navbar-sep"></span>
+															</li>
+														</ul>
+													</div>
+													<div class="d2l-clear"></div>
+												</div>
+											</div>
+										</div>
+										<div class="d2l-box d2l-box-h AreaBoxBottomRight d2l_1_47_238">
+											<div class="d2l-navbar-area d_nb_pBottomRight">
+												<div class="d_nb_pd">
+													<div class="d_nb_i">
+														<ul class="d2l-navbar-area-list">
+															<li>
+																<div class="d2l-navbar-item">
+																	<a class="d2l-navbar-link" href="https://online.camosun.ca/d2l/home/83577"><span>Course Home</span></a></div>
+																<span class="d2l-navbar-sep"></span>
+															</li>
+															<li class="d2l-navbar-area-list-item-last">
+																<div class="d2l-navbar-item d2l-navbar-group">
+																	<div class="d2l-menuflyout d2l-menuflyout-closed d2l-menuflyout-dark">
+																		<a class="d2l-menuflyout-opener d2l-clickable" onclick="return false;" tabindex="0" role="button" aria-controls="d2l_1_48_588" aria-labelledby="d2l_c_5_636">
+																			<span class="d2l-menuflyout-text" id="d2l_c_5_636">COMP 183 Tools</span><span class="d2l-menuflyout-arrow d2l_1_44_294"></span>
+																			<div class="d2l-clear"></div>
+																		</a>
+																		<div class="d2l-menuflyout-contents" id="d2l_1_48_588" aria-hidden="true" aria-expanded="false" tabindex="0" aria-live="assertive" aria-labelledby="d2l_c_5_636">
+																			<div class="d2l-menuflyout-group-container">
+																				<ul class="d2l-navbar-group-inner">
+																					<li>
+																						<a class="vui-link d2l-link vui-outline" href="https://online.camosun.ca/d2l/le/calendar/83577"><span>Calendar</span></a></li>
+																					<li>
+																						<a class="vui-link d2l-link vui-outline" href="https://online.camosun.ca/d2l/lms/classlist/classlist.d2l?ou=83577"><span>Classlist</span></a></li>
+																					<li>
+																						<a class="vui-link d2l-link vui-outline" href="https://online.camosun.ca/d2l/le/content/83577/Home"><span>Content</span></a></li>
+																					<li>
+																						<a class="vui-link d2l-link vui-outline" href="https://online.camosun.ca/d2l/le/83577/discussions/List"><span>Discussions</span></a></li>
+																					<li>
+																						<a class="vui-link d2l-link vui-outline" href="https://online.camosun.ca/d2l/lms/dropbox/dropbox.d2l?ou=83577"><span>Dropbox
+</span></a></li>
+																					<li>
+																						<a class="vui-link d2l-link vui-outline" href="https://online.camosun.ca/d2l/lms/email/frame.d2l?ou=83577"><span>Email</span></a></li>
+																					<li>
+																						<a class="vui-link d2l-link vui-outline" onclick="D2L.O(&quot;__g1&quot;,5)()" tabindex="0"><span>Glossary</span></a></li>
+																					<li>
+																						<a class="vui-link d2l-link vui-outline" href="https://online.camosun.ca/d2l/lms/group/group_list.d2l?ou=83577"><span>Groups</span></a></li>
+																					<li>
+																						<a class="vui-link d2l-link vui-outline" href="https://online.camosun.ca/d2l/lms/locker/locker.d2l?ou=83577"><span>Locker</span></a></li>
+																					<li>
+																						<a class="vui-link d2l-link vui-outline" href="https://online.camosun.ca/d2l/lms/quizzing/quizzing.d2l?ou=83577"><span>Quizzes</span></a></li>
+																				</ul>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+																<span class="d2l-navbar-sep"></span>
+															</li>
+														</ul>
+													</div>
+													<div class="d2l-clear"></div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="d2l-clear"></div>
+								</div>
+							</div>
+						</div>
+						<div class="d2l-clear"></div>
+					</div>
+				</div>
+				<div class="d2l-clear"></div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			
+(function(){
+var hpn=function(){
+if(window == window.parent) {return false;}
+var win = window.parent;
+try {while(true) {
+if(win.document === undefined) {return false;}
+var n= win.document.getElementById('d2l_navbar');
+var m = win.document.getElementById('d2l_minibar');
+if(n !== null || m !== null) {return true;}
+if(win == win.parent) {return false;}
+win = win.parent;
+}} catch(e) {}
+return false;};
+if(!hpn()) {return;}
+var rm=function(n) {if(n&&n.parentNode){n.parentNode.removeChild(n);}};
+var d=document;
+rm(d.getElementById('d2l_navbar'));
+rm(d.getElementById('d2l_minibar'));
+rm(d.getElementById('d2l_minibar_placeholder'));
+rm(d.getElementById('d2l_skipnav'));
+})();
+</script>
+		<span class="d2l-fragment"><a name="d2l_1_12_220" style="top: -44px;"></a></span>
+		<div class="d2l-page-message-container"><div class="d2l-page-message" id="d2l_sessionExpiryWarning"><div style="display:none;" id="d2l_sessionExpiryAlert" role="alert"><div class="d2l-container-icon d2l_1_49_891 d2l_1_50_100">
+			<div class="d2l-container-icon-inner d2l_1_51_951 d2l_1_52_930 d2l_1_53_621 d2l_1_54_76">
+				<h2 class="d2l-heading vui-heading-2">Are You Still There?</h2>
+				<div class="d2l-textblock">Your session expires after 180 minutes of inactivity, which protects your information in case you've left your device without logging out.<br>
+<br>
+<strong>Hit a key or click anywhere to stay logged in.</strong></div>
+			</div>
+		</div>
+		</div><div style="display:none;" id="d2l_sessionExpiryCheck" role="alert"><div class="d2l-container-icon d2l_1_49_891 d2l_1_50_100">
+			<div class="d2l-container-icon-inner d2l_1_55_968 d2l_1_52_930 d2l_1_53_621 d2l_1_54_76">
+				<div class="d2l_1_56_697">
+					<h2 class="d2l-heading vui-heading-2">Oh, There You Are!</h2>
+				</div>
+			</div>
+		</div>
+		</div></div>
+		</div>
+		<div class="d2l-page-bg">
+			<div>
+			</div>
+		</div>
+		<div class="d2l-page-main d2l-min-width d2l-max-width" role="main">
+			<div class="d2l-page-collapsepane-container" style="min-height: 411px; top: 82px;"><div class="d2l-page-collapsepane-shadow" title="Expand side panel"><div></div></div><div class="d2l-page-collapsepane" data-openfirst="D2L.O(&quot;__g1&quot;,6)();"><span tabindex="-1" class="d2l-offscreen"></span><div class="d2l-page-collapsepane-handle"><h2 class="d2l-heading vui-offscreen">Side Panel</h2>
+			<a class="d2l-page-collapsepane-handle-link" tabindex="0" title="Expand side panel" role="button"><span class="d2l-page-collapsepane-handle-expand d2l-offscreen">Expand side panel</span><span class="d2l-page-collapsepane-handle-collapse d2l-offscreen">Collapse side panel</span></a></div><div class="d2l-page-collapsepane-content"><div class="d2l-page-collapsepane-content-inner d2l-scrollbar" style="max-height: 387px;"><div class="d2l-page-collapsepane-content-padding"><div id="ContentNavigator" class="d2l-placeholder d2l-placeholder-live" aria-live="assertive">
+				<div class="d2l-loading"><div class="d2l-textblock d2l-offscreen">Loading...</div>
+				</div>
+			</div>
+			</div></div></div><div class="d2l-page-collapsepane-end"></div><span tabindex="-1" class="d2l-offscreen"></span></div></div><div class="d2l-page-main-padding">
+				<div class="d2l-page-header">
+					<div class="d2l-box-layout d2l_1_14_453">
+						<div class="d2l-box d2l-box-v d2l_1_57_816">
+							<div class="d2l-box-layout d2l_1_14_453">
+								<div class="d2l-box d2l-box-h d2l_1_58_641 d2l_1_47_238">
+									<nav role="navigation">
+										<h2 class="d2l-heading vui-offscreen" id="d2l_1_59_170">Breadcrumb:</h2>
+										<ol class="d2l-breadcrumbs d2l_1_60_881" aria-labelledby="d2l_1_59_170">
+											<li class="d2l-breadcrumb"><a class="vui-link vui-outline d2l-link" href="javascript:void(0);" onclick="D2L.O(&quot;__g1&quot;,7)();return false;">Table of Contents</a>
+											</li><li class="d2l-breadcrumb"><a class="vui-link vui-outline d2l-link" href="https://online.camosun.ca/d2l/le/content/83577/Home?itemIdentifier=D2L.LE.Content.ContentObject.ModuleCO-1280318">Labs</a>
+											</li><li class="d2l-breadcrumb d2l-page-breadcrumb-title d2l-breadcrumb-last"><span class="d2l-breadcrumb-text">Lab 1</span></li></ol>
+									</nav>
+								</div>
+							</div>
+						</div>
+						<div class="d2l-box d2l-box-v d2l_1_57_816">
+							<div class="d2l-box-layout d2l_1_14_453">
+								<div class="d2l-box d2l-box-h d2l_1_58_641 d2l_1_47_238">
+									<div class="d2l-page-title-c"><div class="d2l-box-layout d2l_1_61_337">
+										<div class="d2l-box d2l-box-h d2l_1_62_305 d2l_1_47_238">
+											<img class="d2l-image d2l_1_63_979 d2l_1_64_397" src="./lab1_files/pixel.gif" alt="">
+										</div>
+										<div class="d2l-box d2l-box-h d2l_1_58_641 d2l_1_47_238">
+											<h1 class="d2l-page-title d2l-heading vui-heading-1">Lab 1</h1>
+											<div id="d2l_1_65_831" class="d2l-floating-container d2l-hidden d2l-floating-container-autoclose" role="menu" tabindex="-1">
+												<ul id="d2l_pageTitleActions" class="d2l-contextmenu" role="presentation">
+													<li id="d2l_1_66_267" class="d2l-contextmenu-item" role="presentation">
+														<a class="d2l_1_67_578" tabindex="-1" role="menuitem"><span>Submit Feedback</span></a>
+													</li>
+												</ul>
+											</div>
+											<a id="d2l_1_7_164" class="d2l-contextmenu-ph" data-contextmenuid="d2l_pageTitleActions" title="Actions for &#39;Lab 1&#39;" onclick="D2L.O(&quot;__g1&quot;,8)();return false;" href="javascript:void(0);" aria-haspopup="true">
+												<img src="./lab1_files/pixel.gif" class="d2l_1_69_614" alt="">
+												<span class="d2l-offscreen">Actions for 'Lab 1'</span>
+											</a>
+											<div class="d2l-clear"></div>
+										</div>
+									</div>
+									</div></div>
+								<div class="d2l-box d2l-box-h d2l_1_57_816">
+									<div class="d2l-page-header-side">
+										<div class="d2l_1_70_409 d2l-inline">
+											<a class="d2l-imagelink d2l_1_73_922 d2l_1_74_18" id="d2l_1_71_300" href="javascript:void(0);" onclick="return false;" data-hoverclassname="d2l_1_74_18" title="Add Bookmark" role="button"><span class="d2l-offscreen">Add Bookmark</span></a>
+											<a class="d2l-imagelink d2l-hidden d2l_1_75_168 d2l_1_76_132" id="d2l_1_72_587" href="javascript:void(0);" onclick="return false;" data-hoverclassname="d2l_1_76_132" title="Remove Bookmark" role="button"><span class="d2l-offscreen">Remove Bookmark</span></a>
+										</div>
+										<div class="d2l_1_77_858 d2l-inline">
+											<div class="d2l-iterator">
+												<a class="d2l-iterator-button d2l-button-nml d2l-iterator-button-prev d2l-iterator-button-notext" role="button" href="https://online.camosun.ca/d2l/le/content/83577/navigateContent/80/Previous?pId=1280318" title="Previous "><img class="d2l-image d2l_1_78_599" src="./lab1_files/pixel.gif" alt=""><span class="d2l-offscreen">Previous </span>&nbsp;</a><a class="d2l-iterator-button d2l-button-nml d2l-iterator-button-next d2l-iterator-button-notext" role="button" href="https://online.camosun.ca/d2l/le/content/83577/navigateContent/80/Next?pId=1280318" title="Next"><span class="d2l-offscreen">Next</span>&nbsp;<img class="d2l-image d2l_1_79_593" src="./lab1_files/pixel.gif" alt=""></a></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="d2l-messagearea d2l_1_80_430" id="d2l_messagearea" role="alert" tabindex="0"></div><div id="ContentView" class="d2l-placeholder d2l-placeholder-live" aria-live="assertive">
+				</div>
+				<div>
+					<div id="d2l_1_2_711" class="d2l-placeholder d2l-placeholder-live" aria-live="assertive">
+						<div class="d2l-panel d2l_1_81_314">
+							<h2 class="d2l-heading vui-heading-3">Instructions</h2>
+							<div class="d2l-htmlblock" id="Instructions"><center>
+<h2>Lab 1</h2>
+<h4>For demonstration before the end of your labs session in week 3</h4>
+<h4>20 Marks</h4>
+</center>
+<p></p>
+<h2>Topics</h2>
+<ul>
+<li>CHASM</li>
+<li>the CRAPS Debugger</li>
+</ul>
+<h2>Purpose</h2>
+<ul>
+<li>To become familiar with the CRAPS debugging system and basic concepts of assembly language.&nbsp;</li>
+</ul>
+<h2>Assignment</h2>
+<p>Good morning (or afternoon) Ladies and Gentlemen.</p>
+<p>Attached to this Dropbox item you will find a source program,&nbsp;<i>lab1.csm</i>&nbsp;which you are to use in this lab. Note that this is the only place where you will be able to download this file.&nbsp; Because in this lab we will be working on Deepblue, you will be responsible for copying it to an appropriate location (using WinSCP or the like).</p>
+<p>This program has several deliberate mistakes; there is at least one fatal typo (not a tough one to find) and a few logic errors.</p>
+<p>Your assignment (should you choose to accept it or not) is firstly to get the program to assemble with&nbsp;<i>no</i>&nbsp;errors and&nbsp;<i>no</i>&nbsp;warnings, then to identify and fix the problems.</p>
+<p>FYI, the correct output of the program is:</p>
+<pre>	Hello there!
+	Bye now!
+</pre>
+<p>You will need to confirm that the arithmetic instructions and the loads and stores worked correctly by using display commands to check the registers and the contents of memory.</p>
+<p>You must be able to answer the following questions (or show me how to find out) when you demo the lab:</p>
+<p></p>
+<ul>
+<li>What are the addresses of W1, W2 and W3?</li>
+<li>What are the (hexadecimal) contents of W1, W2 and W3 after the program has run?</li>
+<li>Which flags are on/off immediately after the add instruction?</li>
+</ul>
+<p></p>
+<h2>Resources</h2>
+<p>A general introduction to using unix (and hence linux) can be found&nbsp;<a href="javascript://">here</a>; this is somewhat out of date (speak to its author) and contains far more material than you need to complete the COMP183 labs.</p>
+<p>Information on the CRAB (CRAPS BIOS) will be found in the <a href="https://online.camosun.ca/d2l/common/dialogs/quickLink/quickLink.d2l?ou=83577&type=content&rcode=Camosun-696162" target="_self">CRAB Reference</a>.&nbsp;</p>
+<p></p>
+<h2>Hand In</h2>
+<p>Nothing! -ish...&nbsp; As in COMP 176, your COMP183 assignments will be marked by your&nbsp;<i>demonstrating</i>&nbsp;them to me <strong><span style="text-decoration: underline;">during</span></strong> your lab session. This not only means showing me that the program works, but being able to explain the program (or parts of it) when I ask.</p>
+<p>Here is what you need to do in your demo:</p>
+<ol>
+<li>Run your program and show that its output is correct (e.g. craps lab1)</li>
+<li>Load your program into the debugger and then:</li>
+<li>Set a break point immediately after the add instructions</li>
+<li>Run the program up to the breakpoint</li>
+<li>Display the flags and the registers</li>
+<li>Let the program run to completion then display the contents of W1, W2 and W3 in hexadecimal&nbsp;<b>and</b>&nbsp;signed decimal.</li>
+</ol>
+<p>You will need to submit you source code after having demonstrated it via this Dropbox.&nbsp; You will loose marks if:</p>
+<ol>
+<li>Your source code is NOT submitted by the close of the lab availability window.</li>
+<li>You have not included your name, student ("C...") number, the date and time you demonstrated your lab, and at least one line containing the unique identifier I will give you when you have completed your demonstration.</li>
+</ol>
+<p>Note that although this lab is to be demonstrated during week 3, there will be another lab assignment published before then. This is&nbsp;<i>not</i>&nbsp;a two-week lab.</p>
+<p>This web page will self-destruct "real soon now".</p></div>
+							<h2 class="d2l-heading vui-offscreen">Attachments</h2>
+							<div class="d2l_1_82_632">
+								<div>
+									<div class="d2l-inline">
+										<span id="2074487" class="d2l-filelink"><span class="d2l-filelink-cont"><a class="d2l-filelink-link" href="https://online.camosun.ca/d2l/le/dropbox/83577/192761/DownloadAttachment?fid=2074487" target="_blank"><span class="d2l-filelink-link-icon d2l_1_83_965"></span><span class="d2l-filelink-link-text">lab1.csm</span><span class="d2l-filelink-filesize">(995 Bytes)</span></a></span></span></div>
+						</div>
+						<div class="d2l-sep d2l-sep-b"><hr></div>
+					</div>
+					<div>
+						<div id="SubmissionPlaceholder" class="d2l-placeholder d2l-placeholder-live" aria-live="assertive">
+							<div class="d2l-sep d2l-sep-s d2l-sep-t d2l-sep-b"><hr></div>
+							<h2 class="d2l-heading vui-heading-3 d2l-heading-half">Submissions</h2>
+							<div id="d2l_1_84_912" class="d2l-datalist-container d2l-datalist-style1" data-d2l-actionable-ns="D2L.LP.Web.UI.Desktop.Controls.DataList"><div class="d2l-datalist-summary d2l-hidden"><span class="d2l-datalist-summary-count-nosearch d2l-hidden">{count} items shown.</span><span class="d2l-datalist-summary-count-selected d2l-hidden"><strong>{count}</strong> items selected.</span><span class="d2l-datalist-summary-count-all-selected d2l-hidden">All items selected.</span><a class="vui-link vui-outline d2l-link d2l-datalist-summary-clear d2l-hidden" href="javascript:void(0);" onclick="D2L.O(&quot;__g1&quot;,11)();return false;">Clear Selection</a>
+							<div class="d2l-clear"></div>
+							</div>
+							<div class="d2l-msg-container d2l-msg-container-none  d2l-hidden d2l-datalist-empty"><div class="d2l-msg-container-inner"><div class="d2l-msg-container-text d2l_1_85_297">No submissions yet. Drag and drop to upload your assignment below.
+</div><div class="d2l-clear"></div>
+							</div></div>
+							<ul class="d2l-datalist">
+								<li class="d2l-datalist-item d2l-datalist-simpleitem">
+									<div class="d2l-datalist-item-content">
+										<div class="d2l-panel d2l_1_86_8">
+											<div class="d2l-left">
+												<div>
+													<span id="2075470" class="d2l-filelink"><span class="d2l-filelink-cont"><a class="d2l-filelink-link" href="https://online.camosun.ca/d2l/le/dropbox/83577/192761/DownloadSubmissionFile?fid=2075470&sid=771671" target="_blank"><span class="d2l-filelink-link-icon d2l_1_83_965"></span><span class="d2l-filelink-link-text">lab1.csm</span><span class="d2l-filelink-filesize">(979 Bytes)</span></a></span></span></div>
+										<div class="d2l-hidden d2l_1_87_9">
+											<div class="d2l-textblock d2l-textblock-secondary d2l-textblock-strong">Deleted</div>
+										</div>
+									</div>
+									<div class="d2l-right">
+										<div class="d2l-textblock d2l-textblock-secondary d2l-textblock-emphasis">Jan 13, 2015 1:52 PM</div>
+									</div>
+									<div class="d2l-clear"></div>
+									<div class="d2l-sep d2l-sep-t"><hr></div>
+									<div class="d2l-htmlblock"><p>Pavel Bolokhov, C0411819, Demonstrated on Jan 13, 2014 at 12:22pm.</p>
+<p>Code:&nbsp;<span>TB151-12-13-12:22</span></p>
+<p></p></div>
+								</div>
+							</div>
+							<div class="d2l-datalist-item-sep">
+								</div><div class="d2l-clear"></div>
+							</li>
+							<li class="d2l-datalist-item d2l-datalist-simpleitem d2l-datalist-lastchild">
+								<div class="d2l-datalist-item-content">
+									<div class="d2l-panel d2l_1_86_8">
+										<div class="d2l-left">
+											<div>
+												<span id="2075866" class="d2l-filelink"><span class="d2l-filelink-cont"><a class="d2l-filelink-link" href="https://online.camosun.ca/d2l/le/dropbox/83577/192761/DownloadSubmissionFile?fid=2075866&sid=771846" target="_blank"><span class="d2l-filelink-link-icon d2l_1_83_965"></span><span class="d2l-filelink-link-text">lab1.s</span><span class="d2l-filelink-filesize">(1.01 KB)</span></a></span></span></div>
+									<div class="d2l-hidden d2l_1_87_9">
+										<div class="d2l-textblock d2l-textblock-secondary d2l-textblock-strong">Deleted</div>
+									</div>
+								</div>
+								<div class="d2l-right">
+									<div class="d2l-textblock d2l-textblock-secondary d2l-textblock-emphasis">Jan 14, 2015 8:57 AM</div>
+								</div>
+								<div class="d2l-clear"></div>
+								<div class="d2l-sep d2l-sep-t"><hr></div>
+								<div class="d2l-htmlblock"><p>lab1 in gnu assembler</p>
+<p></p></div>
+							</div>
+						</div>
+						<div class="d2l-datalist-item-sep">
+							</div><div class="d2l-clear"></div>
+						</li>
+					</ul>
+					</div>
+					<div id="d2l_1_1_407" class="d2l-placeholder d2l-placeholder-live" aria-live="assertive">
+						<form data-method="post" data-scope="" class="d2l-form d2l-form-track-changes d2l-form-primary" id="SubmissionForm" onsubmit="return false;">
+							<div data-method="post" data-scope="" class="d2l-form d2l-form-nested" id="d2l_1_88_564" onsubmit="return false;">
+								<ul class="d2l-fieldgroup">
+									<li class="d2l-form-tracker d2l-field-above d2l-field-required d2l_1_89_197" role="presentation">
+										<label for="Submissions" class="d2l-field d2l-offscreen">Upload Submission<span class="d2l-required-indicator"></span></label>
+										<div class="d2l_1_90_140">
+											<div id="Submissions" class="d2l-fileinput d2l_1_92_528 d2l-filedrop d2l-filedrop-default-style d2l-filedrop-add d2l-form-tracked-element d2l-fileinput-add" data-d2l-ismultiple="false" data-d2l-msg-uploadcomplete="Complete." data-d2l-validatefocus="d2l_1_93_187"><div class="d2l-fileinput-drop-msg">Drop file here, or click below!</div>
+											<div class="d2l-fileinput-errors"><div class="d2l-fileinput-filecount-error d2l-hidden">Only one file allowed.</div>
+											<div class="d2l-fileinput-filetype-error d2l-hidden">Invalid file type.</div>
+											<div class="d2l-fileinput-filesize-error d2l-hidden">Maximum file size is 1 GB.</div>
+											<div class="d2l-fileinput-fileupload-error d2l-hidden">Oops, your file could not be uploaded.</div>
+											</div>
+											<div class="d2l-fileinput-addbuttons"><a class="vui-button d2l-button" id="d2l_1_93_187" role="button" tabindex="0"><span class="vui-icon-d2l d2l_1_94_148"></span> Upload</a>
+											<a class="vui-button d2l-button" id="d2l_1_95_555" role="button" tabindex="0">Record Audio</a>
+											<a class="vui-button d2l-button" id="d2l_1_96_946" role="button" tabindex="0">Choose Existing</a>
+											</div>
+											<div id="d2l_1_91_416" class="d2l-fileinput-upload-progress d2l-hidden" role="progressbar" aria-aria-valuemin="0" aria-aria-valuemax="100" aria-aria-valuenow="0"><div class="d2l-fileinput-upload-progress-bar"><div class="d2l-fileinput-upload-progress-bar-text"></div>
+											<div class="d2l-fileinput-upload-progress-bar-inner"></div>
+											<a class="d2l-imagelink d2l-right d2l_1_98_452 vui-outline" id="d2l_1_97_923" href="javascript:void(0);" onclick="return false;" title="Cancel Upload" role="button"><span class="d2l-offscreen">Cancel Upload</span></a>
+											<div class="d2l-clear"></div>
+											</div>
+											</div>
+											<ul class="d2l-fileinput-filelist d2l-hidden"><li id="d2l_1_99_462" class="d2l-fileinput-placeholder"><input type="hidden" name="Submissions$files$ActionType" id="Submissions$files$ActionType" value="None">
+											<input type="hidden" name="Submissions$files$PluginKey" id="Submissions$files$PluginKey" value="">
+											<input type="hidden" name="Submissions$files$Id" id="Submissions$files$Id" value="">
+											<input type="hidden" name="Submissions$files$FileSize" id="Submissions$files$FileSize" value="">
+											</li>
+											</ul>
+											<span class="d2l-validator" id="d2l_1_100_373"></span>
+											<span class="d2l-validator" id="d2l_1_101_20"></span>
+											</div>
+										</div>
+										<div class="d2l-hidden d2l_1_90_140" id="CommentContainerId">
+											<h2 class="d2l-heading vui-heading-3">Comments</h2>
+											<div id="Comments" class="d2l-htmleditor d2l-htmleditor-wysiwyg d2l-htmleditor-frosted d2l-htmleditor-compact d2l-form-tracked-element" role="application" style="visibility: visible; width: 100%;" data-d2l-editor-title="Comments" data-d2l-editor-isinline="true" data-d2l-filtermode="Strict" data-d2l-htmlorgunitid="83577" data-d2l-height="100px" data-d2l-width="100%" data-d2l-toolbar-toggle-hide="Hide Extra Components" data-d2l-toolbar-toggle-show="Show All Components">
+												<a class="d2l-htmleditor-skiptoolbars" href="javascript:void(0);" data-onclick="D2L.O(&quot;__g1&quot;,16)();" accesskey="q"><span class="d2l-htmleditor-skiptoolbars-inner">Skip Toolbars</span></a>
+												<div class="d2l-htmleditor-header d2l-htmleditor-toolbar" data-d2l-toolbar-label="Header" aria-label="Header" role="toolbar">
+													<div class="d2l-box-layout d2l_1_14_453">
+														<div class="d2l-box d2l-box-h d2l-htmleditor-component-container d2l_1_57_816">
+															<div class="d2l-htmleditor-group d2l-htmleditor-hide1"><span class="d2l-htmleditor-toolbar-item"><div class="d2l-menuflyout d2l-menuflyout-closed d2l-htmleditor-menuflyout d2l-left" id="d2l_1_102_893">
+																<a class="d2l-menuflyout-opener d2l-clickable" onclick="return false;" tabindex="0" role="button" aria-controls="d2l_1_106_363" aria-labelledby="d2l_c_6_579">
+																	<img class="d2l-image d2l-menuflyout-icon d2l_1_103_972" src="./lab1_files/pixel.gif" alt="">
+																	<span class="d2l-menuflyout-text d2l-offscreen" id="d2l_c_6_579">Edit</span><div class="d2l-menuflyout-spacer">&nbsp;</div><span class="d2l-menuflyout-arrow d2l_1_104_481"></span>
+																	<div class="d2l-clear"></div>
+																</a>
+																<div class="d2l-menuflyout-contents d2l_1_105_799" id="d2l_1_106_363" aria-hidden="true" aria-expanded="false" tabindex="0" aria-live="assertive" aria-labelledby="d2l_c_6_579">
+																	<div class="d2l-menuflyout-group-container">
+																		<ul class="d2l-htmleditor-menuflyout-list"><li class="d2l-htmleditor-menuflyout-item"><a class="d2l-htmleditor-buttonmenuitem d2l-htmleditor-button-disabled" id="d2l_1_107_7" data-d2l-key="undo" role="button" tabindex="0" aria-disabled="true"><img class="d2l-htmleditor-buttonmenuitem-icon d2l_1_108_602" src="./lab1_files/pixel.gif" alt=""><span class="d2l-htmleditor-buttonmenuitem-text">Undo (Ctrl+Z)</span><div class="d2l-clear"></div>
+																		</a></li><li class="d2l-htmleditor-menuflyout-item"><a class="d2l-htmleditor-buttonmenuitem d2l-htmleditor-button-disabled" id="d2l_1_109_907" data-d2l-key="redo" role="button" tabindex="0" aria-disabled="true"><img class="d2l-htmleditor-buttonmenuitem-icon d2l_1_110_836" src="./lab1_files/pixel.gif" alt=""><span class="d2l-htmleditor-buttonmenuitem-text">Redo (Ctrl+Y)</span><div class="d2l-clear"></div>
+																		</a></li><li class="d2l-htmleditor-menuflyout-item"><a class="d2l-htmleditor-buttonmenuitem" id="d2l_1_111_838" data-d2l-key="cut" role="button" tabindex="0"><img class="d2l-htmleditor-buttonmenuitem-icon d2l_1_112_216" src="./lab1_files/pixel.gif" alt=""><span class="d2l-htmleditor-buttonmenuitem-text">Cut</span><div class="d2l-clear"></div>
+																		</a></li><li class="d2l-htmleditor-menuflyout-item"><a class="d2l-htmleditor-buttonmenuitem" id="d2l_1_113_48" data-d2l-key="copy" role="button" tabindex="0"><img class="d2l-htmleditor-buttonmenuitem-icon d2l_1_114_738" src="./lab1_files/pixel.gif" alt=""><span class="d2l-htmleditor-buttonmenuitem-text">Copy</span><div class="d2l-clear"></div>
+																		</a></li><li class="d2l-htmleditor-menuflyout-item"><a class="d2l-htmleditor-buttonmenuitem" id="d2l_1_115_566" data-d2l-key="paste" role="button" tabindex="0"><img class="d2l-htmleditor-buttonmenuitem-icon d2l_1_116_704" src="./lab1_files/pixel.gif" alt=""><span class="d2l-htmleditor-buttonmenuitem-text">Paste</span><div class="d2l-clear"></div>
+																		</a></li><li class="d2l-htmleditor-menuflyout-item"><a class="d2l-htmleditor-buttonmenuitem" id="d2l_1_117_339" data-d2l-key="pastetext" role="button" tabindex="0"><img class="d2l-htmleditor-buttonmenuitem-icon d2l_1_118_67" src="./lab1_files/pixel.gif" alt=""><span class="d2l-htmleditor-buttonmenuitem-text">Paste as Plain Text</span><div class="d2l-clear"></div>
+																		</a></li><li class="d2l-htmleditor-menuflyout-item"><a class="d2l-htmleditor-buttonmenuitem" id="d2l_1_119_100" data-d2l-key="pasteword" role="button" tabindex="0"><img class="d2l-htmleditor-buttonmenuitem-icon d2l_1_120_823" src="./lab1_files/pixel.gif" alt=""><span class="d2l-htmleditor-buttonmenuitem-text">Paste from Word</span><div class="d2l-clear"></div>
+																		</a></li></ul></div>
+																</div>
+															</div>
+															</span></div><div class="d2l-htmleditor-group d2l-htmleditor-hide1"><span class="d2l-htmleditor-toolbar-item"><a class="d2l-htmleditor-button" id="d2l_1_121_257" title="Bold (Ctrl+B)" role="button" aria-label="Bold (Ctrl+B)" tabindex="0"><img class="d2l-htmleditor-button-icon d2l_1_122_14" src="./lab1_files/pixel.gif" alt=""></a></span><span class="d2l-htmleditor-toolbar-item"><a class="d2l-htmleditor-button" id="d2l_1_123_146" title="Italic (Ctrl+I)" role="button" aria-label="Italic (Ctrl+I)" tabindex="0"><img class="d2l-htmleditor-button-icon d2l_1_124_474" src="./lab1_files/pixel.gif" alt=""></a></span><span class="d2l-htmleditor-toolbar-item"><div class="d2l-menuflyout d2l-menuflyout-closed d2l-htmleditor-menuflyout d2l-left" id="d2l_1_125_991">
+																<a class="d2l-menuflyout-opener d2l-clickable" onclick="return false;" tabindex="0" role="button" aria-controls="d2l_1_126_770" aria-labelledby="d2l_c_7_41">
+																	<span class="d2l-menuflyout-text d2l-offscreen" id="d2l_c_7_41">More Text actions.</span><div class="d2l-menuflyout-spacer">&nbsp;</div><span class="d2l-menuflyout-arrow d2l_1_104_481"></span>
+																	<div class="d2l-clear"></div>
+																</a>
+																<div class="d2l-menuflyout-contents d2l_1_105_799" id="d2l_1_126_770" aria-hidden="true" aria-expanded="false" tabindex="0" aria-live="assertive" aria-labelledby="d2l_c_7_41">
+																	<div class="d2l-menuflyout-group-container">
+																		<ul class="d2l-htmleditor-menuflyout-list"><li class="d2l-htmleditor-menuflyout-item"><a class="d2l-htmleditor-buttonmenuitem" id="d2l_1_127_400" data-d2l-key="underline" role="button" tabindex="0"><img class="d2l-htmleditor-buttonmenuitem-icon d2l_1_128_774" src="./lab1_files/pixel.gif" alt=""><span class="d2l-htmleditor-buttonmenuitem-text">Underline (Ctrl+U)</span><div class="d2l-clear"></div>
+																		</a></li><li class="d2l-htmleditor-menuflyout-item"><a class="d2l-htmleditor-buttonmenuitem" id="d2l_1_129_461" data-d2l-key="strikethrough" role="button" tabindex="0"><img class="d2l-htmleditor-buttonmenuitem-icon d2l_1_130_220" src="./lab1_files/pixel.gif" alt=""><span class="d2l-htmleditor-buttonmenuitem-text">Strikethrough</span><div class="d2l-clear"></div>
+																		</a></li><li class="d2l-htmleditor-menuflyout-item"><a class="d2l-htmleditor-buttonmenuitem" id="d2l_1_131_207" data-d2l-key="sub" role="button" tabindex="0"><img class="d2l-htmleditor-buttonmenuitem-icon d2l_1_132_406" src="./lab1_files/pixel.gif" alt=""><span class="d2l-htmleditor-buttonmenuitem-text">Subscript</span><div class="d2l-clear"></div>
+																		</a></li><li class="d2l-htmleditor-menuflyout-item"><a class="d2l-htmleditor-buttonmenuitem" id="d2l_1_133_137" data-d2l-key="sup" role="button" tabindex="0"><img class="d2l-htmleditor-buttonmenuitem-icon d2l_1_134_219" src="./lab1_files/pixel.gif" alt=""><span class="d2l-htmleditor-buttonmenuitem-text">Superscript</span><div class="d2l-clear"></div>
+																		</a></li></ul></div>
+																</div>
+															</div>
+															</span></div><div class="d2l-htmleditor-group d2l-htmleditor-hide1"><span class="d2l-htmleditor-toolbar-item"><a class="d2l-htmleditor-button" id="d2l_1_135_409" title="Indent" role="button" aria-label="Indent" tabindex="0"><img class="d2l-htmleditor-button-icon d2l_1_136_420" src="./lab1_files/pixel.gif" alt=""></a></span><span class="d2l-htmleditor-toolbar-item"><a class="d2l-htmleditor-button" id="d2l_1_137_658" title="Unordered List" role="button" aria-label="Unordered List" tabindex="0"><img class="d2l-htmleditor-button-icon d2l_1_138_483" src="./lab1_files/pixel.gif" alt=""></a></span><span class="d2l-htmleditor-toolbar-item"><div class="d2l-menuflyout d2l-menuflyout-closed d2l-htmleditor-menuflyout d2l-left" id="d2l_1_139_113">
+																<a class="d2l-menuflyout-opener d2l-clickable" onclick="return false;" tabindex="0" role="button" aria-controls="d2l_1_140_932" aria-labelledby="d2l_c_8_71">
+																	<span class="d2l-menuflyout-text d2l-offscreen" id="d2l_c_8_71">More Paragraph Style actions.</span><div class="d2l-menuflyout-spacer">&nbsp;</div><span class="d2l-menuflyout-arrow d2l_1_104_481"></span>
+																	<div class="d2l-clear"></div>
+																</a>
+																<div class="d2l-menuflyout-contents d2l_1_105_799" id="d2l_1_140_932" aria-hidden="true" aria-expanded="false" tabindex="0" aria-live="assertive" aria-labelledby="d2l_c_8_71">
+																	<div class="d2l-menuflyout-group-container">
+																		<ul class="d2l-htmleditor-menuflyout-list"><li class="d2l-htmleditor-menuflyout-item"><a class="d2l-htmleditor-buttonmenuitem d2l-htmleditor-button-disabled" id="d2l_1_141_0" data-d2l-key="outdent" role="button" tabindex="0" aria-disabled="true"><img class="d2l-htmleditor-buttonmenuitem-icon d2l_1_142_405" src="./lab1_files/pixel.gif" alt=""><span class="d2l-htmleditor-buttonmenuitem-text">Outdent</span><div class="d2l-clear"></div>
+																		</a></li><li class="d2l-htmleditor-menuflyout-item"><a class="d2l-htmleditor-buttonmenuitem" id="d2l_1_143_655" data-d2l-key="numlist" role="button" tabindex="0"><img class="d2l-htmleditor-buttonmenuitem-icon d2l_1_144_360" src="./lab1_files/pixel.gif" alt=""><span class="d2l-htmleditor-buttonmenuitem-text">Ordered List</span><div class="d2l-clear"></div>
+																		</a></li><li class="d2l-htmleditor-menuflyout-item"><a class="d2l-htmleditor-buttonmenuitem" id="d2l_1_145_301" data-d2l-key="justifyleft" role="button" tabindex="0"><img class="d2l-htmleditor-buttonmenuitem-icon d2l_1_146_200" src="./lab1_files/pixel.gif" alt=""><span class="d2l-htmleditor-buttonmenuitem-text">Align Left</span><div class="d2l-clear"></div>
+																		</a></li><li class="d2l-htmleditor-menuflyout-item"><a class="d2l-htmleditor-buttonmenuitem" id="d2l_1_147_480" data-d2l-key="justifyright" role="button" tabindex="0"><img class="d2l-htmleditor-buttonmenuitem-icon d2l_1_148_448" src="./lab1_files/pixel.gif" alt=""><span class="d2l-htmleditor-buttonmenuitem-text">Align Right</span><div class="d2l-clear"></div>
+																		</a></li><li class="d2l-htmleditor-menuflyout-item"><a class="d2l-htmleditor-buttonmenuitem" id="d2l_1_149_581" data-d2l-key="justifyfull" role="button" tabindex="0"><img class="d2l-htmleditor-buttonmenuitem-icon d2l_1_150_849" src="./lab1_files/pixel.gif" alt=""><span class="d2l-htmleditor-buttonmenuitem-text">Align Full</span><div class="d2l-clear"></div>
+																		</a></li><li class="d2l-htmleditor-menuflyout-item"><a class="d2l-htmleditor-buttonmenuitem" id="d2l_1_151_606" data-d2l-key="justifycenter" role="button" tabindex="0"><img class="d2l-htmleditor-buttonmenuitem-icon d2l_1_152_856" src="./lab1_files/pixel.gif" alt=""><span class="d2l-htmleditor-buttonmenuitem-text">Align Center</span><div class="d2l-clear"></div>
+																		</a></li><li class="d2l-htmleditor-menuflyout-item"><a class="d2l-htmleditor-buttonmenuitem" id="d2l_1_153_351" role="button" tabindex="0"><img class="d2l-htmleditor-buttonmenuitem-icon d2l_1_154_638" src="./lab1_files/pixel.gif" alt=""><span class="d2l-htmleditor-buttonmenuitem-text">Left to Right</span><div class="d2l-clear"></div>
+																		</a></li><li class="d2l-htmleditor-menuflyout-item"><a class="d2l-htmleditor-buttonmenuitem" id="d2l_1_155_116" role="button" tabindex="0"><img class="d2l-htmleditor-buttonmenuitem-icon d2l_1_156_6" src="./lab1_files/pixel.gif" alt=""><span class="d2l-htmleditor-buttonmenuitem-text">Right to Left</span><div class="d2l-clear"></div>
+																		</a></li></ul></div>
+																</div>
+															</div>
+															</span></div><div class="d2l-htmleditor-group d2l-htmleditor-hide1"><span class="d2l-htmleditor-toolbar-item"><a class="d2l-htmleditor-button" id="d2l_1_157_746" title="Insert Link" role="button" aria-label="Insert Link" tabindex="0"><img class="d2l-htmleditor-button-icon d2l_1_158_497" src="./lab1_files/pixel.gif" alt=""></a></span><span class="d2l-htmleditor-toolbar-item"><div class="d2l-menuflyout d2l-menuflyout-closed d2l-htmleditor-menuflyout d2l-left" id="d2l_1_159_489">
+																<a class="d2l-menuflyout-opener d2l-clickable" onclick="return false;" tabindex="0" role="button" aria-controls="d2l_1_160_28" aria-labelledby="d2l_c_9_223">
+																	<span class="d2l-menuflyout-text d2l-offscreen" id="d2l_c_9_223">More Insert actions.</span><div class="d2l-menuflyout-spacer">&nbsp;</div><span class="d2l-menuflyout-arrow d2l_1_104_481"></span>
+																	<div class="d2l-clear"></div>
+																</a>
+																<div class="d2l-menuflyout-contents d2l_1_105_799" id="d2l_1_160_28" aria-hidden="true" aria-expanded="false" tabindex="0" aria-live="assertive" aria-labelledby="d2l_c_9_223">
+																	<div class="d2l-menuflyout-group-container">
+																		<ul class="d2l-htmleditor-menuflyout-list"><li class="d2l-htmleditor-menuflyout-item"><a class="d2l-htmleditor-buttonmenuitem" id="d2l_1_161_962" role="button" tabindex="0"><img class="d2l-htmleditor-buttonmenuitem-icon d2l_1_162_232" src="./lab1_files/pixel.gif" alt=""><span class="d2l-htmleditor-buttonmenuitem-text">Insert Symbol</span><div class="d2l-clear"></div>
+																		</a></li><li class="d2l-htmleditor-menuflyout-item"><a class="d2l-htmleditor-buttonmenuitem" id="d2l_1_163_141" role="button" tabindex="0"><img class="d2l-htmleditor-buttonmenuitem-icon d2l_1_164_686" src="./lab1_files/pixel.gif" alt=""><span class="d2l-htmleditor-buttonmenuitem-text">Insert Line</span><div class="d2l-clear"></div>
+																		</a></li><li class="d2l-htmleditor-menuflyout-item"><a class="d2l-htmleditor-buttonmenuitem d2l-htmleditor-button-disabled" id="d2l_1_165_628" role="button" tabindex="0" aria-disabled="true"><img class="d2l-htmleditor-buttonmenuitem-icon d2l_1_166_431" src="./lab1_files/pixel.gif" alt=""><span class="d2l-htmleditor-buttonmenuitem-text">Insert Attributes</span><div class="d2l-clear"></div>
+																		</a></li></ul></div>
+																</div>
+															</div>
+															</span></div><div class="d2l-clear"></div>
+														</div>
+													</div>
+													<div class="d2l-clear"></div>
+												</div>
+												<textarea id="Comments$html" name="Comments$html" class="d2l-htmleditor-textarea" aria-hidden="true" style="display: none;"></textarea><span role="application" id="Comments$html_parent" class="mceEditor defaultSkin"><table role="presentation" id="Comments$html_tbl" class="mceLayout" cellspacing="0" cellpadding="0" style="width: 100%; height: 100%;"><tbody><tr class="mceFirst mceLast"><td class="mceIframeContainer mceFirst mceLast" style="width: 100%; height: 120px;"><iframe id="Comments$html_ifr" src="javascript:""" frameborder="0" allowtransparency="true" title="Comments" style="width: 100%; height: 100%; display: block;"></iframe></td></tr></tbody></table></span>
+												<div class="d2l-htmleditor-files" data-d2l-scope="Comments"></div>
+												<input type="hidden" name="Comments$id" id="Comments$id" value="Comments">
+												<input type="hidden" name="Comments$htmlOrgUnitId" id="Comments$htmlOrgUnitId" value="83577">
+												<div class="d2l-htmleditor-footer d2l-htmleditor-toolbar" data-d2l-toolbar-label="Footer" aria-label="Footer" role="toolbar">
+													<div class="d2l-htmleditor-footer-inner">
+														<div class="d2l-htmleditor-group d2l-htmleditor-hide1"><span class="d2l-htmleditor-toolbar-item"><a class="d2l-htmleditor-button" id="d2l_1_167_79" title="Check Spelling" role="button" aria-label="Check Spelling" tabindex="0"><img class="d2l-htmleditor-button-icon d2l_1_168_827" src="./lab1_files/pixel.gif" alt=""></a></span><span class="d2l-htmleditor-toolbar-item"><a class="d2l-htmleditor-button" id="d2l_1_169_329" title="HTML Source Editor" role="button" aria-label="HTML Source Editor" tabindex="0"><img class="d2l-htmleditor-button-icon d2l_1_170_145" src="./lab1_files/pixel.gif" alt=""></a></span><span class="d2l-htmleditor-toolbar-item"><a class="d2l-htmleditor-button" id="d2l_1_171_45" title="Preview" role="button" aria-label="Preview" tabindex="0"><img class="d2l-htmleditor-button-icon d2l_1_172_855" src="./lab1_files/pixel.gif" alt=""></a></span><span class="d2l-htmleditor-toolbar-item"><a class="d2l-htmleditor-button" id="d2l_1_173_952" title="Toggle Fullscreen" role="button" aria-label="Toggle Fullscreen" tabindex="0"><img class="d2l-htmleditor-button-icon d2l_1_174_166" src="./lab1_files/pixel.gif" alt=""></a></span></div><img class="d2l-htmleditor-resize" src="./lab1_files/resize.png"><div class="d2l-clear"></div>
+													</div>
+													<div class="d2l-clear"></div>
+												</div>
+											</div>
+										</div>
+									</li>
+								</ul>
+								<a class="vui-button d2l-button vui-button-primary d2l-hidden" id="Submit" role="button" tabindex="0">Submit to Dropbox </a>
+							<input type="text" class="d2l-hidden"></div>
+						<input type="text" class="d2l-hidden"></form>
+					</div>
+				</div>
+			</div>
+			<div class="d2l-clear"></div>
+		</div>
+	</div>
+</div>
+<div class="d2l_1_175_822">
+	<div class="d2l-left">
+	</div>
+	<div class="d2l-right">
+		<div class="d2l_1_77_858 d2l-inline">
+			<div class="d2l-iterator">
+				<a class="d2l-iterator-button d2l-button-nml d2l-iterator-button-prev d2l-iterator-button-notext" role="button" href="https://online.camosun.ca/d2l/le/content/83577/navigateContent/80/Previous?pId=1280318" title="Previous "><img class="d2l-image d2l_1_78_599" src="./lab1_files/pixel.gif" alt=""><span class="d2l-offscreen">Previous </span>&nbsp;</a><a class="d2l-iterator-button d2l-button-nml d2l-iterator-button-next d2l-iterator-button-notext" role="button" href="https://online.camosun.ca/d2l/le/content/83577/navigateContent/80/Next?pId=1280318" title="Next"><span class="d2l-offscreen">Next</span>&nbsp;<img class="d2l-image d2l_1_79_593" src="./lab1_files/pixel.gif" alt=""></a></div>
+		</div>
+	</div>
+	<div class="d2l-clear"></div>
+</div>
+<div class="d2l-sep d2l-sep-s d2l-sep-t"><hr></div>
+<div class="d2l_1_176_850">
+	<div class="d2l-collapsepane">
+		<div class="d2l-collapsepane-header d2l_1_179_173 d2l_1_180_791">
+			<span id="d2l_1_178_784" class="d2l-expandcollapse d2l-right">
+				<a class="d2l-imagelink d2l-right d2l-hidden d2l_1_182_951 vui-outline" id="d2l_1_181_289" href="javascript:void(0);" onclick="return false;" title="Expand Activity Details" role="button"><span class="d2l-offscreen">Expand Activity Details</span></a>
+				<a class="d2l-imagelink d2l-right d2l_1_184_611 vui-outline" id="d2l_1_183_193" href="javascript:void(0);" onclick="return false;" title="Collapse Activity Details" role="button"><span class="d2l-offscreen">Collapse Activity Details</span></a>
+			</span>
+			<h2 class="d2l-heading vui-heading-3 d2l-left" id="d2l_1_178_784_h">Activity Details</h2>
+			<div class="d2l-clear"></div>
+		</div>
+		<div class="d2l-collapsepane-content d2l_1_185_612 d2l_1_186_350 d2l_1_187_54" id="d2l_1_177_357">
+			<div class="d2l-box-layout d2l_1_14_453">
+				<div class="d2l-box d2l-box-h d2l_1_58_641 d2l_1_57_816">
+					<div class="d2l_1_188_497 d2l_1_189_102">
+						<div class="d2l-left">
+							<div id="d2l_1_5_435" class="d2l-placeholder d2l-placeholder-live" aria-live="assertive">
+								<form data-method="post" data-scope="restrictions$" class="d2l-form d2l-form-primary" id="d2l_1_3_876" onsubmit="return false;">
+									<div>
+										<div class="d2l_1_190_402 d2l-inline">
+											<img class="d2l-image d2l_1_191_672 d2l_1_192_161" src="./lab1_files/pixel.gif" alt="">
+											<span class="d2l-textblock d2l-textblock-emphasis d2l_1_193_993">Starts Jan 12, 2015 8:30 AM</span><span class="d2l-textblock d2l-textblock-emphasis d2l_1_193_993">Ends Jan 24, 2015 11:59 PM</span></div>
+									</div>
+								<input type="text" class="d2l-hidden"></form>
+							</div>
+						</div>
+						<div class="d2l-clear"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="ResultDetails" class="d2l-placeholder d2l-placeholder-inner d2l-placeholder-live" aria-live="assertive">
+</div>
+<div class="d2l-sep d2l-sep-s d2l-sep-t d2l-sep-b"><hr></div>
+<div id="StatusPlaceholder" class="d2l-placeholder d2l-placeholder-live" aria-live="assertive">
+	<div class="d2l-textblock d2l-textblock-secondary d2l-textblock-emphasis"></div>
+</div>
+</div>
+</div>
+<script type="text/javascript" src="./lab1_files/jquery-1.10.2-ui-1.10.3.min.js"></script>
+		<script type="text/javascript" src="./lab1_files/valenceui.min.js"></script>
+		<script type="text/javascript" src="./lab1_files/D2L.LP.Web.Desktop.default.js"></script>
+		<script type="text/javascript" src="./lab1_files/D2L.LE.Content.ContentViewer.default.js"></script>
+		<script type="text/javascript" src="./lab1_files/D2L.LE.Content.Web.Desktop.default.js"></script>
+		<script type="text/javascript" src="./lab1_files/D2L.LE.ToolIntegration.Content.default.js"></script>
+		<script type="text/javascript" src="./lab1_files/langterms"></script>
+		<script type="text/javascript">
+		//<![CDATA[
+			D2L.LP.Web.UI.Events.OnInit.AddListener( function() {
+D2L.O("__g1",52)();
+D2L.O("__g1",53)();
+D2L.O("__g1",54)();
+D2L.O("__g1",55)();
+D2L.O("__g1",56)();
+D2L.O("__g1",57)();
+D2L.O("__g1",58)();
+D2L.O("__g1",59)();
+D2L.O("__g1",60)();
+D2L.O("__g1",61)();
+D2L.O("__g1",62)();
+D2L.O("__g1",63)();
+} );
+
+			D2L.LP.Web.UI.Events.OnLoad.AddListener( function() {
+D2L.O("__g1",64)();
+D2L.O("__g1",65)();
+} );
+
+			D2L.OR={
+"d2l_1_17_945":{"MenuFlyout.OpenFirstFunction":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.PartialRendering.PartialRender\",\"P\":[{\"_type\":\"id\",\"Value\":\"courseSelectorId\"},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Rpc.ConnectPartial\",\"P\":[{\"_type\":\"id\",\"Value\":\"courseSelectorId\"},\"GET\",{\"_type\":\"url\",\"Url\":\"\/d2l\/lp\/courseSelector\/83577\/InitPartial\"},{\"_type\":\"D2L.LP.Util.Dictionary\"},{\"_type\":\"D2L.LP.Web.UI.Rpc.RpcOptions\",\"keepAlive\":true}],\"D\":true},0],\"D\":true}"}
+,
+"courseSelectorId":{"0":"{\"_type\":\"D2L.LP.Web.UI.Html.PartialRendering.PartialHtmlRenderContext\",\"HeadingLevel\":2,\"ValidClassNames\":[],\"Scope\":\"\"}"}
+,
+"d2l_1_9_647":{"MenuFlyout.OpenFunction":"{\"_type\":\"pipe\",\"P\":[{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.JavaScript.If\",\"P\":[{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Html.JavaScript.CompareBoolean\",\"P\":[1,{\"_type\":\"call\",\"N\":\"D2L.VG\",\"P\":[\"ab_status_Messages\"]},true]},{\"_type\":\"pipe\",\"P\":[{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.PartialRendering.PartialRender\",\"P\":[{\"_type\":\"id\",\"Value\":\"AB_DL_PH_Messages\"},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Rpc.ConnectPartial\",\"P\":[{\"_type\":\"id\",\"Value\":\"AB_DL_PH_Messages\"},\"GET\",{\"_type\":\"call\",\"N\":\"D2L.LP.Web.Mvc.RouteLocation.Create\",\"P\":[\"\/d2l\/MiniBar\/{orgUnitId}\/ActivityFeed\/{action}\",{\"_type\":\"D2L.LP.Util.Dictionary\",\"Category\":2},{\"_type\":\"D2L.LP.Util.Dictionary\",\"action\":\"GetAlerts\",\"orgUnitId\":83577}]},{\"_type\":\"D2L.LP.Util.Dictionary\"},{\"_type\":\"D2L.LP.Web.UI.Rpc.RpcOptions\",\"keepAlive\":true}],\"D\":true},0],\"D\":true}]}],\"D\":true},{\"_type\":\"func\",\"N\":\"D2L.VS\",\"P\":[\"ab_status_Messages\",false]},{\"_type\":\"func\",\"N\":\"D2L.LP.ActivityBar.OpenBucket\",\"P\":[\"alert_bucket_Messages\"]}]}",
+"MenuFlyout.CloseFunction":"{\"_type\":\"func\",\"N\":\"D2L.LP.ActivityBar.CloseBucket\",\"P\":[\"alert_bucket_Messages\"]}"}
+,
+"alert_bucket_Messages":{"aria-message":"\"You have new Messages\"",
+"title":"\"Message alerts\"",
+"new-alert-title":"\"Message alerts - You have new alerts\"",
+"flyout-id":"{\"_type\":\"id\",\"Value\":\"d2l_1_9_647\"}"}
+,
+"__g1":{"0":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.Dom.OpenWindow\",\"P\":[\"D2L.LE.Pager\",{\"_type\":\"url\",\"Url\":\"\/d2l\/p\/le\/pager\/83577\"},650,730,false,false]}",
+"1":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.ReturnPoints.Set\",\"P\":[\"D2L.UXP.Profile.6654.56036\"]}",
+"2":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.ReturnPoints.Set\",\"P\":[\"D2L.LP.Notification.Settings.83577\"]}",
+"3":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.ReturnPoints.Set\",\"P\":[\"D2L.UXP.Preferences.83577\"]}",
+"4":"{\"_type\":\"func\",\"N\":\"D2L.PT.Auth.Logout\",\"P\":[\"\/d2l\/logout\"]}",
+"5":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.Dom.OpenWindow\",\"P\":[\"NavbarLink_s_D2L.LE.Glossary.NavBarLinks.Glossary\",{\"_type\":\"url\",\"Url\":\"\/d2l\/lms\/glossary\/glossary.d2l?ou=83577\"},800,600,false,false]}",
+"6":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.PartialRendering.PartialRender\",\"P\":[{\"_type\":\"id\",\"Value\":\"ContentNavigator\"},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Rpc.ConnectPartial\",\"P\":[{\"_type\":\"id\",\"Value\":\"ContentNavigator\"},\"GET\",{\"_type\":\"url\",\"Url\":\"\/d2l\/le\/content\/83577\/viewobject\/1280320\/PartialNavigator?mId=1280318\"},{\"_type\":\"D2L.LP.Util.Dictionary\"},{\"_type\":\"D2L.LP.Web.UI.Rpc.RpcOptions\",\"keepAlive\":true}],\"D\":true},0],\"D\":true}",
+"7":"{\"_type\":\"pipe\",\"P\":[{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.Dom.Navigate\",\"P\":[{\"_type\":\"url\",\"Url\":\"\/d2l\/le\/content\/83577\/Home?itemIdentifier=TOC\"}]}]}",
+"8":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.ContextMenu.Open\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_pageTitleActions\"},{\"_type\":\"id\",\"Value\":\"d2l_1_7_164\"},\"d2l_1_68_344\",null]}",
+"9":"{\"_type\":\"pipe\",\"P\":[{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.Dom.SetIsDisplayed\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_72_587\"},true]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.Dom.SetIsDisplayed\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_71_300\"},false]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.Dom.Focus\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_72_587\"}]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Rpc.Connect\",\"P\":[\"POST\",{\"_type\":\"url\",\"Url\":\"\/d2l\/le\/content\/83577\/viewContent\/1280320\/ToggleBookmark?bookmarkStatus=1\"}],\"D\":true}]}",
+"10":"{\"_type\":\"pipe\",\"P\":[{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.Dom.SetIsDisplayed\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_71_300\"},true]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.Dom.SetIsDisplayed\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_72_587\"},false]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.Dom.Focus\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_71_300\"}]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Rpc.Connect\",\"P\":[\"POST\",{\"_type\":\"url\",\"Url\":\"\/d2l\/le\/content\/83577\/viewContent\/1280320\/ToggleBookmark?bookmarkStatus=0\"}],\"D\":true}]}",
+"11":"{\"_type\":\"pipe\",\"P\":[{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.SelectAll.SetSelectionInfo\",\"P\":[{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.DataList.Summary.GetSelectAllIdByDataListId\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_84_912\"}]},{\"_type\":\"D2L.LP.Web.UI.Desktop.Controls.SelectAll+SelectionInfo\",\"type\":0,\"values\":\"\"}]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.SelectAll.SetIsSelectionReadOnly\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"d2l_1_84_912$selection\"},false]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.DataList.CheckboxItems.SetIsSelectionReadOnly\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_84_912\"},false]}]}",
+"12":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.Files.FileUpload.FileBrowse.Default.Browse\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_93_187\"},{\"_type\":\"D2L.LP.Web.UI.Html.Files.FileUpload.FileBrowse.Default.FileBrowseProvider+Settings\",\"BytesPerSlice\":10485760,\"ErrorMessages\":[\"Only one file allowed.\",\"Invalid file type.\",\"Maximum file size is 1 GB.\",\"Oops, your file could not be uploaded.\"],\"Extensions\":[\"*.*\"],\"IsMultipleAllowed\":false,\"IsStatusEnabled\":false,\"OnAbort\":{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.FileInput.OnDropAbort\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Submissions\"}]},\"OnError\":{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.FileInput.OnDropError\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Submissions\"},{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Html.Files.FileUpload.FileBrowse.Default.GetErrorNumber\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_93_187\"}]}]},\"OnFileComplete\":null,\"OnFilesComplete\":{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.FileInput.OnDropFilesComplete\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Submissions\"},{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Html.Files.FileUpload.FileBrowse.Default.GetFiles\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_93_187\"}]}],\"D\":true},\"OnFilesStarted\":{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.FileInput.OnDropStarted\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Submissions\"}]},\"OnProgress\":{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.FileInput.OnDropProgress\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_91_416\"},{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Html.Files.FileUpload.FileBrowse.Default.GetProgress\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_93_187\"}]}]},\"MaxFileSize\":1073741824,\"RestrictedExtensions\":[\"asp\",\"aspx\",\"exe\",\"bat\",\"dll\",\"com\",\"asa\",\"asax\",\"ascx\",\"ashx\",\"asmx\",\"axd\",\"cdx\",\"cer\",\"config\",\"idc\",\"cs\",\"csproj\",\"jsl\",\"licx\",\"rem\",\"resources\",\"resx\",\"shtm\",\"shtml\",\"soap\",\"stm\",\"vb\",\"vbproj\",\"vjsproj\",\"vsdisco\",\"webinfo\",\"ini\",\"msi\",\"msp\",\"scr\",\"sct\",\"wsf\",\"wsc\",\"vbs\",\"vbe\"],\"UploadLocation\":{\"_type\":\"url\",\"Url\":\"\/d2l\/lp\/fileupload\/83577?maxFileSize=1073741824\"}}]}",
+"13":"{\"_type\":\"pipe\",\"P\":[{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.FileInput.HideErrorMessages\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Submissions\"}]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.FileInput.RecordAudioFile.SaveAudio\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Submissions\"},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.MasterPages.Dialog.Open\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_95_555\"},{\"_type\":\"call\",\"N\":\"D2L.LP.Web.Mvc.RouteLocation.Create\",\"P\":[\"\/d2l\/lp\/fileinput\/{orgUnitId}\/{action}\",{\"_type\":\"D2L.LP.Util.Dictionary\"},{\"_type\":\"D2L.LP.Util.Dictionary\",\"orgUnitId\":83577,\"action\":\"recordaudio\"}]},{\"_type\":\"D2L.LP.Web.UI.Desktop.MasterPages.Dialog+OpenSettings\",\"AutoClose\":false,\"ShimType\":1}],\"D\":true}]}]}",
+"14":"{\"_type\":\"pipe\",\"P\":[{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.FileInput.HideErrorMessages\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Submissions\"}]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.FileInput.LegacyAddFile.AddFile\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Submissions\"},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Legacy.MasterPages.Dialog.Open\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_96_946\"},{\"_type\":\"url\",\"Url\":\"\/d2l\/common\/dialogs\/file\/main.d2l?ou=83577&af=OuFiles%2cSharedFiles%2cMyLocker%2cGroupLocker%2clearningportfolio%2cgooglefiledownloader&am=0&fsc=0&asc=0&mfs=1073741824&afid=0&uih=&f=\"},\"DialogCallback\",\"HandleResize\",\"files\",660,520,\"Close this Dialog\",[{\"_type\":\"D2L.LP.Web.UI.Legacy.MasterPages.DialogLegacy+ButtonData\",\"IsPrimary\":true,\"Key\":\"\",\"Param\":\"\",\"Text\":\"Add\",\"ResponseType\":1,\"IsEnabled\":true},{\"_type\":\"D2L.LP.Web.UI.Legacy.MasterPages.DialogLegacy+ButtonData\",\"IsPrimary\":false,\"Key\":\"\",\"Param\":\"\",\"Text\":\"Cancel\",\"ResponseType\":0,\"IsEnabled\":true}]],\"D\":true}]}]}",
+"15":"{\"_type\":\"pipe\",\"P\":[{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.Files.FileUpload.FileBrowse.Default.Abort\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_93_187\"}]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.Files.FileUpload.FileDrop.Default.Abort\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Submissions\"}]}]}",
+"16":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.Focus\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"}]}",
+"17":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.ExecuteCommand\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"},\"undo\"]}",
+"18":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.ExecuteCommand\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"},\"redo\"]}",
+"19":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.ExecuteCommand\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"},\"cut\"]}",
+"20":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.ExecuteCommand\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"},\"copy\"]}",
+"21":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.ExecuteCommand\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"},\"paste\"]}",
+"22":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.ExecuteCommand\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"},\"mcePasteText\"]}",
+"23":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditorComponents.PasteAction.PasteWord\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"},{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Desktop.MasterPages.Dialog.Open\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"},{\"_type\":\"url\",\"Url\":\"\/d2l\/lp\/htmleditor\/pasteword\"}],\"D\":true}]}",
+"24":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.ExecuteCommand\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"},\"bold\"]}",
+"25":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.ExecuteCommand\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"},\"italic\"]}",
+"26":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.ExecuteCommand\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"},\"underline\"]}",
+"27":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.ExecuteCommand\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"},\"strikethrough\"]}",
+"28":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.ExecuteCommand\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"},\"subscript\"]}",
+"29":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.ExecuteCommand\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"},\"superscript\"]}",
+"30":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.ExecuteCommand\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"},\"indent\"]}",
+"31":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.ExecuteCommand\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"},\"InsertUnorderedList\"]}",
+"32":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.ExecuteCommand\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"},\"outdent\"]}",
+"33":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.ExecuteCommand\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"},\"InsertOrderedList\"]}",
+"34":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.ExecuteCommand\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"},\"justifyleft\"]}",
+"35":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.ExecuteCommand\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"},\"justifyright\"]}",
+"36":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.ExecuteCommand\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"},\"justifyfull\"]}",
+"37":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.ExecuteCommand\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"},\"justifycenter\"]}",
+"38":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditorComponents.DirectionalityAction.SetDirection\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"},\"ltr\"]}",
+"39":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditorComponents.DirectionalityAction.SetDirection\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"},\"rtl\"]}",
+"40":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.InsertDelayed\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.MasterPages.Dialog.Open\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"},{\"_type\":\"call\",\"N\":\"D2L.LP.Web.Mvc.RouteLocation.Create\",\"P\":[\"\/d2l\/lp\/htmleditor\/{action}\",{\"_type\":\"D2L.LP.Util.Dictionary\",\"link\":{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditorComponents.LinkAction.GetLinkData\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"}]},\"selectedText\":{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditorComponents.LinkAction.GetLinkSelectedText\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"}]}},{\"_type\":\"D2L.LP.Util.Dictionary\",\"action\":\"link\"}]}],\"D\":true},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditorComponents.LinkAction.SelectLink\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"}]}]}",
+"41":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.InsertDelayed\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.MasterPages.Dialog.Open\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"},{\"_type\":\"call\",\"N\":\"D2L.LP.Web.Mvc.RouteLocation.Create\",\"P\":[\"\/d2l\/lp\/htmleditor\/{action}\",{\"_type\":\"D2L.LP.Util.Dictionary\",\"fontfamily\":{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.GetComputedStyle\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"},\"font-family\"]}},{\"_type\":\"D2L.LP.Util.Dictionary\",\"action\":\"symbol\"}]}],\"D\":true}]}",
+"42":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.InsertDelayed\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.MasterPages.Dialog.Open\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"},{\"_type\":\"call\",\"N\":\"D2L.LP.Web.Mvc.RouteLocation.Create\",\"P\":[\"\/d2l\/lp\/htmleditor\/{action}\",{\"_type\":\"D2L.LP.Util.Dictionary\",\"hr\":{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditorComponents.HorizontalRuleAction.GetHorizontalRuleData\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"}]}},{\"_type\":\"D2L.LP.Util.Dictionary\",\"action\":\"horizontalrule\"}]}],\"D\":true}]}",
+"43":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditorComponents.AttributesAction.SetAttributes\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.MasterPages.Dialog.Open\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"},{\"_type\":\"call\",\"N\":\"D2L.LP.Web.Mvc.RouteLocation.Create\",\"P\":[\"\/d2l\/lp\/htmleditor\/{action}\",{\"_type\":\"D2L.LP.Util.Dictionary\",\"attributes\":{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditorComponents.AttributesAction.GetAttributesData\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"}]}},{\"_type\":\"D2L.LP.Util.Dictionary\",\"action\":\"attributes\"}]}],\"D\":true}]}",
+"44":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditorComponents.SpellcheckAction.Apply\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Legacy.MasterPages.Dialog.OpenWithParam\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"},{\"_type\":\"url\",\"Url\":\"\/d2l\/common\/dialogs\/spellChecker\/spellChecker.d2l?ou=83577&isTextHtml=0&isPreviewTextHtml=1&hasDiffPreviewText=1\"},\"SrcCallback\",null,\"text\",500,null,\"Close this Dialog\",[{\"_type\":\"D2L.LP.Web.UI.Legacy.MasterPages.DialogLegacy+ButtonData\",\"IsPrimary\":true,\"Key\":\"\",\"Param\":\"\",\"Text\":\"OK\",\"ResponseType\":1,\"IsEnabled\":true},{\"_type\":\"D2L.LP.Web.UI.Legacy.MasterPages.DialogLegacy+ButtonData\",\"IsPrimary\":false,\"Key\":\"\",\"Param\":\"\",\"Text\":\"Cancel\",\"ResponseType\":0,\"IsEnabled\":true}],{\"_type\":\"D2L.LP.Util.Dictionary\",\"text\":{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditorComponents.SpellcheckAction.GetText\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"}]},\"previewText\":{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Html.JavaScript.ObjectAccessor\",\"P\":[{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.GetHtml\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"}]},\"GetHtml\"]}}],\"D\":true}]}",
+"45":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.SetHtml\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"},{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Desktop.MasterPages.Dialog.OpenWithParam\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"},{\"_type\":\"url\",\"Url\":\"\/d2l\/lp\/htmleditor\/sourcecode\"},{\"_type\":\"D2L.LP.Util.Dictionary\",\"editor\":{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.GetHtml\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"}]}},null],\"D\":true}],\"D\":true}",
+"46":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.MasterPages.Dialog.OpenWithParam\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"},{\"_type\":\"url\",\"Url\":\"\/d2l\/lp\/htmleditor\/inlinepreview?ou=83577\"},{\"_type\":\"D2L.LP.Util.Dictionary\",\"editor\":{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.GetHtml\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"}]},\"filter\":1},null],\"D\":true}",
+"47":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditorComponents.FullscreenAction.ToggleFullscreen\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"},{\"_type\":\"id\",\"Value\":\"d2l_1_173_952\"}]}",
+"48":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.JavaScript.If\",\"P\":[{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Common.Controls.Form.RpcObjectSubmit\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"SubmissionForm\"},{\"_type\":\"url\",\"Url\":\"\/d2l\/le\/dropbox\/83577\/192761\/Submit?entityId=56036\"},false],\"D\":true},{\"_type\":\"pipe\",\"P\":[{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.PartialRendering.PartialRender\",\"P\":[{\"_type\":\"id\",\"Value\":\"SubmissionPlaceholder\"},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Rpc.ConnectPartial\",\"P\":[{\"_type\":\"id\",\"Value\":\"SubmissionPlaceholder\"},\"GET\",{\"_type\":\"url\",\"Url\":\"\/d2l\/le\/dropbox\/83577\/192761\/UpdateSubmissions?entityId=56036\"},{\"_type\":\"D2L.LP.Util.Dictionary\"},{\"_type\":\"D2L.LP.Web.UI.Rpc.RpcOptions\",\"keepAlive\":true}],\"D\":true},0],\"D\":true},{\"_type\":\"func\",\"N\":\"D2L.LE.ToolIntegration.Content.CompletionStatusChanged.Actions.Changed\"}]},true,{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.MasterPages.Dialog.InlineDialog\",\"P\":[{\"_type\":\"id\",\"Value\":\"Submit\"},null,\"Error\",\"This dropbox has closed. Sorry, the deadline for this activity had passed and this dropbox is no longer accepting submissions.\",\"\",\"OK\",\"\",\"Close this Dialog\",\"d2l-dialog-inline-body-alert\",null,null,null,true,false,false],\"D\":true}],\"D\":true}",
+"49":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Common.Controls.ExpandCollapse.Toggle\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_178_784\"}]}",
+"50":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.Dom.SetIsDisplayed\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_177_357\"},true]}",
+"51":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.Dom.SetIsDisplayed\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_177_357\"},false]}",
+"52":"{\"_type\":\"func\",\"N\":\"D2L.VS\",\"P\":[\"ab_status_Messages\",true]}",
+"53":"{\"_type\":\"func\",\"N\":\"D2L.VS\",\"P\":[\"ab_status_Grades\",true]}",
+"54":"{\"_type\":\"func\",\"N\":\"D2L.VS\",\"P\":[\"ab_status_Alerts\",true]}",
+"55":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.FloatingContainer.Init\"}",
+"56":"{\"_type\":\"func\",\"N\":\"D2L.PT.Auth.SessionTimeout.Init\",\"P\":[\"56036\",180,5,{\"_type\":\"id\",\"Value\":\"d2l_sessionExpiryWarning\"},\"d2l_sessionExpiryAlert\",\"d2l_sessionExpiryCheck\",{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Rpc.ConnectObject\",\"P\":[\"POST\",{\"_type\":\"url\",\"Url\":\"\/d2l\/lp\/auth\/session\/extend\"}],\"D\":true},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.MasterPages.Dialog.OpenHelper\",\"P\":[{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Html.Dom.GetActiveElement\"},{\"_type\":\"url\",\"Url\":\"\/d2l\/lp\/auth\/session\/Expired?isUsernamePasswordLogin=1&isLogout=0\"}],\"D\":true},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.MasterPages.Dialog.OpenHelper\",\"P\":[{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Html.Dom.GetActiveElement\"},{\"_type\":\"url\",\"Url\":\"\/d2l\/lp\/auth\/session\/Expired?isUsernamePasswordLogin=1&isLogout=1\"}],\"D\":true},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.MasterPages.Dialog.InlineDialog\",\"P\":[null,{\"_type\":\"id\",\"Value\":\"d2l_1_194_85\"},\"Warning\",\"New User Session\",\"The current user session has changed, so the links and content on this page may not behave as expected.\",\"OK\",\"\",\"Close this Dialog\",\"d2l-dialog-inline-body-warning\",null,null,null,true,false,false],\"D\":true},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.MasterPages.Dialog.Inline.Abort\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_194_85\"}]}]}",
+"57":"{\"_type\":\"func\",\"N\":\"D2LMathML.DesktopInit\",\"P\":[\"\/d2l\/common\/mathjax\/2.1\/MathJax.js?config=MML_HTMLorMML&v=10.3.0.791-39\",\"\/d2l\/common\/mathjax\/2.1\/MathJax.js?config=TeX-AMS-MML_HTMLorMML&v=10.3.0.791-39\"]}",
+"58":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.Authentication.Xsrf.Init\",\"P\":[\"d2l_referrer\",\"bM619T0QxCothQZX0iC4fRim5tQCP9pk\",1497790724]}",
+"59":"{\"_type\":\"func\",\"N\":\"D2L.LP.ActivityBar.Init\",\"P\":[{\"_type\":\"url\",\"Url\":\"\/d2l\/activityFeed\/checkForNewAlerts\"},30,\"alert_bucket_{0}\",\"ab_status_{0}\"]}",
+"60":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Common.Controls.MessageArea.Init\",\"P\":[\"d2l_messagearea\",{\"_type\":\"url\",\"Url\":\"\/d2l\/lp\/validation\/errors\"}]}",
+"61":"{\"_type\":\"func\",\"N\":\"D2L.LP.Globalization.Locale.Init\",\"P\":[0,{\"_type\":\"anon\",\"DecimalSeparator\":\".\",\"GroupSeparator\":\",\",\"NumberNegativePattern\":1,\"PercentPositivePattern\":0,\"PercentNegativePattern\":0,\"PercentSymbol\":\"%\",\"NegativeSign\":\"-\",\"NativeDigits\":[\"0\",\"1\",\"2\",\"3\",\"4\",\"5\",\"6\",\"7\",\"8\",\"9\"],\"UseNativeDigits\":false,\"GroupSizes\":[3],\"IntegerRegex\":\"^([\\\\(-]*(([01234567890123456789]?[01234567890123456789]?([01234567890123456789](,[01234567890123456789][01234567890123456789][01234567890123456789])*)?))[\\\\)-]*)$|^([\\\\(-]*[01234567890123456789]+[\\\\)-]*)$\",\"DecimalRegex\":\"^([\\\\(-]*(([01234567890123456789]?[01234567890123456789]?([01234567890123456789](,[01234567890123456789][01234567890123456789][01234567890123456789])*)))(\\\\.[01234567890123456789]+)?[\\\\)-]*)$|^([\\\\(-]*[01234567890123456789]*\\\\.?[01234567890123456789]+[\\\\)-]*)$\"},{\"_type\":\"anon\",\"InputDateFormat\":\"M\/d\/yyyy\",\"Is24HourClock\":false,\"NativeDigits\":[\"0\",\"1\",\"2\",\"3\",\"4\",\"5\",\"6\",\"7\",\"8\",\"9\"],\"UseNativeDigits\":false,\"TimeFormat\":\"h:mm tt\",\"AmDesignator\":\"AM\",\"PmDesignator\":\"PM\",\"ShortMonthNames\":[\"Jan\",\"Feb\",\"Mar\",\"Apr\",\"May\",\"Jun\",\"Jul\",\"Aug\",\"Sep\",\"Oct\",\"Nov\",\"Dec\",\"\"],\"ShortDayOfWeekNames\":[\"Sun\",\"Mon\",\"Tue\",\"Wed\",\"Thu\",\"Fri\",\"Sat\"]},{\"_type\":\"anon\",\"TextDirection\":1},{\"_type\":\"anon\",\"Culture\":\"en-ca\"},{\"_type\":\"anon\",\"JustNow\":\"just now\",\"OneMinuteAgo\":\"1 minute ago\",\"TwoMinutesAgo\":\"2 minutes ago\",\"MinutesAgoMany\":\"[0] minutes ago\",\"OneHourAgo\":\"1 hour ago\",\"TwoHoursAgo\":\"2 hours ago\",\"ManyHoursAgo\":\"[0] hours ago\",\"YesterdayTime\":\"yesterday at [0]\",\"DayOfWeekTime\":\"[0] at [1]\",\"MonthDayTime\":\"[0] at [1]\",\"Now\":{\"_type\":\"D2L.LocalDateTime\",\"Year\":2015,\"Month\":1,\"Day\":20,\"Hour\":9,\"Minute\":57,\"Second\":15}}]}",
+"62":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Rpc.Initialize\",\"P\":[{\"_type\":\"url\",\"Url\":\"\/d2l\/login?target=%2fd2l%2fle%2fcontent%2f83577%2fviewContent%2f1280320%2fView&sessionExpired=1\"},\"Error: unable to complete your request.\",{\"_type\":\"D2L.LP.Util.Dictionary\"},{\"_type\":\"D2L.LP.Util.Dictionary\",\"flash\":{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.FlashMessages.RpcReceivePayloadProvider\"},\"session\":{\"_type\":\"func\",\"N\":\"D2L.PT.Auth.SessionTimeout.RpcReceivePayloadProvider\"},\"messageArea\":{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Common.Controls.MessageArea.RpcReceivePayloadProvider\"},\"OR\":{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.ObjectRepository.RpcReceivePayloadProvider\"},\"JS\":{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.JavaScript.RpcReceiveJsPayloadProvider\"},\"CSS\":{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.JavaScript.RpcReceiveCssPayloadProvider\"},\"ariaMessages\":{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.Aria.RpcReceivePayloadProvider\"}}]}",
+"63":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.InlineHelp.Init\",\"P\":[{\"_type\":\"url\",\"Url\":\"\/d2l\/lp\/inlineHelp\/83577\/help\"}]}",
+"64":"{\"_type\":\"func\",\"N\":\"D2L.LE.ViewContent.ContentViewer.OnLoad\",\"P\":[83577,1280320]}",
+"65":"{\"_type\":\"pipe\"}"}
+,
+"AB_DL_PH_Messages":{"0":"{\"_type\":\"D2L.LP.Web.UI.Html.PartialRendering.PartialHtmlRenderContext\",\"HeadingLevel\":2,\"ValidClassNames\":[],\"Scope\":\"\"}"}
+,
+"d2l_1_10_771":{"MenuFlyout.OpenFunction":"{\"_type\":\"pipe\",\"P\":[{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.JavaScript.If\",\"P\":[{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Html.JavaScript.CompareBoolean\",\"P\":[1,{\"_type\":\"call\",\"N\":\"D2L.VG\",\"P\":[\"ab_status_Grades\"]},true]},{\"_type\":\"pipe\",\"P\":[{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.PartialRendering.PartialRender\",\"P\":[{\"_type\":\"id\",\"Value\":\"AB_DL_PH_Grades\"},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Rpc.ConnectPartial\",\"P\":[{\"_type\":\"id\",\"Value\":\"AB_DL_PH_Grades\"},\"GET\",{\"_type\":\"call\",\"N\":\"D2L.LP.Web.Mvc.RouteLocation.Create\",\"P\":[\"\/d2l\/MiniBar\/{orgUnitId}\/ActivityFeed\/{action}\",{\"_type\":\"D2L.LP.Util.Dictionary\",\"Category\":1},{\"_type\":\"D2L.LP.Util.Dictionary\",\"action\":\"GetAlerts\",\"orgUnitId\":83577}]},{\"_type\":\"D2L.LP.Util.Dictionary\"},{\"_type\":\"D2L.LP.Web.UI.Rpc.RpcOptions\",\"keepAlive\":true}],\"D\":true},0],\"D\":true}]}],\"D\":true},{\"_type\":\"func\",\"N\":\"D2L.VS\",\"P\":[\"ab_status_Grades\",false]},{\"_type\":\"func\",\"N\":\"D2L.LP.ActivityBar.OpenBucket\",\"P\":[\"alert_bucket_Grades\"]}]}",
+"MenuFlyout.CloseFunction":"{\"_type\":\"func\",\"N\":\"D2L.LP.ActivityBar.CloseBucket\",\"P\":[\"alert_bucket_Grades\"]}"}
+,
+"alert_bucket_Grades":{"aria-message":"\"You have new Updates\"",
+"title":"\"Update alerts\"",
+"new-alert-title":"\"Update alerts - You have new alerts\"",
+"flyout-id":"{\"_type\":\"id\",\"Value\":\"d2l_1_10_771\"}"}
+,
+"AB_DL_PH_Grades":{"0":"{\"_type\":\"D2L.LP.Web.UI.Html.PartialRendering.PartialHtmlRenderContext\",\"HeadingLevel\":2,\"ValidClassNames\":[],\"Scope\":\"\"}"}
+,
+"d2l_1_11_898":{"MenuFlyout.OpenFunction":"{\"_type\":\"pipe\",\"P\":[{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.JavaScript.If\",\"P\":[{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Html.JavaScript.CompareBoolean\",\"P\":[1,{\"_type\":\"call\",\"N\":\"D2L.VG\",\"P\":[\"ab_status_Alerts\"]},true]},{\"_type\":\"pipe\",\"P\":[{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.PartialRendering.PartialRender\",\"P\":[{\"_type\":\"id\",\"Value\":\"AB_DL_PH_Alerts\"},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Rpc.ConnectPartial\",\"P\":[{\"_type\":\"id\",\"Value\":\"AB_DL_PH_Alerts\"},\"GET\",{\"_type\":\"call\",\"N\":\"D2L.LP.Web.Mvc.RouteLocation.Create\",\"P\":[\"\/d2l\/MiniBar\/{orgUnitId}\/ActivityFeed\/{action}\",{\"_type\":\"D2L.LP.Util.Dictionary\",\"Category\":0},{\"_type\":\"D2L.LP.Util.Dictionary\",\"action\":\"GetAlerts\",\"orgUnitId\":83577}]},{\"_type\":\"D2L.LP.Util.Dictionary\"},{\"_type\":\"D2L.LP.Web.UI.Rpc.RpcOptions\",\"keepAlive\":true}],\"D\":true},0],\"D\":true}]}],\"D\":true},{\"_type\":\"func\",\"N\":\"D2L.VS\",\"P\":[\"ab_status_Alerts\",false]},{\"_type\":\"func\",\"N\":\"D2L.LP.ActivityBar.OpenBucket\",\"P\":[\"alert_bucket_Alerts\"]}]}",
+"MenuFlyout.CloseFunction":"{\"_type\":\"func\",\"N\":\"D2L.LP.ActivityBar.CloseBucket\",\"P\":[\"alert_bucket_Alerts\"]}"}
+,
+"alert_bucket_Alerts":{"aria-message":"\"You have new Subscriptions\"",
+"title":"\"Subscription alerts\"",
+"new-alert-title":"\"Subscription alerts - You have new alerts\"",
+"flyout-id":"{\"_type\":\"id\",\"Value\":\"d2l_1_11_898\"}"}
+,
+"AB_DL_PH_Alerts":{"0":"{\"_type\":\"D2L.LP.Web.UI.Html.PartialRendering.PartialHtmlRenderContext\",\"HeadingLevel\":2,\"ValidClassNames\":[],\"Scope\":\"\"}"}
+,
+"ContentNavigator":{"0":"{\"_type\":\"D2L.LP.Web.UI.Html.PartialRendering.PartialHtmlRenderContext\",\"HeadingLevel\":2,\"ValidClassNames\":[],\"Scope\":\"\"}"}
+,
+"d2l_1_66_267":{"0":"{\"_type\":\"D2L.LP.Util.Dictionary\",\"enabledIconCss\":\"d2l_1_67_578\",\"disabledIconCss\":\"\",\"onClick\":{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Legacy.MasterPages.Dialog.Open\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_7_164\"},{\"_type\":\"url\",\"Url\":\"\/d2l\/lms\/content\/viewer\/actions\/submit_feedback_popup.d2l?tId=1280320&ou=83577\"},\"Save\",null,\"\",550,500,\"Close this Dialog\",[{\"_type\":\"D2L.LP.Web.UI.Legacy.MasterPages.DialogLegacy+ButtonData\",\"IsPrimary\":true,\"Key\":\"submitButton\",\"Param\":\"\",\"Text\":\"Submit\",\"ResponseType\":1,\"IsEnabled\":true},{\"_type\":\"D2L.LP.Web.UI.Legacy.MasterPages.DialogLegacy+ButtonData\",\"IsPrimary\":false,\"Key\":\"cancelButton\",\"Param\":\"\",\"Text\":\"Cancel\",\"ResponseType\":0,\"IsEnabled\":true}]],\"D\":true}}"}
+,
+"d2l_1_65_831":{"onClose":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.ContextMenu.OnCloseHandler\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_pageTitleActions\"}]}"}
+,
+"d2l_pageTitleActions":{"Context":"{\"_type\":\"D2L.LP.Util.Dictionary\",\"floatingContainerId\":{\"_type\":\"id\",\"Value\":\"d2l_1_65_831\"}}"}
+,
+"ContentView":{"0":"{\"_type\":\"D2L.LP.Web.UI.Html.PartialRendering.PartialHtmlRenderContext\",\"HeadingLevel\":2,\"ValidClassNames\":[],\"Scope\":\"\"}"}
+,
+"d2l_1_2_711":{"0":"{\"_type\":\"D2L.LP.Web.UI.Html.PartialRendering.PartialHtmlRenderContext\",\"HeadingLevel\":2,\"ValidClassNames\":[],\"Scope\":\"\"}"}
+,
+"SubmissionPlaceholder":{"0":"{\"_type\":\"D2L.LP.Web.UI.Html.PartialRendering.PartialHtmlRenderContext\",\"HeadingLevel\":2,\"ValidClassNames\":[],\"Scope\":\"\"}"}
+,
+"d2l_1_84_912":{"0":"{\"_type\":\"D2L.LP.Web.UI.Html.PartialRendering.PartialHtmlRenderContext\",\"HeadingLevel\":2,\"ValidClassNames\":[],\"Scope\":\"\"}"}
+,
+"d2l_1_1_407":{"0":"{\"_type\":\"D2L.LP.Web.UI.Html.PartialRendering.PartialHtmlRenderContext\",\"HeadingLevel\":2,\"ValidClassNames\":[],\"Scope\":\"\"}"}
+,
+"d2l_1_88_564":{"change":"{\"_type\":\"pipe\",\"P\":[{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.Dom.SetIsDisplayed\",\"P\":[{\"_type\":\"id\",\"Value\":\"Submit\"},true]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.Dom.SetIsDisplayed\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"CommentContainerId\"},true]}]}"}
+,
+"Submissions":{"bytesPerSlice":"10485760",
+"maxFileSize":"1073741824",
+"uploadLocation":"{\"_type\":\"url\",\"Url\":\"\/d2l\/lp\/fileupload\/83577?maxFileSize=1073741824\"}",
+"extensions":"[\"*.*\"]",
+"statusIndicator":"\"custom\"",
+"isMultipleAllowed":"false",
+"x-extensions":"[\"asp\",\"aspx\",\"exe\",\"bat\",\"dll\",\"com\",\"asa\",\"asax\",\"ascx\",\"ashx\",\"asmx\",\"axd\",\"cdx\",\"cer\",\"config\",\"idc\",\"cs\",\"csproj\",\"jsl\",\"licx\",\"rem\",\"resources\",\"resx\",\"shtm\",\"shtml\",\"soap\",\"stm\",\"vb\",\"vbproj\",\"vjsproj\",\"vsdisco\",\"webinfo\",\"ini\",\"msi\",\"msp\",\"scr\",\"sct\",\"wsf\",\"wsc\",\"vbs\",\"vbe\"]",
+"errorMessages":"[\"Only one file allowed.\",\"Invalid file type.\",\"Maximum file size is 1 GB.\",\"Oops, your file could not be uploaded.\",\"The filename is invalid. Please ensure that the filename is not blank and does not include the characters \\\\ \/ : * ? \\\" < > |\"]",
+"onFilesComplete":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.FileInput.OnDropFilesComplete\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Submissions\"},{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Html.Files.FileUpload.FileDrop.Default.GetFiles\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Submissions\"}]}],\"D\":true}",
+"onFilesStarted":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.FileInput.OnDropStarted\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Submissions\"}]}",
+"onProgress":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.FileInput.OnDropProgress\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_91_416\"},{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Html.Files.FileUpload.FileDrop.Default.GetProgress\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Submissions\"}]}]}",
+"onAbort":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.FileInput.OnDropAbort\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Submissions\"}]}",
+"onError":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.FileInput.OnDropError\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Submissions\"},{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Html.Files.FileUpload.FileDrop.Default.GetErrorNumber\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Submissions\"}]}]}"}
+,
+"d2l_1_99_462":{"0":"{\"_type\":\"D2L.LP.Web.UI.Html.PartialRendering.PartialHtmlRenderContext\",\"HeadingLevel\":2,\"ValidClassNames\":[],\"Scope\":\"Submissions\"}",
+"1":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.PartialRendering.PartialRender\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_99_462\"},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Rpc.ConnectPartial\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_99_462\"},\"POST\",{\"_type\":\"call\",\"N\":\"D2L.LP.Web.Mvc.RouteLocation.Create\",\"P\":[\"\/d2l\/lp\/fileinput\/{orgUnitId}\/{action}\",{\"_type\":\"D2L.LP.Util.Dictionary\"},{\"_type\":\"D2L.LP.Util.Dictionary\",\"orgUnitId\":83577,\"action\":\"addfiles\"}]},{\"_type\":\"D2L.LP.Util.Dictionary\",\"files\":{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.FileInput.GetAddFilesByPlaceholderId\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_99_462\"}]}},{\"_type\":\"D2L.LP.Web.UI.Rpc.RpcOptions\",\"keepAlive\":true}],\"D\":true},0],\"D\":true}"}
+,
+"d2l_1_100_373":{"0":"[\"Submissions\",{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.FileInput.ValidateRequired\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Submissions\"}]},\"A file is required.\",null]"}
+,
+"d2l_1_101_20":{"0":"[\"Submissions\",{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.FileInput.ValidateUploadInProgress\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Submissions\"}]},\"A file upload is in progress.\",null]"}
+,
+"Comments":{"pluginInitializers":"[{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditorComponents.ReplaceStringScript.Initialize\",\"P\":[{\"_type\":\"D2L.LP.Util.Dictionary\",\"orgUnitId\":\"83577\"}]},{\"_type\":\"func\",\"N\":\"D2L.PT.ExternalUrls.Web.Desktop.HtmlEditor.XSPLScript.Initialize\"},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditorComponents.PasteAction.InitializePastePlainText\",\"P\":[false]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditorComponents.PasteAction.InitializePasteWord\",\"P\":[null]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditorComponents.DirectionalityAction.InitializeLtr\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_153_351\"}]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditorComponents.DirectionalityAction.InitializeRtl\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_155_116\"}]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditorComponents.LinkAction.Initialize\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_157_746\"}]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditorComponents.HorizontalRuleAction.Initialize\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_163_141\"}]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditorComponents.AttributesAction.Initialize\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_165_628\"}]}]",
+"pluginLayoutInitializers":"[{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditorComponents.Button.Register\",\"P\":[\"undo\",{\"_type\":\"id\",\"Value\":\"d2l_1_107_7\"},{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.GetControlManager\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"}]}]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditorComponents.Button.Register\",\"P\":[\"redo\",{\"_type\":\"id\",\"Value\":\"d2l_1_109_907\"},{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.GetControlManager\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"}]}]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditorComponents.Button.Register\",\"P\":[\"cut\",{\"_type\":\"id\",\"Value\":\"d2l_1_111_838\"},{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.GetControlManager\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"}]}]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditorComponents.Button.Register\",\"P\":[\"copy\",{\"_type\":\"id\",\"Value\":\"d2l_1_113_48\"},{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.GetControlManager\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"}]}]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditorComponents.Button.Register\",\"P\":[\"paste\",{\"_type\":\"id\",\"Value\":\"d2l_1_115_566\"},{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.GetControlManager\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"}]}]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditorComponents.Button.Register\",\"P\":[\"pastetext\",{\"_type\":\"id\",\"Value\":\"d2l_1_117_339\"},{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.GetControlManager\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"}]}]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditorComponents.Button.Register\",\"P\":[\"pasteword\",{\"_type\":\"id\",\"Value\":\"d2l_1_119_100\"},{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.GetControlManager\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"}]}]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditorComponents.Menu.Register\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_102_893\"},{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.GetEditor\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"}]}]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditorComponents.Button.Register\",\"P\":[\"bold\",{\"_type\":\"id\",\"Value\":\"d2l_1_121_257\"},{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.GetControlManager\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"}]}]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditorComponents.Button.Register\",\"P\":[\"italic\",{\"_type\":\"id\",\"Value\":\"d2l_1_123_146\"},{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.GetControlManager\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"}]}]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditorComponents.Button.Register\",\"P\":[\"underline\",{\"_type\":\"id\",\"Value\":\"d2l_1_127_400\"},{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.GetControlManager\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"}]}]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditorComponents.Button.Register\",\"P\":[\"strikethrough\",{\"_type\":\"id\",\"Value\":\"d2l_1_129_461\"},{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.GetControlManager\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"}]}]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditorComponents.Button.Register\",\"P\":[\"sub\",{\"_type\":\"id\",\"Value\":\"d2l_1_131_207\"},{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.GetControlManager\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"}]}]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditorComponents.Button.Register\",\"P\":[\"sup\",{\"_type\":\"id\",\"Value\":\"d2l_1_133_137\"},{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.GetControlManager\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"}]}]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditorComponents.Menu.Register\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_125_991\"},{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.GetEditor\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"}]}]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditorComponents.Button.Register\",\"P\":[\"indent\",{\"_type\":\"id\",\"Value\":\"d2l_1_135_409\"},{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.GetControlManager\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"}]}]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditorComponents.Button.Register\",\"P\":[\"bullist\",{\"_type\":\"id\",\"Value\":\"d2l_1_137_658\"},{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.GetControlManager\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"}]}]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditorComponents.Button.Register\",\"P\":[\"outdent\",{\"_type\":\"id\",\"Value\":\"d2l_1_141_0\"},{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.GetControlManager\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"}]}]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditorComponents.Button.Register\",\"P\":[\"numlist\",{\"_type\":\"id\",\"Value\":\"d2l_1_143_655\"},{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.GetControlManager\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"}]}]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditorComponents.Button.Register\",\"P\":[\"justifyleft\",{\"_type\":\"id\",\"Value\":\"d2l_1_145_301\"},{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.GetControlManager\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"}]}]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditorComponents.Button.Register\",\"P\":[\"justifyright\",{\"_type\":\"id\",\"Value\":\"d2l_1_147_480\"},{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.GetControlManager\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"}]}]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditorComponents.Button.Register\",\"P\":[\"justifyfull\",{\"_type\":\"id\",\"Value\":\"d2l_1_149_581\"},{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.GetControlManager\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"}]}]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditorComponents.Button.Register\",\"P\":[\"justifycenter\",{\"_type\":\"id\",\"Value\":\"d2l_1_151_606\"},{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.GetControlManager\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"}]}]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditorComponents.Menu.Register\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_139_113\"},{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.GetEditor\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"}]}]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditorComponents.Menu.Register\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_159_489\"},{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.HtmlEditor.GetEditor\",\"P\":[{\"_type\":\"D2L.LP.Web.UI.Html.AbsoluteHtmlId\",\"Value\":\"Comments\"}]}]}]",
+"contentCssLocation":"\"\/d2l\/lp\/htmleditor\/contentcss?f=verdana&s=11\""}
+,
+"d2l_1_5_435":{"0":"{\"_type\":\"D2L.LP.Web.UI.Html.PartialRendering.PartialHtmlRenderContext\",\"HeadingLevel\":3,\"ValidClassNames\":[],\"Scope\":\"restrictions\"}"}
+,
+"d2l_1_3_876":{"submit":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.PartialRendering.PartialRender\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_5_435\"},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Common.Controls.Form.RpcSubmitPartial\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_5_435\"},{\"_type\":\"id\",\"Value\":\"d2l_1_3_876\"},{\"_type\":\"url\",\"Url\":\"\/d2l\/le\/content\/83577\/updateresource\/Dropbox\/192761\/UpdateRestrictions?topicId=1280320\"},false,{\"_type\":\"D2L.LP.Util.Dictionary\"}],\"D\":true},0],\"D\":true}"}
+,
+"ResultDetails":{"0":"{\"_type\":\"D2L.LP.Web.UI.Html.PartialRendering.PartialHtmlRenderContext\",\"HeadingLevel\":2,\"ValidClassNames\":[],\"Scope\":\"\",\"ChildScopeCounters\":\"Submissions:0;Comments:0;restrictions:0\"}"}
+,
+"StatusPlaceholder":{"0":"{\"_type\":\"D2L.LP.Web.UI.Html.PartialRendering.PartialHtmlRenderContext\",\"HeadingLevel\":2,\"ValidClassNames\":[],\"Scope\":\"\",\"ChildScopeCounters\":\"Submissions:0;Comments:0;restrictions:0\"}"}
+
+};
+
+		//]]>
+		</script>
+	
+</body></html>
