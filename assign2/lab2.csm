@@ -12,6 +12,7 @@
 
 CONSOLE equ	1
 GETSTR	equ	1
+PUTCHAR equ	2
 PUTSTR	equ	3
 EXIT	equ	0xffff
 
@@ -32,6 +33,7 @@ prompt	db	'Give a string [exit]: ', 0
 bufsize	db	BUF + 1
 size	db	?
 buf	db	[?] * BUF + 1
+left	db	?
 
 
 
@@ -64,16 +66,34 @@ back						; program entry point
 ;
 ; Print the string backwards
 ;
-	mov	PUTSTR, r1
-	lea	prompt, r2
+	lodbu	size,, r3
+	stobl	left,, r3	; save the length
+
+nextchar
+	dec	r3   		; last character = length - 1
+	lodbl	buf, r3, r2	; load the character into %r2
+	mov	PUTCHAR, r1
 	sys	CONSOLE
 
-	
+	lodbu	left,, r3
+	cmp	r3, 0
+	be	linefeed
+	dec	r3		; decrease 'left'
+	stobl	left,, r3
+	br	nextchar
 
 ;
 ; Repeat
 ;
 	br	back
+
+;
+; Print '\n'
+;
+linefeed
+	mov	PUTCHAR, r1
+	mov	'\n', r2
+	sys	CONSOLE
 
 ;
 ; Quit
