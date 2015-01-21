@@ -9,14 +9,15 @@
 	.set	WRITE,		1	# system call 1 is write
 	.set	FHANDLE, 	1	# file handle 1 is stdout
 	.set	EXIT,		60	# system call 60 is exit
-	.set	BUF,		80	# maximum string length
+	.set	BUF,		80 + 2	# buffer size
 
 ###
 ### Data section
 ###
 	.data
-prompt:	.ascii	"Give a string [exit]: "
+prompt:	.asciz	"Give a string [exit]: "
 	.set	p_len, .-prompt
+buf:	.byte	
 	
 #bufsize	db	BUF + 1
 #size	db	?
@@ -34,18 +35,20 @@ main:
 #
 # Make a prompt
 #
-	mov	$WRITE, %rax
-	mov	$FHANDLE, %rdi
-	mov	$prompt, %rsi
-	mov	$p_len, %rdx
-	syscall
+	mov	$prompt, %rdi
+	call	puts
 	
 ##
 ## Read in the string
 ##
+.extern	stdin
+
+	
 #	mov	GETSTR, r1
 #	lea	bufsize, r2
 #	sys	CONSOLE
+
+	
 #
 ##
 ## Check the string length
@@ -90,6 +93,4 @@ main:
 # Quit
 #
 quit:	
-	mov	$EXIT, %rax
-	xor	%rdi, %rdi	# return code 0
-	syscall
+	ret			# return to C library code
