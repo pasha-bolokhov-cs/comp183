@@ -1,6 +1,13 @@
 ###
 ### A program for printing a string backwards
 ###
+### Invocation:
+###	$ gcc lab2.s
+###	$ ./a.out
+###
+### The program needs C library functions,
+### so linking has to be done with 'gcc'
+###
 
 
 	#
