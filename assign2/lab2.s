@@ -15,16 +15,10 @@
 ### Data section
 ###
 	.data
-prompt:	.asciz	"Give a string [exit]: "
-	.set	p_len, .-prompt
-buf:	.fill	BUF, 1, 0
-
-	
-#bufsize	db	BUF + 1
-#size	db	?
-#buf	db	[?] * BUF + 1
-#left	db	?
-
+prompt:	.asciz	"Give a string [exit]: "	# prompt
+	.set	p_len, .-prompt			# length of the prompt
+buf:	.fill	BUF, 1, 0			# buffer for input
+left:	.byte	0				# counter for backwards printing
 
 
 ###
@@ -33,66 +27,74 @@ buf:	.fill	BUF, 1, 0
 	.text
 	.global main
 main:
+start_over:	
 #
 # Make a prompt:
 #	puts(prompt)
 #
 	mov	$prompt, %rdi
 	call	puts
+
 	
-##
-## Read in the string:
-##	fgets(buf, BUF, stdin)
-##
+#
+# Read in the string:
+#	fgets(buf, BUF, stdin)
+#
 	mov	$buf, %rdi
 	mov	$BUF, %rsi
 	mov	stdin, %rdx
 	call	fgets
 
-	
-#	mov	GETSTR, r1
-#	lea	bufsize, r2
-#	sys	CONSOLE
+
+#
+# Check the string length
+#
+	mov	$buf, %rax
+	xor	%rcx, %rcx	# %rcx will contain the length
+length_loop:	
+	xor	%rbx, %rbx	# %rbx will contain next symbol
+	movb	(%rax), %bl
+	cmp	$0x0a, %rbx	# have we got '\n'?
+	je	got_length
+	cmp	$0x00, %rbx	# have we got '\0'?
+	je	got_length	
+	inc	%rax
+	inc	%rcx
+	jmp	length_loop
+
+got_length:
+	cmp	$0, %rcx	# is length zero ?
+	je	quit
 
 	
 #
-##
-## Check the string length
-##
-#	lodbu	size,, r3
-#	cmp	r3, 0
-#	be	quit
+# Print the string backwards
 #
-##
-## Print the string backwards
-##
-#	lodbu	size,, r3
-#	stobl	left,, r3	# save the length
+	# %rax points to the trailing '\n' or '\0'
+	# %rcx contains the length
+back_loop:	
+	dec	%rax
+	# putchar(buf[i])
+	xor	%rdi, %rdi
+	mov	(%rax), %rdi
+	push	%rax
+	push	%rcx
+	call	putchar
+	pop	%rcx
+	pop	%rax
+	dec	%rcx
+	cmp	$0, %rcx
+	jne	back_loop
+
+	# putchar('\n')
+	mov	$0x0a, %rdi
+	call	putchar
+
+
 #
-#nextchar
-#	dec	r3   		# index of current character = left - 1
-#	lodbl	buf, r3, r2	# load the character into %r2
-#	mov	PUTCHAR, r1
-#	sys	CONSOLE
+# Start over
 #
-#	# the system call may have altered the registers
-#	lodbu	left,, r3
-#	cmp	r3, 0
-#	be	linefeed
-#	dec	r3		# decrease 'left'
-#	stobl	left,, r3
-#	br	nextchar
-#
-#	# print '\n'
-#linefeed
-#	mov	PUTCHAR, r1
-#	mov	'\n', r2
-#	sys	CONSOLE
-#
-##
-## Start over
-##
-#	br	back
+	jmp	start_over
 
 
 #
