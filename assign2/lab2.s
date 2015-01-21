@@ -17,7 +17,8 @@
 	.data
 prompt:	.asciz	"Give a string [exit]: "
 	.set	p_len, .-prompt
-buf:	.byte	
+buf:	.fill	BUF, 1, 0
+
 	
 #bufsize	db	BUF + 1
 #size	db	?
@@ -33,15 +34,20 @@ buf:	.byte
 	.global main
 main:
 #
-# Make a prompt
+# Make a prompt:
+#	puts(prompt)
 #
 	mov	$prompt, %rdi
 	call	puts
 	
 ##
-## Read in the string
+## Read in the string:
+##	fgets(buf, BUF, stdin)
 ##
-.extern	stdin
+	mov	$buf, %rdi
+	mov	$BUF, %rsi
+	mov	stdin, %rdx
+	call	fgets
 
 	
 #	mov	GETSTR, r1
