@@ -33,8 +33,6 @@ prompt	db	'Give a string [exit]: ', 0
 bufsize	db	BUF + 1
 size	db	?
 buf	db	[?] * BUF + 1
-left	db	?
-
 
 
 ;;;
@@ -69,19 +67,17 @@ back						; program entry point
 	lodbu	size,, r3
 	stobl	left,, r3	; save the length
 
+	; %r3 is the running index
 nextchar
-	dec	r3   		; index of current character = left - 1
+	dec	r3   		; index of the last character = size - 1
 	lodbl	buf, r3, r2	; load the character into %r2
 	mov	PUTCHAR, r1
+	push	r3
 	sys	CONSOLE
 
-	; the system call may have altered the registers
-	lodbu	left,, r3
-	cmp	r3, 0
-	be	linefeed
-	dec	r3		; decrease 'left'
-	stobl	left,, r3
-	br	nextchar
+	pop	r3		; the system call may have altered the registers
+	cmp	r3, 0		; if (%r3 != 0) goto nextchar;
+	bne	nextchar
 
 	; print '\n'
 linefeed
