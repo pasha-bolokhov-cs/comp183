@@ -37,10 +37,11 @@ main:
 start_over:	
 #
 # Make a prompt:
-#	puts(prompt)
+#	fputs(prompt, stdout)
 #
 	mov	$prompt, %rdi
-	call	puts
+	mov	stdout, %rsi
+	call	fputs
 
 	
 #
