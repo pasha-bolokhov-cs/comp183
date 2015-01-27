@@ -1,0 +1,142 @@
+;
+; Author:	Pasha Bolokhov C0411819
+; Displayed:
+; Keyword:
+;
+
+
+	program back
+;;;
+;;; A program for printing a string backwards
+;;;
+
+CONSOLE equ	1
+GETSTR	equ	1
+PUTCHAR equ	2
+PUTSTR	equ	3
+EXIT	equ	0xffff
+
+BUF	equ	80
+
+
+;;;
+;;; Stack size
+;;;
+	stack	80
+
+
+;;;
+;;; Data section
+;;;
+	data
+prompt	db	'Give a string [exit]: ', 0
+yes	db	'It is a palindrome\n', 0
+no	db	'It is *not* a palindrome\n', 0
+bufsize	db	BUF + 1
+size	db	?
+buf	db	[?] * BUF + 1
+
+
+;;;
+;;; Text section
+;;;
+	code
+back						; program entry point
+;
+; Make a prompt
+;
+	mov	PUTSTR, r1
+	lea	prompt, r2
+	sys	CONSOLE
+
+;
+; Read in the string
+;
+	mov	GETSTR, r1
+	lea	bufsize, r2
+	sys	CONSOLE
+
+;
+; Check the string length
+;
+	lodbu	size,, r3
+	cmp	r3, 0
+	be	quit
+
+;
+;	r1 = is_palindrome(buf, size);
+;
+	lea	buf, r1
+	lodbu	size,, r2
+	call	is_palindrome
+
+;
+;	if (r1) {
+;
+	cmp	r1, 0
+	be	print_false
+;
+;		r2 = yes;
+;
+	lea	yes, r2
+;
+;	} else {
+;		r2 = no;
+;
+print_false
+	lea	no, r2
+;
+;	}
+;	
+;	putstr(r2);
+;
+	mov	PUTSTR, r1	
+	sys	CONSOLE
+
+;
+; Start over
+;
+	br	back
+
+
+;
+; Quit
+;
+quit
+	sys	EXIT
+
+
+;
+; int16 is_palindrome(char *str, int16 len)
+;
+is_palindrome
+	;
+	; put the address of the last character into r3
+	;
+	add	r1, r2, r3
+	dec	r3
+
+	;
+	; r1 and r3 are the running indices
+	; r1 goes up, r3 goes down
+	;
+is_palindrome_loop
+	cmp	r1, r3
+	bae	return_true
+	lodbl	0, r1, r4
+	lodbl	0, r3, r5
+	cmp	r4, r5
+	bne	return_false
+	inc	r1
+	dec	r2
+	br	is_palindrome_loop
+	
+return_true
+	mov	1, r1
+	ret
+
+return_false
+	mov	0, r1
+	ret
+
+	end
