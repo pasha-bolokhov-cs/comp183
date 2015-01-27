@@ -65,7 +65,6 @@ back						; program entry point
 ; Print the string backwards
 ;
 	lodbu	size,, r3
-	stobl	left,, r3	; save the length
 
 	; %r3 is the running index
 nextchar
