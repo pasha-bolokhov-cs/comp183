@@ -5,7 +5,7 @@
 ;
 
 
-	program back
+	program palindrome
 ;;;
 ;;; A program for printing a string backwards
 ;;;
@@ -41,7 +41,7 @@ buf	db	[?] * BUF + 1
 ;;; Text section
 ;;;
 	code
-back						; program entry point
+palindrome					; program entry point
 ;
 ; Make a prompt
 ;
@@ -74,29 +74,31 @@ back						; program entry point
 ;	if (r1) {
 ;
 	cmp	r1, 0
-	be	print_false
+	be	assign_false
 ;
 ;		r2 = yes;
 ;
 	lea	yes, r2
+	br	print_answer
 ;
 ;	} else {
 ;		r2 = no;
 ;
-print_false
+assign_false
 	lea	no, r2
 ;
 ;	}
 ;	
 ;	putstr(r2);
 ;
+print_answer
 	mov	PUTSTR, r1	
 	sys	CONSOLE
 
 ;
 ; Start over
 ;
-	br	back
+	br	palindrome
 
 
 ;
@@ -128,7 +130,7 @@ is_palindrome_loop
 	cmp	r4, r5
 	bne	return_false
 	inc	r1
-	dec	r2
+	dec	r3
 	br	is_palindrome_loop
 	
 return_true
