@@ -25,7 +25,6 @@
 prompt:	.asciz	"Give a string [exit]: "	# prompt
 	.set	p_len, .-prompt			# length of the prompt
 buf:	.fill	BUF, 1, 0			# buffer for input
-left:	.byte	0				# counter for backwards printing
 
 
 ###
