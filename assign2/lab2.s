@@ -13,9 +13,6 @@
 	#
 	# Define some constants
 	#
-	.set	WRITE,		1	# system call 1 is write
-	.set	FHANDLE, 	1	# file handle 1 is stdout
-	.set	EXIT,		60	# system call 60 is exit
 	.set	BUF,		80 + 2	# buffer size
 
 ###
