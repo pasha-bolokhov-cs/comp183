@@ -15,6 +15,10 @@
 	# Define some constants
 	#
 	.set	BUF,		80 + 2	# buffer size
+	.set	upper_A,	'A'	# beginning of upper-case characters
+	.set	upper_Z,	'Z'	# end of upper-case characters
+	.set	lower_A,	'a'	# beginning of lower-case characaters
+	.set	lower_Z,	'z'	# end of lower-case characters
 
 ###
 ### Data section
@@ -27,6 +31,10 @@ yes:	.asciz	"It is a palindrome\n"		# positive answer
 no:	.asciz	"It is *not* a palindrome\n"	# negative answer
 	.set	no_len, .-no			# length of the positive answer
 buf:	.fill	BUF, 1, 0			# buffer for input
+allowed:
+	.ascii	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+						# allowed set of characters
+	.set	allowed_len, .-allowed		# length of the allowed set
 
 
 
@@ -142,12 +150,59 @@ is_palindrome:
 	# %rdi goes up, %rsi goes down
 	#
 is_palindrome_loop:
-	cmp	%rdi, %rsi
-	jbe	return_true
+	cmp	%rdi, %rsi		# if (%rsi <= %rdi)
+	jbe	return_true		# 	goto return_true;
 	movb	(%rdi), %ah
 	movb	(%rsi), %al
-	cmp	%ah, %al
-	jne	return_false
+
+	#
+	# run %ah through the allowed set
+	#
+	mov	$allowed, %rbx
+	xor	%rcx, %rcx		# %rcx is the counter
+head_sym_allowed_loop:	
+	cmpb	%ah, (%rbx)		# if (%ah == &%rbx)
+	je	head_sym_to_lower	#	goto head_sym_to_lower;
+	inc	%rbx			# %rbx++
+	inc	%rcx			# %rcx++
+	cmp	$allowed_len, %rcx	# if (%rcx < $allowed_len)
+	jb	head_sym_allowed_loop	#	goto head_sym_allowed_loop;
+
+	# %ah not on 'allowed' set
+	inc	%rdi			# skip it
+	jmp	is_palindrome_loop
+
+	# %ah is allowed, convert to lower case
+head_sym_to_lower:
+	cmp	$upper_A, %ah
+	jb	head_sym_not_upper
+	cmp	$upper_Z, %ah
+	ja	head_sym_not_upper
+head_sym_not_upper:
+	
+
+	#
+	# run %al through the allowed set
+	#
+	mov	$allowed, %rbx
+	xor	%rcx, %rcx		# %rcx is the counter
+tail_sym_allowed_loop:
+	cmpb	%al, (%rbx)		# if (%al == &%rbx)
+	je	tail_sym_to_lower	#	goto tail_sym_to_lower;
+	inc	%rbx			# %rbx++
+	inc	%rcx			# %rcx++
+	cmp	$allowed_len, %rcx	# if (%rcx < $allowed_len)
+	jb	tail_sym_allowed_loop	#	goto tail_sym_allowed_loop;
+
+	# %al not on 'allowed' set
+	dec	%rsi			# skip it
+	jmp	is_palindrome_loop
+
+tail_sym_to_lower:
+	
+
+	cmp	%ah, %al		# if (%ah != %al)
+	jne	return_false		#	goto return_false;
 	inc	%rdi
 	dec	%rsi
 	jmp	is_palindrome_loop
