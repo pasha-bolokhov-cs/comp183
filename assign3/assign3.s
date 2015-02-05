@@ -156,6 +156,16 @@ is_palindrome_loop:
 	movb	(%rsi), %al
 
 	#
+	# pre-compare
+	#
+	cmp	%ah, %al		# if (%ah != %al)
+	jne	go_on			#	goto go_on;
+	inc	%rdi			# skip the equal
+	dec	%rsi			# characters
+	jmp	is_palindrome_loop
+
+go_on:	
+	#
 	# run %ah through the allowed set
 	#
 	mov	$allowed, %rbx
