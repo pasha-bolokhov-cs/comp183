@@ -17,6 +17,11 @@ PUTSTR	equ	3
 EXIT	equ	0xffff
 
 BUF	equ	80
+upper_A	equ	'A'
+upper_Z	equ	'Z'
+lower_A	equ	'a'
+lower_Z	equ	'z'
+allowed_len	equ	26 + 26 + 10
 
 
 ;;;
@@ -35,6 +40,7 @@ no	db	'It is *not* a palindrome\n', 0
 bufsize	db	BUF + 1
 size	db	?
 buf	db	[?] * BUF + 1
+allowed	db	'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
 
 
 ;;;
@@ -123,19 +129,90 @@ is_palindrome
 	; r1 goes up, r3 goes down
 	;
 is_palindrome_loop
-	cmp	r1, r3
-	bae	return_true
+	cmp	r1, r3			; if (r1 >= r3)
+	bae	return_true		;    goto return_true;
+	xor	r4, r4
+	xor	r5, r5
 	lodbl	0, r1, r4
 	lodbl	0, r3, r5
-	cmp	r4, r5
-	bne	return_false
+
+	;
+	; pre-compare
+	;
+	cmp	r4, r5			; if (r4 != r5)
+	bne	go_on			;    goto go_on;
+	inc	r1			; skip the equal
+	dec	r3			; characters
+	br	is_palindrome_loop
+
+go_on
+	;
+	; run r4 through the allowed set
+	;
+	lea	allowed, r6		; r6 = allowed;
+	xor	r7, r7			; r7 is the counter
+head_sym_allowed_loop
+	xor	r8, r8
+	lodbl	0, r6, r8		; r8 = *r6;
+	cmp	r4, r8 			; if (r4 == r8)
+	be	head_sym_to_lower	;    goto head_sym_to_lower;
+	inc	r6			; r6++;
+	inc	r7			; r7++;
+	cmp	r7, allowed_len		; if (r7 < allowed_len)
+	bb	head_sym_allowed_loop	;    goto head_sym_allowed_loop;
+
+	; r4 not on 'allowed' set
+	inc	r1			; skip it
+	br	is_palindrome_loop
+
+	; r4 is allowed, convert to lower case
+head_sym_to_lower
+	sub	r4, upper_A, r7		; r7 = r4 - upper_A;
+	bs	head_sym_not_upper	; if (r7 < 0) goto head_sym_not_upper;
+	cmp	r4, upper_Z
+	ba	head_sym_not_upper	; if (r4 > upper_Z) goto head_sym_not_upper
+	add	r7, lower_A, r4		; r4 = r7 + lower_A;
+head_sym_not_upper
+
+	;
+	; run r5 through the allowed set
+	;
+	lea	allowed, r6		; r6 = allowed;
+	xor	r7, r7			; r7 is the counter
+tail_sym_allowed_loop
+	xor	r8, r8			; r8 is the current symbol in the allowed table
+	lodbl	0, r6, r8		; r8 = *r6;
+	cmp	r5, r8 			; if (r5 == r8)
+	be	tail_sym_to_lower	;    goto tail_sym_to_lower;
+	inc	r6			; r6++;
+	inc	r7			; r7++;
+	cmp	r7, allowed_len		; if (r7 < allowed_len)
+	bb	tail_sym_allowed_loop	;    goto tail_sym_allowed_loop;
+
+	; r5 not on 'allowed' set
+	dec	r3			; skip it
+	br	is_palindrome_loop
+
+	; r5 is allowed, convert to lower case
+tail_sym_to_lower
+	sub	r5, upper_A, r7		; r7 = r5 - upper_A;
+	bs	tail_sym_not_upper	; if (r7 < 0) goto tail_sym_not_upper;
+	cmp	r5, upper_Z
+	ba	tail_sym_not_upper	; if (r5 > upper_Z) goto tail_sym_not_upper
+	add	r7, lower_A, r5		; r5 = r7 + lower_A;
+tail_sym_not_upper
+
+
+
+	cmp	r4, r5			; if (r4 != r5)
+	bne	return_false		;	goto return_false;
 	inc	r1
 	dec	r3
 	br	is_palindrome_loop
 	
 return_true
 	mov	1, r1
-	ret
+	ret	
 
 return_false
 	mov	0, r1

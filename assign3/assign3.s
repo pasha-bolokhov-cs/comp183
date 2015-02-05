@@ -171,10 +171,10 @@ go_on:
 	mov	$allowed, %rbx
 	xor	%rcx, %rcx		# %rcx is the counter
 head_sym_allowed_loop:	
-	cmpb	%ah, (%rbx)		# if (%ah == &%rbx)
+	cmpb	%ah, (%rbx)		# if (%ah == *%rbx)
 	je	head_sym_to_lower	#	goto head_sym_to_lower;
-	inc	%rbx			# %rbx++
-	inc	%rcx			# %rcx++
+	inc	%rbx			# %rbx++;
+	inc	%rcx			# %rcx++;
 	cmp	$allowed_len, %rcx	# if (%rcx < $allowed_len)
 	jb	head_sym_allowed_loop	#	goto head_sym_allowed_loop;
 
