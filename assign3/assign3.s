@@ -174,10 +174,13 @@ head_sym_allowed_loop:
 
 	# %ah is allowed, convert to lower case
 head_sym_to_lower:
-	cmp	$upper_A, %ah
-	jb	head_sym_not_upper
+	movb	%ah, %bh
+	sub	$upper_A, %bh		# %bh = %ah - $upper_A;
+	js	head_sym_not_upper	# if (%bh < 0) goto head_sym_not_upper;
 	cmp	$upper_Z, %ah
-	ja	head_sym_not_upper
+	ja	head_sym_not_upper	# if (%ah > $upper_Z) goto head_sym_not_upper;
+	add	$lower_A, %bh		# %bh += $lower_A
+	mov	%bh, %ah
 head_sym_not_upper:
 	
 
@@ -198,7 +201,16 @@ tail_sym_allowed_loop:
 	dec	%rsi			# skip it
 	jmp	is_palindrome_loop
 
+	# %al is allowed, convert to lower case
 tail_sym_to_lower:
+	movb	%al, %bl
+	sub	$upper_A, %bl		# %bl = %al - $upper_A;
+	js	tail_sym_not_upper	# if (%bl < 0) goto tail_sym_not_upper;
+	cmp	$upper_Z, %al
+	ja	tail_sym_not_upper	# if (%al > $upper_Z) goto tail_sym_not_upper
+	add	$lower_A, %bl		# %bl += $lower_A
+	mov	%bl, %al
+tail_sym_not_upper:	
 	
 
 	cmp	%ah, %al		# if (%ah != %al)
