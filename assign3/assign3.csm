@@ -203,7 +203,6 @@ tail_sym_to_lower
 tail_sym_not_upper
 
 
-
 	cmp	r4, r5			; if (r4 != r5)
 	bne	return_false		;	goto return_false;
 	inc	r1
