@@ -136,7 +136,7 @@ quit:
 
 
 #
-# int64 i_palindrome(char *str, int64 len)
+# int64 is_palindrome(char *str, int64 len)
 #
 is_palindrome:
 	#
