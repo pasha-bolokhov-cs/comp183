@@ -1,0 +1,360 @@
+
+Bit0    equ     0b1000000000000000
+Bit1    equ     0b0100000000000000
+Bit2    equ     0b0010000000000000
+Bit3    equ     0b0001000000000000
+Bit4    equ     0b0000100000000000
+Bit5    equ     000000010000000000
+Bit6    equ     0b0000001000000000
+Bit7    equ     0b0000000100000000
+Bit8    equ     0b0000000010000000
+Bit9    equ     0b0000000001000000
+Bit10   equ     0b0000000000100000
+Bit11   equ     0b0000000000010000
+Bit12   equ     0b0000000000001000
+Bit13   equ     0b0000000000000100
+Bit14   equ     0b0000000000000010
+Bit15   equ     0b0000000000000001
+
+;
+; Handy non-printing ASCII defines
+;
+NUL     equ     0
+LF      equ     10
+CR      equ     13
+
+
+;
+; System BIOS definitions
+;
+
+CONSOLE equ     1
+GETCHAR equ     0
+GETSTR  equ     1
+PUTCHAR equ     2
+PUTSTR  equ     3
+
+FSTREAM equ     2
+OPEN    equ     0
+CLOSE   equ     1
+READ    equ     2
+
+ARGS    equ     3
+GETARGS equ     0
+
+EXIT    equ     0xffff
+
+
+;
+; Convert the binary value in r1 and place it as an ASCIIZ string in the 
+; buffer pointed at by r2
+;
+; On return r2 points to the first significant digit of the string
+;
+
+TEN     EQU     10
+
+        code
+ bin2asc
+        push    r3
+        push    r4
+        mov     6, r3   ; max digit count
+        mov     '0', r4
+ top1_
+        stobl   0, r2, r4       ; store ASCII '0'
+        inc     r2              ; next digit
+        dec     r3              ; count down
+        bnz     top1_           ; until all set
+;
+; Now store the NUL character 1 byte later (r2 already inc'ed)
+;
+        stobl   0, r2, r0
+        dec     r2              ; so dec to getback to last digit
+;
+; Now we'll go through the divide by 10 and store the remainder loop
+; working backwards as the cumulative powers of 10 increase
+;
+        mov     r1, r3          ; get value to r3
+ top2_
+        div     r3, TEN, r3     ; result -> r3, remainder ->r4
+        or      r4, '0', r4     ; convert to ASCII digit
+        stobl   0, r2, r4       ; store
+        dec     r2              ; previous byte
+        cmp     r3, 0           ; if there was a result
+        bnz     top2_           ; go round again
+
+        inc     r2              ; gone back 1 too far
+
+        pop     r4
+        pop     r3
+        ret
+
+;
+; Convert the ASCIIZ string pointed at by R1 to a 16-bit binary value
+; return it in R1.
+;
+; If carry goes on well, that's life
+;
+
+ asc2bin
+        push    r2
+        push    r3
+        push    r4
+
+        mov     0, r3           ; cumulative sum
+ top3_
+        lodbu   0,r1,r2         ; next digit
+        cmp     r2, 0           ; NUL?
+        be      done3_          ; yes - done
+
+        and     r2, 0xf         ; and out zone bits
+        mul     r3, TEN, r3     ; sum = sum * 10
+                                ; r3 = HO, r4 = LO
+        bc      nogo_           ; cumulative value too big
+        mov     r4, r3          ; sum so far to r3
+        add     r3, r2, r3      ; add this digit total
+        bc      nogo_           ; oh - you had to spoil it!
+        inc     r1
+        br      top3_           ; keep going
+
+ done3_
+        mov     r3, r1          ; value where caller expects it
+ nogo_
+        pop     r4
+        pop     r3
+        pop     r2
+        ret
+
+
+        STACK   20
+BUFSIZE EQU     81
+
+        data
+ascnum  db      [?] * 7 ; Max 6 digits plus NUL
+        0004 ......  
+
+;
+; Various text messages
+;
+
+msg     db      'product = ', 0
+badmsg1 db      'I said <= 65535 dummy!', '\n', 0
+badmsg2 db      'Sorry product > 65535', '\n', 0
+
+;
+; The numbers
+;
+
+num1    dw      ?
+num2    dw      ?
+num3    dw      ?
+
+buffer  db      BUFSIZE, [?] * BUFSIZE + 1      ; Input buffer area
+
+        0098 ......  
+
+        code
+ Driver
+ GET1
+        call    get_number      ; get first number
+        bz      Finito          ; Enter alone means quit
+        lea     buffer+2, r1    ; input
+        call    asc2bin         ; and convert to binary
+        bnc     OK1             ; OK
+        mov     PUTSTR, r1      ; bad input, tell and ...
+        lea     badmsg1, r2
+        sys     CONSOLE
+        br      GET1            ; retry
+ OK1
+        stow    num1,,r1        ; first number
+ GET2
+        call    get_number      ; get other number
+        bz      Finito          ; Enter alone means quit
+        lea     buffer+2, r1    ; input
+        call    asc2bin         ; and convert to bin
+        bnc     OK2
+        mov     PUTSTR, r1
+        lea     badmsg1, r2
+        sys     CONSOLE
+        br      GET2    
+ OK2
+        stow    num2,,r1        ; second number
+
+        lodw    num1,,r1        ; multiply this by
+        lodw    num2,,r2        ; this and put the
+        lea     num3,r3         ; result here
+        push    r1              ; put params into stack
+        push    r2
+        push    r3
+        call    saveregs        ; save registers for comparison later
+        call    multiply        ; DO IT!
+        bc      Toobig          ; Oh dear, result won't fit into 16 bits
+
+        sub     SP, 6, SP       ; remove params from stack
+        call    checkregs       ; make sure student code obeys the rules
+
+        mov     PUTSTR, r1
+        lea     msg, r2        ; display product msg
+        sys     CONSOLE
+
+        lodw    num3,,r1        ; product (bianry)
+        lea     ascnum,r2
+        call    bin2asc         ; convert to ASCII and
+        mov     PUTSTR,r1
+        sys     CONSOLE         ; print
+
+        mov     PUTCHAR, r1
+        mov     '\n', r2
+        sys     CONSOLE         ; print NL
+
+        br      GET1            ; get another pair of numbers
+
+ Toobig
+        sub     SP, 6, SP       ; remove params from stack
+        call    checkregs
+        mov     PUTSTR, r1
+        lea     badmsg2,r2
+        sys     CONSOLE
+
+        br      GET1            ; get another pair of numbers
+
+ Finito                          ; OK, we're done
+        ret
+
+;
+; Prompt for and get  a number
+;
+
+        data
+
+prompt  db      'enter a number (<= 65535) ', 0
+
+        code
+
+ get_number
+        push    r1              ; save registers we'll use
+        push    r2
+        mov     PUTSTR, r1      ; function code 
+        lea     prompt, r2      ; address message
+        sys     CONSOLE
+
+        mov     GETSTR, r1      ; function code
+        lea     buffer, r2      ; address buffer area
+        sys     CONSOLE 
+
+        lodbu   buffer+1,,r1    ; input char count
+        cmp     r1, 0           ; set Z flag, pop doesn't reset
+
+        pop     r2              ; restore 'em
+        pop     r1
+        ret
+
+;
+; Save the registers for checking later
+; this is the easy part...:-)
+;
+
+        data
+regs    dw      [?] * 14        ; no point in checking r0 and if they
+                                ; screw up SP...
+
+        code
+ saveregs
+        stow    regs,,r1        ; rn saved at regs+[(n-1)*2]
+        stow    regs+2,,r2      ; There
+        stow    regs+4,,r3      ;  really
+        stow    regs+6,,r4      ;   is
+        stow    regs+8,,r5      ;    no
+        stow    regs+10,,r6     ;     smarter
+        stow    regs+12,,r7     ;      way
+        stow    regs+14,,r8     ;       of
+        stow    regs+16,,r9     ;       doing
+        stow    regs+18,,r10    ;        this
+        stow    regs+20,,r11    ; Or
+        stow    regs+22,,r12    ;  I'd
+        stow    regs+24,,r13    ;   do
+        stow    regs+26,,r14    ;    it
+        ret
+
+;
+; Check the current r1-r14 against the saved values
+; As our execution model is reg-reg this isn't quite as simple as it
+; might be
+;
+; In order not to make things *too* easy, if we find a mismatch we're
+; simply going to print a rude message and quit the program...:-)
+;
+
+        code
+ checkregs
+        push    r2              ; use r2 for work reg for first bit
+;
+; Now check r1
+;
+        lodw    regs,,r2        ; old r1
+        cmp     r1,r2           ; same?
+        bne     Quit            ; silly...
+;
+; Right, now we can use r1 as a temporary while comparing r2-r14
+; Again there is no more sophisticated way of doing this.
+; 
+        pop     r2              ; get r2 back
+        push    r1              ; save r1 for later
+        lodw    regs+2,,r1      ; saved r2
+        cmp     r1, r2          ; same?
+        bne     Quit            ; silly...
+        lodw    regs+4,,r1      ; saved r3
+        cmp     r1, r3          ; same?
+        bne     Quit            ; silly...
+        lodw    regs+6,,r1      ; saved r4
+        cmp     r1, r4          ; same?
+        bne     Quit            ; silly...
+        lodw    regs+8,,r1      ; saved r5
+        cmp     r1, r5          ; same?
+        bne     Quit            ; silly...
+        lodw    regs+10,,r1     ; saved r6
+        cmp     r1, r6          ; same?
+        bne     Quit            ; silly...
+        lodw    regs+12,,r1     ; saved r7
+        cmp     r1, r7          ; same?
+        bne     Quit            ; silly...
+        lodw    regs+14,,r1     ; saved r8
+        cmp     r1, r8          ; same?
+        bne     Quit            ; silly...
+        lodw    regs+16,,r1     ; saved r9
+        cmp     r1, r9          ; same?
+        bne     Quit            ; silly...
+        lodw    regs+18,,r1     ; saved r10
+        cmp     r1, r10         ; same?
+        bne     Quit            ; silly...
+        lodw    regs+20,,r1     ; saved r11
+        cmp     r1, r11         ; same?
+        bne     Quit            ; silly...
+        lodw    regs+22,,r1     ; saved r12
+        cmp     r1, r12         ; same?
+        bne     Quit            ; silly...
+        lodw    regs+24,,r1     ; saved r13
+        cmp     r1, r13         ; same?
+        bne     Quit            ; silly...
+        lodw    regs+26,,r1     ; saved r14
+        cmp     r1, r14         ; same?
+        bne     Quit            ; silly...
+
+        pop     r1
+        ret                     ; Well done...regs OK
+
+        data
+badregs db      'I told you to save and restore ALL the registers....why do you never listen?', CR, LF, 0
+
+        code
+ Quit
+
+        mov     PUTSTR, r1
+        lea     badregs, r2
+        sys     CONSOLE
+        sys     EXIT
+;
+;
+; Include procedures for converting ASCII to binary and vice-versa
+;
+        list    all

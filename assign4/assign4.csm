@@ -60,7 +60,7 @@ multiply
 
 again
 	;
-	; do {
+	; while (1) {
 	; 	r4 = r2 & 1;
 	;
 	and	r2, 1, r4
@@ -78,14 +78,21 @@ again
 
 shift
 	;
-	; 	r1 <<= 1;
 	; 	r2 >>= 1;
-	; 	} while (r2);
+	; 	if (r2 == 0)
+	; 		goto done;
+	; 	r1 <<= 1;
+	; 	if (carry)
+	; 		goto overflow;
+	; }
 	;
-	shl	r1, 1, r1
 	shr	r2, 1, r2
-	bnz	again
+	bz	done
+	shl	r1, 1, r1
+	bc	overflow
+	br	again
 
+done
 	;
 	; *c = r3;
 	;
@@ -110,7 +117,6 @@ overflow
 	pop	r2
 	pop	r1
 
-	mov	fp, sp
 	pop	fp
 	ret
 
