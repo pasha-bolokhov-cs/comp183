@@ -1,0 +1,117 @@
+;
+; Author: Pasha Bolokhov
+; Displayed:
+; Keyword:
+;
+	program	assign4
+
+
+	include	'/home/batemann/labs/183/Driver'
+
+	data
+
+
+
+	code
+
+assign4
+	call	Driver
+
+	sys	EXIT
+
+
+
+
+	;
+	; void multiply(uint16_t a, b, *c);
+	;
+multiply
+	push	fp
+	mov	sp, fp
+
+	;
+	; save regs
+	;
+	push	r1
+	push	r2
+	push	r3
+	push	r4
+
+	;
+	; r1 will carry parameter 1
+	; r2 will carry parameter 2
+	; r3 will carry the "sum"
+	;
+	; r1 shifts left
+	; r2 shifts right
+	;
+
+	;
+	; r1 = a;
+	; r2 = b;
+	;
+	lodw	-8, fp, r1
+	lodw	-6, fp, r2
+
+	;
+	; r3 = 0;
+	;
+	xor	r3, r3
+
+again
+	;
+	; do {
+	; 	r4 = r2 & 1;
+	;
+	and	r2, 1, r4
+
+	;
+	; 	if (r4) {
+	; 		r3 += r1;
+	;		if (carry)
+	;			goto overflow;
+	; 	}
+	;
+	bz	shift
+	add	r3, r1, r3
+	bc	overflow
+
+shift
+	;
+	; 	r1 <<= 1;
+	; 	r2 >>= 1;
+	; 	} while (r2);
+	;
+	shl	r1, 1, r1
+	shr	r2, 1, r2
+	bnz	again
+
+	;
+	; *c = r3;
+	;
+	lodw	-4, fp, r1
+	stow	0, r1, r3
+	
+	;
+	; clear carry flag
+	;
+	xor	r1, r1
+
+	;
+	; carry flag is set => return
+	;
+overflow
+
+	;
+	; restore regs
+	;
+	pop	r4
+	pop	r3
+	pop	r2
+	pop	r1
+
+	mov	fp, sp
+	pop	fp
+	ret
+
+	end
