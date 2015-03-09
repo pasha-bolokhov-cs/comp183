@@ -1,4 +1,5 @@
 #
+# Compile all source files
 #
 
 SRC = assign5.c error.c lex.c parser.c tree.c
@@ -13,3 +14,4 @@ $(OBJ): $(SRC) $(HDR)
 
 clean:
 	-$(RM) $(OBJ) $(TARGET) *~
+
