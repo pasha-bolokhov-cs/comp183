@@ -1,14 +1,15 @@
-CC = gcc
-CFLAGS = -c
-OFLAGS = -o
-OBJECTS = lex.o lab6b.o machine.o parser.o tree.o
-SOURCES = lex.c lab6b.c machine.c parser.c tree.c
+#
+#
 
-all:
-	$(CC) $(OFLAGS) lab6b $(SOURCES)
+SRC = assign5.c error.c lex.c parser.c tree.c
+HDR = $(wildcard *.h)
+OBJ = $(SRC:.c=.o)
+TARGET = assign5
 
-%.o: %.c
-	$(CC) $(CFLAGS) $<
+$(TARGET): $(OBJ) $(SRC) $(HDR)
+	$(CC) -o $(TARGET) $(OBJ)
+
+$(OBJ): $(SRC) $(HDR)
 
 clean:
-	rm -f *.o lab6b
+	-$(RM) $(OBJ) $(TARGET) *~
