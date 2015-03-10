@@ -16,24 +16,23 @@
 #include    "parser.h"
 #include    "machine.h"
 
-int
-main        (void){     /* Compiler main routine */
+int main (void)			/* Compiler main routine */
+{
+	int	 status;
+	NODE	*expr;
 
-int         status;
+    	status = Parse(&expr);
+    	while (status != DONE) {
+        	if (expr != NULL) {
+            		PrintParseTree(expr);
+	    		putchar ('\n');
+            		PrintPostTree(expr);
+	    		putchar ('\n');
 
-NODE        *expr;
-
-    status = Parse (&expr);
-    while (status != DONE){
-        if (expr != NULL){
-            PrintParseTree (expr);
-            PrintPostTree (expr);
-	    putchar ('\n');
-            printf ("%d\n", EvaluateParseTree (expr));
-        }
-        status = Parse (&expr);
-    }
-
-    return (0);
-
+            		printf ("%d\n", EvaluateParseTree (expr));
+		}
+	        status = Parse(&expr);
+	}
+    
+	return (0);
 }
