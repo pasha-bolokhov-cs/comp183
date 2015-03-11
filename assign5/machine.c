@@ -5,9 +5,9 @@
  *
  * Author: Pasha Bolokhov <pasha.bolokhov@gmail.com>
  *
- * Date shown:
+ * Date shown: March 10, 2015
  *
- * Keyword:
+ * Keyword: RESISTANTCAT
  */
 #include <stdio.h>
 #include <stdlib.h>
