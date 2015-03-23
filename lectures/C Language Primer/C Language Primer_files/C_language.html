@@ -1,0 +1,639 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!-- saved from url=(0165)https://online.camosun.ca/content/enforced/83577-2015Q2COMP183X01AB/Content_Non-text/C_language.html?d2lSessionVal=lyLu89bpKyCv7O80Yz0fxKN3B&ou=83577&d2l_body_type=3 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script type="text/javascript" src="9efc9e456b"></script><script type="text/javascript">window.NREUM||(NREUM={});NREUM.info = {"beacon":"bam.nr-data.net","errorBeacon":"bam.nr-data.net","licenseKey":"9efc9e456b","applicationID":"2089117","transactionName":"b1wHYUNYWxEFUkJbDlYWLUFFSX0DClVaVxMXfVd5H3VlTDBeWV4SFnERQUF0WgYRXVMcIldXEVBfTX0WCV1wWw1MXBd9UFdRDgFD","queueTime":0,"applicationTime":196,"ttGuid":"44CE496453C797BE","agent":"js-agent.newrelic.com/nr-593.min.js"}</script><script type="text/javascript">window.NREUM||(NREUM={}),__nr_require=function(n,e,t){function r(t){if(!e[t]){var o=e[t]={exports:{}};n[t][0].call(o.exports,function(e){var o=n[t][1][e];return r(o?o:e)},o,o.exports)}return e[t].exports}if("function"==typeof __nr_require)return __nr_require;for(var o=0;o<t.length;o++)r(t[o]);return r}({QJf3ax:[function(n,e){function t(n){function e(e,t,a){n&&n(e,t,a),a||(a={});for(var u=c(e),f=u.length,s=i(a,o,r),p=0;f>p;p++)u[p].apply(s,t);return s}function a(n,e){f[n]=c(n).concat(e)}function c(n){return f[n]||[]}function u(){return t(e)}var f={};return{on:a,emit:e,create:u,listeners:c,_events:f}}function r(){return{}}var o="nr@context",i=n("gos");e.exports=t()},{gos:"7eSDFh"}],ee:[function(n,e){e.exports=n("QJf3ax")},{}],3:[function(n,e){function t(n){return function(){r(n,[(new Date).getTime()].concat(i(arguments)))}}var r=n("handle"),o=n(1),i=n(2);"undefined"==typeof window.newrelic&&(newrelic=window.NREUM);var a=["setPageViewName","addPageAction","setCustomAttribute","finished","addToTrace","inlineHit","noticeError"];o(a,function(n,e){window.NREUM[e]=t("api-"+e)}),e.exports=window.NREUM},{1:12,2:13,handle:"D5DuLP"}],gos:[function(n,e){e.exports=n("7eSDFh")},{}],"7eSDFh":[function(n,e){function t(n,e,t){if(r.call(n,e))return n[e];var o=t();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(n,e,{value:o,writable:!0,enumerable:!1}),o}catch(i){}return n[e]=o,o}var r=Object.prototype.hasOwnProperty;e.exports=t},{}],D5DuLP:[function(n,e){function t(n,e,t){return r.listeners(n).length?r.emit(n,e,t):(o[n]||(o[n]=[]),void o[n].push(e))}var r=n("ee").create(),o={};e.exports=t,t.ee=r,r.q=o},{ee:"QJf3ax"}],handle:[function(n,e){e.exports=n("D5DuLP")},{}],XL7HBI:[function(n,e){function t(n){var e=typeof n;return!n||"object"!==e&&"function"!==e?-1:n===window?0:i(n,o,function(){return r++})}var r=1,o="nr@id",i=n("gos");e.exports=t},{gos:"7eSDFh"}],id:[function(n,e){e.exports=n("XL7HBI")},{}],loader:[function(n,e){e.exports=n("G9z0Bl")},{}],G9z0Bl:[function(n,e){function t(){var n=h.info=NREUM.info;if(n&&n.licenseKey&&n.applicationID&&f&&f.body){c(l,function(e,t){e in n||(n[e]=t)}),h.proto="https"===d.split(":")[0]||n.sslForHttp?"https://":"http://",a("mark",["onload",i()]);var e=f.createElement("script");e.src=h.proto+n.agent,f.body.appendChild(e)}}function r(){"complete"===f.readyState&&o()}function o(){a("mark",["domContent",i()])}function i(){return(new Date).getTime()}var a=n("handle"),c=n(1),u=(n(2),window),f=u.document,s="addEventListener",p="attachEvent",d=(""+location).split("?")[0],l={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-593.min.js"},h=e.exports={offset:i(),origin:d,features:{}};f[s]?(f[s]("DOMContentLoaded",o,!1),u[s]("load",t,!1)):(f[p]("onreadystatechange",r),u[p]("onload",t)),a("mark",["firstbyte",i()])},{1:12,2:3,handle:"D5DuLP"}],12:[function(n,e){function t(n,e){var t=[],o="",i=0;for(o in n)r.call(n,o)&&(t[i]=e(o,n[o]),i+=1);return t}var r=Object.prototype.hasOwnProperty;e.exports=t},{}],13:[function(n,e){function t(n,e,t){e||(e=0),"undefined"==typeof t&&(t=n?n.length:0);for(var r=-1,o=t-e||0,i=Array(0>o?0:o);++r<o;)i[r]=n[e+r];return i}e.exports=t},{}]},{},["G9z0Bl"]);</script>
+<title>The C Language (abridged)</title>
+<script type="text/javascript" src="MathML.js"></script><script type="text/javascript">D2LMathML.DesktopInit('/d2l/common/mathjax/2.1/MathJax.js?config=MML_HTMLorMML&v=10.3.0.791-39','/d2l/common/mathjax/2.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML&v=10.3.0.791-39');</script><script type="text/x-mathjax-config;executed=true">MathJax.Hub.Config({ delayStartupUntil: "onload",showProcessingMessages: false, messageStyle: "none", showMathMenu: true, showMathMenuMSIE: true, menuSettings: { context: "MathJax", zoom: "None" },NativeMML: { showMathMenuMSIE: false, scale: 140 }, "HTML-CSS": { linebreaks: { automatic: true, width: "container"}, imageFont: null, scale: 130 } });</script><script type="text/javascript" src="MathJax.js"></script><style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Hover_Arrow {position: absolute; width: 15px; height: 11px; cursor: pointer}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 2px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 2px 2em; background: transparent}
+.MathJax_MenuTitle {background-color: #CCCCCC; margin: -1px -1px 1px -1px; text-align: center; font-style: italic; font-size: 80%; color: #444444; padding: 2px 0; overflow: hidden}
+.MathJax_MenuArrow {position: absolute; right: .5em; color: #666666}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuRadioCheck {position: absolute; left: 1em}
+.MathJax_MenuLabel {padding: 2px 2em 4px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #CCCCCC; margin: 4px 1px 0px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: Highlight; color: HighlightText}
+.MathJax_Menu_Close {position: absolute; width: 31px; height: 31px; top: -15px; left: -15px}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style></head>
+<body bgcolor="#FFFFFF" style="overflow-y: hidden;"><div id="MathJax_Message" style="display: none;"></div>
+
+<center>
+<h1>The C Language</h1>
+<h2>An Abridged Introduction</h2>
+</center>
+<p>
+</p><li>
+
+Designed by Dennis Ritchie c1972 
+
+<p>
+</p></li><li>
+
+Derived from <b>B</b>:<b><i> </i></b>in turn a modified form of Richards'
+<b>BCPL </b>(derived from <b>CPL</b>) 
+
+<p>
+</p></li><li>
+Used as the (re)implementation language for Unix 
+
+<p>
+</p></li><li>
+Achieved great popularity with the advent of the PC 
+
+<ul>
+<p>
+</p><li>
+Compilers relatively easy to write 
+
+<p>
+</p></li><li>
+Use relatively little memory 
+<p>
+
+</p></li><li>
+Produce efficient code 
+<p>
+
+</p></li><li>
+A vast improvement on both MASM and BASIC as an implementation language
+
+<p>
+</p></li></ul>
+
+<h3>
+<li>Data types </li></h3>
+<p>
+
+</p><ul>
+<p>
+</p><h4>
+<li><font size="3">
+Base types:</font> </li></h4>
+
+<ul>
+<p>
+</p><h5>
+<li><font size="3">
+<b>int </b>integer</font> </li></h5>
+<p>
+
+</p><ul>
+<p>
+<b>short [int]</b> 
+</p><p>
+<b>long [int]</b> 
+</p><p>
+<b>unsigned</b> 
+</p><p>
+</p><li>
+C standard says nothing about size of <b>short</b>, <b>int</b>, or
+<b>long</b>, merely that: 
+
+<p><b>sizeof (short) &lt;= sizeof (int) &lt;= sizeof (long)</b> </p>
+</li></ul>
+
+<li><b>float</b> real/floating point (single-precision)
+<p>
+</p><ul>
+<li>
+<b>float</b> single precision
+</li><li>
+<b>double</b> double precision 
+</li></ul>
+<p>
+
+</p></li><li><b>char </b>character
+<ul>
+<li>
+(C usually considers this as a short int) 
+</li></ul>
+</li></ul>
+<p>
+</p><h4>
+<font size="3">
+<!--NewPage-->
+</font><li><font size="3">
+Constants: </font>
+</li></h4>
+
+<ul>
+<p>
+</p><li>
+<b>int</b>
+<pre><font size="3">
+int-const         ::= decimal-int | octal-int   | hex-int
+decimal-int       ::= decimal-digit {decimal-digit}
+octal-int         ::= <b>0</b> octal-digit {octal-digit}
+hex-int           ::= <b>0x</b> hexadecimal-digit
+	              {hexadecimal-digit}
+octal-digit       ::= <b>0</b> | <b>1</b> | <b>2</b> | <b>3</b> | <b>4</b> | <b>5</b> | <b>6</b> | <b>7</b>
+decimal-digit     ::= octal-digit | <b>8</b> | <b>9</b> 
+hexadecimal-digit ::= decimal-digit | <b>a</b> | <b>b</b> | <b>c
+		     </b> | <b>d</b> | <b>e</b> | <b>f</b> | <b>A</b> | <b>B</b> | <b>C</b> | <b>D
+		     </b> | <b>E</b> | <b>F</b>
+</font>
+</pre>
+Examples: 
+<pre><font size="3">
+1       decimal
+12      decimal
+012     octal (base 8)
+0x1f    hexadecimal (base 16)
+</font>
+</pre>
+</li><li>
+<b>char</b> 
+
+<pre><font size="3">
+char-const       ::= <b>' </b>char <b>'</b>
+char             ::= escape-char | octal-char 
+                       | hexadecimal-char | regular-char
+escape-char      ::= <b>\ </b>esc-special
+esc-special      ::= <b>a </b>|<b> f </b>|<b> n </b>|<b> r </b>|<b> t </b>|<b> \ </b>|<b> ' </b>|<b> "</b>
+octal-char       ::= <b>\ </b>octal-digit 
+                       [octal-digit [octal-digit]]
+hexadecimal-char ::= <b>\x </b>hexadecimal-digit 
+                       [hexadecimal-digit]
+regular-char     ::= None of the above.....
+                       (i.e. a printing, typable character)
+</font>
+</pre>
+<p>
+Examples: 
+</p><pre><font size="3">
+'c'     the character c 
+'\\'    the character \
+'\''    the character '
+'\t'    the tab (HT) character
+'\n'    the newline (NL) character (or CR/LF)
+'\071'  the character 9
+'\x41'  the character A
+</font>
+</pre>
+</li></ul>
+</ul>
+<!--NewPage-->
+<h3>
+<li>
+Programs (simplified) </li></h3>
+
+<ul>
+<pre><font size="3">
+program         ::= function {function}
+function        ::= [return-type] identifier
+<b>                      '('</b> [parameter-list] <b>')' </b>statement-block
+return-type     ::= type
+identifier      ::= A valid C identifier 
+                      (implementation dependent)
+parameter-list  ::= parameter { <b>, </b>parameter }
+parameter       ::= type identifier
+statement-block ::= <b>'{' </b>{declaration ;} {statement } <b>'}'</b>
+declaration     ::= type identifier {<b> , </b>identifier }
+statement       ::= simple-statement <b>;</b> | statement-block
+simple-statement::= expression | <b>if</b> | <b>while</b> | <b>for</b> 
+                      | <b>do</b> | <b>switch</b> | ...
+expression      ::= expression operator expression 
+                      | function-call
+operator        ::= <b>= </b>| <b>==</b>| <b>!=</b>|<b> &lt; </b>|<b> &gt; </b>|<b> &lt;= </b>|<b> &gt;= </b>|<b> + </b>
+                      |<b> - </b>|<b> * </b>|<b> / </b>|<b> % </b>
+                      | <b>| </b>| <b>|| </b>| <b>&amp;</b> |<b> &amp;&amp; </b>| ...
+function-call   ::= identifier 
+<b>                      ( </b>[ expression { <b>, </b>expression} ] <b>)</b>
+if              ::=   <b>if '(' </b>expression <b>')'</b>statement
+                    | <b>if '('</b>  expression <b>')'</b> statement
+                        <b>else</b> statement
+while           ::= <b>while '(' </b>expression <b>')' </b>statement
+for             ::= <b>for '(' </b>[expression] <b>; </b>[expression] 
+<b>                      ; </b>[expression] <b>')'</b> statement
+do              ::= <b>do </b>statement <b>while '(' </b>expression <b>')'</b>
+switch          ::= <b>switch '(' </b>expression <b>')'</b>case-list
+case-list       ::= case-statement 
+                      | <b>{ </b>case-statement {case-statement}<b>}</b>
+case-statement  ::= <b>case </b>constant <b>: </b>statement-list 
+                      | <b>default : </b>statement-list
+statement-list  ::= {statement}
+</font>
+
+</pre>
+</ul>
+<!--NewPage-->
+<ul>
+A simple example 
+
+<pre><font size="3">
+#include &lt;stdio.h&gt;  /* This is a <i>preprocessor</i> directive,
+                     not part of C */
+#include &lt;string.h&gt; /* So is this */
+
+/*
+ * main is the compulsory name of the primary procedure
+ * argc is an integer,
+ * argv a pointer to a pointer
+ * to character
+ */
+
+int main (int argc, char **argv){
+  int i;                /* a single integer variable */
+
+  printf ("Arguments in their original form, and lower cased\n");
+
+  for (i = 1; i  &lt; argc ; i++){
+                        /* Iterate up command line arguments */
+	printf ("argument %d = \"%s\"\n", i, argv[i]);
+	printf ("argument %d (lowercase) = \"%s\"\n", i,
+	        strlwr (argv[i]));
+  }
+
+  printf ("Th..th..that\'s all folks!\n");
+
+}
+</font>
+
+</pre>
+</ul>
+<ul>
+
+<h4>
+<li>
+<font size="3">
+Function prototypes</font> </li></h4>
+<ul>
+<li>
+Used to ensure that
+<p>
+</p><ul>
+<li>Function declarations agree with their specification (cf. <b>DEFINITION</b>
+and <b>IMPLEMENTATION </b>modules in Modula-2)
+<p>
+</p><ul>
+<li>Functions may be used before they are defined providing a prototype
+has been specified (forward referencing) 
+</li></ul>
+<p>
+</p></li><li>Functions are used according to their specification 
+</li></ul>
+<p>
+<!--NewPage-->
+</p><h5>
+<font size="3">
+</font><li><font size="3">
+Specification: </font></li></h5>
+<pre><font size="3">
+prototype   ::= return-type identifier <b>'(' </b>[ptype-list] [ <b>, ...</b>]'<b>)</b>'<b>;</b>
+return-type ::= type
+ptype-list  ::= type { <b>,</b> type}
+</font>
+</pre>
+<p>
+Examples: 
+</p></li></ul>
+
+<pre><font size="3">
+        int dummy ();
+
+                /* A function returning an integer
+                   params unspecified <b>not recommended</b>*/
+
+        int dummy1 (int, char, int []);
+                /* A function returning an integer,
+                   taking 3 parameters: an int, a char and 
+                   an array of ints */
+
+        void dummy2 (void);
+                /* A function returning nothing and taking no parameters */
+
+        int dummy3 (char, int, ...);
+                /* A function returning an integer,
+                   taking a character parameter, an integer parameter, 
+                   and then<b> any number of parameters of any type</b> */
+</font>
+
+</pre>
+</ul>
+<h5>
+<font size="3">
+</font><li><font size="3">
+The C preprocessor</font> </li></h5>
+<p>
+</p><ul>
+<li>A pre-compilation pass over the source 
+<p>
+Essentially rewrites the source file using definitions, macros, included
+external files 
+</p><p>
+</p></li><li>Output passed to the compilation phase 
+<p>
+</p></li><li>Basic syntax:
+<pre><font size="3">
+cpp-directive ::= <b># </b>directive
+directive     ::= include | define | ...
+include       ::= <b>include </b>include-file
+include-file  ::= <b>'&lt;' </b>filespec <b>'&gt;'</b> | <b>" </b>filespec <b>"</b>
+define        ::= <b>define</b> name definition
+</font>
+
+</pre>
+
+<h6>
+<font size="3">
+</font><li><font size="3">
+Header files </font></li></h6>
+<ul>
+<li>A <b>header file</b> is a file containing common definitions, functions
+prototypes, etc. usually useful for several other program 
+<p>
+</p></li><li><i>Roughly </i>equivalent to a <b>DEFINITION MODULE</b> in Modula-2
+although more flexible (i.e. easier to screw up) 
+<p>
+</p></li><li>Header files are included in the compilation process via the <b>#include</b>
+<i>preprocessor directive</i> 
+</li></ul>
+
+<h6>
+<font size="3">
+</font><li><font size="3">
+Defines (macros)</font> </li></h6>
+
+<ul>
+The only way in C to define a constant 
+
+<pre><font size="3">
+#define GST 7
+#define MYNAME "Deryk" 
+</font>
+</pre>
+
+But beware: a <b>#define</b> is literally shorthand 
+<p>
+</p><pre><font size="3">
+#define FOUR 2 + 2 
+#define SIXTEEN FOUR * FOUR
+
+/*
+ * Does <i>not</i> work, because it is effectively:
+ */
+
+#define SIXTEEN 2 + 2 * 2 + 2
+</font>
+
+</pre>
+</ul>
+</li></ul>
+
+
+<h3>
+<li><font size="3">
+Arrays and strings </font></li></h3>
+<ul>
+<h4>
+<li><font size="3">
+Array declarations</font></li></h4>
+<pre><font size="3">
+array-decl  ::= type array-ident { <b>, </b>array-ident }
+array-ident ::= identifier <b>'['</b> size <b>']' </b>
+                  { '<b>[</b>'size '<b>]</b>'}
+</font>
+</pre>
+Examples:
+
+
+<ul>
+
+<pre><font size="3">int intarray[10]; </font></pre>
+
+<pre><font size="3">char string1[100], string2[20];</font> </pre>
+
+<pre><font size="3">float floatarray[10][20]; </font></pre>
+
+Note: 
+<p>
+</p><ul>
+Array indices are from <b><i>0</i></b> to size - 1 
+</ul>
+</ul>
+
+<h4>
+<li><font size="3">
+Strings </font></li></h4>
+
+<ul>
+A string is <b>not</b> a builtin type in C, it is a <i>kludge</i> based
+on an array of characters 
+<p>
+A string is represented as a sequence of bytes with a terminating <b>\0</b>
+(i.e. NULL) character which identifies the end of the string. (This is
+what is often called an <i>ASCIIZ</i> string) 
+</p><p>
+Consequently, to hold a string of 20 characters an array of 21 chars
+is necessary 
+</p><p>
+</p><pre><font size="3">    char string[21];</font> </pre>
+<p>
+All string manipulation is done with functions, whose prototypes are
+declared in the header file <b>string.h</b>, the only exception
+is <b>initialisation</b>: 
+</p><p>
+Example:
+</p><pre><font size="3">
+#include &lt;string.h&gt;
+
+void dummy (){
+  char str1[100] = "This is a string", str2[100];
+
+  strcpy (str1, str2);
+                /* copy str2 <b>to</b> str1 */
+}
+</font>
+
+</pre>
+</ul>
+</ul>
+
+<h3>
+<li>
+<font size="3">
+Pointers </font></li></h3>
+
+<ul>
+<pre>pointer-decl ::= datatype * identifier</pre>
+
+Examples: 
+
+<pre>int *intp; /* intp is of type 
+              pointer to int */
+
+char *charp1, **charp2;
+          /* charp1 is type pointer to char, 
+             charp2 is type pointer to pointer
+             to char */
+</pre>
+
+<h4>
+<font size="3">
+</font><li><font size="3">
+Referencing and dereferencing: </font></li></h4>
+
+<ul>
+<li>
+Referencing
+<pre>pointer-ref ::= &amp; identifier</pre>
+<font size="3">
+Example: 
+<font size="3">
+<pre>p = &amp;i; /* Assign to p the <b>address 
+	   </b>of variable i */ 
+</pre>
+</font>
+</font></li><li><font size="3">
+Dereferencing
+
+<pre>pointer-ref ::= * identifier</pre>
+Example: 
+<font size="3">
+<pre>i = *p; /* Assign to i the contents of the variable
+    <b>       pointed to</b> by p */
+*p = i  /* Assign the contents of i to the variable
+    <b>       pointed to </b>by p */
+</pre>
+</font>
+</font></li></ul><font size="3">
+<h4>
+<font size="3">
+</font><li><font size="3">
+Pointers and arrays </font></li></h4>
+<p>
+</p><ul>
+Pointers and arrays in C are intimately related 
+<pre><font size="3">
+int i, array[100], *p; 
+
+p = array; 	/* Equivalent to p = &amp;array[0] */
+p++; 		/* p now contains &amp;array[1] */
+i = *p; 	/* Assign to i the contents of array[1] */
+i = *(p+1);	/* Assign to i the contents of array[1+1]
+		   i.e. array[2] */ 
+</font></pre><font size="3">
+
+When a formal parameter of a function is either an array or a struct
+(see below) C will <b>automatically</b> force the actual argument passed
+to be a pointer Arrays and Pointers 
+
+in C the difference between an array and a pointer is blurry, to say
+the least 
+</font></ul><font size="3">
+</font></font></ul><font size="3"><font size="3">
+
+<h3>
+<li><font size="3">
+Function invocation and parameter passing </font></li></h3>
+
+<ul>
+All arguments to C functions are passed <b>by value</b> (as opposed
+to by reference or other mechanisms to be discussed later. 
+<p>
+In other words the called function receives a <i>copy</i> of the parameter.
+</p><p>
+Example: 
+
+</p><pre>void badswap (int a, b){
+  int z;
+
+    z = a;
+    a = b;
+    b = z
+}
+
+badswap (x, y); 
+</pre>
+<p>
+badswap will <b>not</b> exchange the values of its arguments. </p>
+
+Example: 
+
+<pre>void goodswap (int *a, *b){
+  int z;
+
+    z = *a;
+    *a = *b; /* a = b is wrong - why ? */
+    *b = z;
+
+}
+
+goodswap (&amp;x, &amp;y);
+</pre>
+</ul>
+<!--NewPage-->
+<p>
+</p><h3>
+<li><font size="3">
+Structures</font></li></h3>
+
+<ul>
+<pre>struct-decl ::= struct [identifier ] '{' member-list '}'
+member-list ::= declaration ; { declaration ;}
+</pre>
+
+Examples: 
+
+<pre>struct test{int a, b; float z;};
+struct test s1, s2;
+
+  s1.a = 2; 
+  s2.z = 3.1415926
+
+
+struct testa{
+  int x, y, z;
+  float a, b;
+
+
+  struct{
+    char p, q, r;
+  } internal;
+} TA1, TA2;
+
+  TA1.x = 5;
+  TA2.b = 2.71828;
+  TA1.internal.p = 'a';
+</pre>
+</ul>
+
+<h3>
+<li><font size="3">
+Unions</font></li></h3>
+
+<ul>
+<pre>union-decl ::= union [identifier ] '{' member-list '}'
+member-list ::= declaration ; { declaration ;}
+</pre>
+
+Examples: 
+
+<pre>union uniontest {int a; float b; char c;};
+union uniontest u1, u2;
+int x;
+float y;
+
+  u1.a = 5;
+  u2.b = 1.4142;
+  x = u2.a; /* What is the value of x? */
+  y = u1.b; /* What is the value of y? Who knows? */
+</pre>
+</ul>
+
+
+
+
+
+
+</font></font></li><script src="nr-593.min.js"></script></body></html>
